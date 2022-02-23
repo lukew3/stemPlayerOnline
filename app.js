@@ -1,11 +1,6 @@
 const $ = (id) => { return document.getElementById(id) };
 
-const data = {
-	"1": "https://lukew3.com/recolorbot/photos/Donda_2_We%20Did%20It%20Kid_1.mp3",
-	"2": "https://lukew3.com/recolorbot/photos/Donda_2_We%20Did%20It%20Kid_2.mp3",
-	"3": "https://lukew3.com/recolorbot/photos/Donda_2_We%20Did%20It%20Kid_3.mp3",
-	"4": "https://lukew3.com/recolorbot/photos/Donda_2_We%20Did%20It%20Kid_4.mp3"
-}
+let data = songs["we_made_it_kid"];
 
 var track1, track2, track3, track4;
 
