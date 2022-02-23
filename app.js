@@ -9,7 +9,7 @@ const data = {
 
 var track1, track2, track3, track4;
 
-const loadSong = () => {
+const loadTracks = () => {
 	track1 = new Audio(data["1"]);
 	track1.type = 'audio/wav';
 	track1.volume = $("topSlider").value/3;
@@ -23,23 +23,18 @@ const loadSong = () => {
 	track4.type = 'audio/wav';
 	track4.volume = $("bottomSlider").value/3;
 }
-loadSong();
+loadTracks();
 
 
-async function safePlay(track) {
+async function playAudio() {
 	try {
-		await track.play();
-		//console.log('Playing...');
+		track1.play();
+		track2.play();
+		track3.play();
+		track4.play();
 	} catch (err) {
 		console.log('Failed to play...' + err);
 	}
-}
-
-async function playAudio() {
-	safePlay(track1);
-	safePlay(track2);
-	safePlay(track3);
-	safePlay(track4);
 }
 
 async function pauseAudio() {
@@ -50,7 +45,7 @@ async function pauseAudio() {
 }
 
 let nowPlaying = false;
-$("centerButton").addEventListener("click", () => {
+const togglePlayback = () => {
 	if (nowPlaying) {
 		pauseAudio();
 		nowPlaying = false;
@@ -58,21 +53,32 @@ $("centerButton").addEventListener("click", () => {
 		playAudio();
 		nowPlaying = true;
 	}
+}
+
+$("centerButton").addEventListener("click", () => {
+	togglePlayback();
 })
 
 const adjustVolume = (slider, track) => {
 	track.volume = slider.value/3;
 }
 
-$("topSlider").addEventListener("mouseup", () => {
+$("topSlider").addEventListener("change", () => {
 	adjustVolume($("topSlider"), track1);
 })
-$("leftSlider").addEventListener("mouseup", () => {
+$("leftSlider").addEventListener("change", () => {
 	adjustVolume($("leftSlider"), track2);
 })
-$("rightSlider").addEventListener("mouseup", () => {
+$("rightSlider").addEventListener("change", () => {
 	adjustVolume($("rightSlider"), track3);
 })
-$("bottomSlider").addEventListener("mouseup", () => {
+$("bottomSlider").addEventListener("change", () => {
 	adjustVolume($("bottomSlider"), track4);
+})
+
+document.addEventListener("keydown", e => {
+	if (e.key == " ") {
+		togglePlayback();
+	}
+	//use arrow keys to control levels, arrow to increase, ctrl+arrow to lower, hold to isolate track
 })
