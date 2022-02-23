@@ -1,0 +1,52 @@
+:root {
+	--bg: #ffffff;
+	--player: beige;
+}
+
+html {
+	background-color: var(--bg);
+}
+
+#player {
+	height: 500px;
+	width: 500px;
+	margin: auto;
+	margin-top: 50px;
+	border-radius: 250px;
+	background-color: var(--player);
+	border: 1px solid black;
+}
+
+.slider {
+	position: absolute;
+}
+#topSlider {
+	transform: rotate(-90deg);
+	margin-left: 170px;
+	margin-top: 80px;
+}
+#leftSlider {
+	transform: rotate(180deg);
+	margin-top: 240px;
+	margin-left: 10px;
+}
+#centerButton {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: var(--player);
+	border: 1px solid black;
+	margin-top: 225px;
+	margin-left: 225px;
+}
+#rightSlider {
+	margin-top: 240px;
+	margin-left: 330px;
+}
+#bottomSlider {
+	transform: rotate(90deg);
+	margin-top: 400px;
+	margin-left: 170px;
+}
+
