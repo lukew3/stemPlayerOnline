@@ -1,0 +1,20 @@
+{
+	"dir": "ltr",
+	"lang": "en",
+	"name": "Stem Player Online",
+	"short_name": "Stem Player",
+	"description": "Play stems online",
+	"icons": [
+		{
+			"src": "/logo-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		}
+	],
+	"display": "standalone",
+	"orientation": "portrait",
+	"start_url": "/",
+	"theme_color": "#cb3333",
+	"background_color": "#fff"
+}
