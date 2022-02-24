@@ -162,3 +162,9 @@ document.addEventListener("keyup", (e) => {
 		controlPressed = false;
 	}
 });
+
+/*
+document.onpointermove = (e) => {
+	console.log(e);
+}
+*/

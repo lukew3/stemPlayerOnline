@@ -10,13 +10,17 @@
 html {
 	background-color: var(--bg);
 }
+#playerContainer {
+	display: flex;
+	height: 90vh;
+	align-items: center;
+}
 #player {
 	height: 95vw;
 	width: 95vw;
 	max-height: 500px;
 	max-width: 500px;
 	margin: auto;
-	margin-top: 50px;
 	border-radius: 50%;
 	background-color: var(--player);
 	border: 1px solid var(--player-border);
