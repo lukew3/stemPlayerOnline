@@ -7,8 +7,10 @@
 	--light-off: #515151;
 }
 
-html {
+html, body {
 	background-color: var(--bg);
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 #playerContainer {
 	display: flex;
