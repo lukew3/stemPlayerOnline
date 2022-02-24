@@ -66,13 +66,18 @@ const togglePlayback = () => {
 	}
 }
 
+let centerButtonPressed = false;
 $("centerButton").addEventListener("pointerdown", () => {
 	$("centerButton").style.backgroundColor = "#82664b";
+	centerButtonPressed = true;
 });
 
 $("centerButton").addEventListener("pointerup", () => {
-	togglePlayback();
-	$("centerButton").style.backgroundColor = "var(--player)";
+	if (centerButtonPressed) {
+		togglePlayback();
+		$("centerButton").style.backgroundColor = "var(--player)";
+	}
+	centerButtonPressed = false;
 });
 
 
