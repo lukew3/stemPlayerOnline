@@ -5,7 +5,6 @@ https://lukew3.github.io/stemPlayerOnline
 
 ## Todo
 * Allow sliding to set volume
-* Keyboard events to control player
 * Pulse lights to show playing tracks
 * Color lights
 * Access larger stem library
@@ -14,3 +13,4 @@ https://lukew3.github.io/stemPlayerOnline
 * Quick menu tools
   * Reverse
   * Change speed
+* Keyboard events to control player

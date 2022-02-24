@@ -136,30 +136,22 @@ document.addEventListener('pointerdown', (e) => {
 
 let controlPressed = false;
 document.addEventListener("keydown", (e) => {
+	let curVolume;
 	if (e.key == " ") {
 		togglePlayback();
 	} else if (e.key == "Control") {
 		controlPressed = true;
-	} else if (e.key == "ArrowRight") {
-		if (controlPressed)
-			handleLightTap("right", "1");
-		else
-			handleLightTap("right", "4");
-	} else if (e.key == "ArrowLeft") {
-		if (controlPressed)
-			handleLightTap("left", "1");
-		else
-			handleLightTap("left", "4");
-	} else if (e.key == "ArrowUp") {
-		if (controlPressed)
-			handleLightTap("top", "1");
-		else
-			handleLightTap("top", "4");
-	} else if (e.key == "ArrowDown") {
-		if (controlPressed)
-			handleLightTap("bottom", "1");
-		else
-			handleLightTap("bottom", "4");
+	} else if (e.key.substring(0,5) == "Arrow") {
+		let dir;
+		if (e.key == "ArrowRight") dir = "right";
+		else if (e.key == "ArrowUp") dir = "top";
+		else if (e.key == "ArrowDown") dir = "bottom";
+		else if (e.key == "ArrowLeft") dir = "left";
+		curVolume = key[dir].volume * 3 + 1;
+		if (controlPressed && curVolume != 1)
+			handleLightTap(dir, (curVolume-1).toString());
+		else if (!controlPressed && curVolume != 4)
+			handleLightTap(dir, (curVolume+1).toString());
 	}
 
 	//enable holding arrow key to isolate track
