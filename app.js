@@ -185,11 +185,13 @@ window.addEventListener('resize', (e) => {
 })
 
 document.addEventListener("pointermove", (e) => {
+	e.preventDefault();
 	if (pointerdown) {
 		handlePointerDown(e);
 	}
 })
 document.addEventListener("touchmove", (e) => {
+	e.preventDefault();
 	if (pointerdown) {
 		handlePointerDown(e);
 	}
