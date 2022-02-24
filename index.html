@@ -5,56 +5,57 @@
 	<link rel="stylesheet" type="text/css" href="main.css" media="screen">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="manifest" type="application/manifest+json; charset=utf-8" href="manifest.json">
-	<!-- Google Tag Manager -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-JNJPG2RFK2"></script>
 	<script>
-	(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-5LZR2F5');
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-JNJPG2RFK2');
 	</script>
-	<!-- End Google Tag Manager -->
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5LZR2F5"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-<div id="playerContainer">
-	<div id="player">
-		<div id="upperPlayer" class="playerSection">
-			<div id="topSlider" class="slider">
-				<div id="top_1" class="light topLight light1"></div>
-				<div id="top_2" class="light topLight light2"></div>
-				<div id="top_3" class="light topLight light3"></div>
-				<div id="top_4" class="light topLight light4"></div>
+	<nav>
+		<p id="pageTitle">Stem Player Online</p>
+		<p><a href="#">About</a></p>
+		<p><a href="https://github.com/lukew3/stemPlayerOnline">Github</a></p>
+	</nav>
+	<div id="playerContainer">
+		<div id="player">
+			<div id="upperPlayer" class="playerSection">
+				<div id="topSlider" class="slider">
+					<div id="top_1" class="light topLight light1"></div>
+					<div id="top_2" class="light topLight light2"></div>
+					<div id="top_3" class="light topLight light3"></div>
+					<div id="top_4" class="light topLight light4"></div>
+				</div>
 			</div>
-		</div>
-		<div id="middlePlayer" class="playerSection">
-			<div id="leftSlider" class="slider">
-				<div id="left_1" class="light leftLight light1"></div>
-				<div id="left_2" class="light leftLight light2"></div>
-				<div id="left_3" class="light leftLight light3"></div>
-				<div id="left_4" class="light leftLight light4"></div>
+			<div id="middlePlayer" class="playerSection">
+				<div id="leftSlider" class="slider">
+					<div id="left_1" class="light leftLight light1"></div>
+					<div id="left_2" class="light leftLight light2"></div>
+					<div id="left_3" class="light leftLight light3"></div>
+					<div id="left_4" class="light leftLight light4"></div>
+				</div>
+				<div id="centerButton"></div>
+				<div id="rightSlider" class="slider">
+					<div id="right_1" class="light rightLight light1"></div>
+					<div id="right_2" class="light rightLight light2"></div>
+					<div id="right_3" class="light rightLight light3"></div>
+					<div id="right_4" class="light rightLight light4"></div>
+				</div>
 			</div>
-			<div id="centerButton"></div>
-			<div id="rightSlider" class="slider">
-				<div id="right_1" class="light rightLight light1"></div>
-				<div id="right_2" class="light rightLight light2"></div>
-				<div id="right_3" class="light rightLight light3"></div>
-				<div id="right_4" class="light rightLight light4"></div>
-			</div>
-		</div>
-		<div id="lowerPlayer" class="playerSection">
-			<div id="bottomSlider" class="slider">
-				<div id="bottom_1" class="light bottomLight light1"></div>
-				<div id="bottom_2" class="light bottomLight light2"></div>
-				<div id="bottom_3" class="light bottomLight light3"></div>
-				<div id="bottom_4" class="light bottomLight light4"></div>
+			<div id="lowerPlayer" class="playerSection">
+				<div id="bottomSlider" class="slider">
+					<div id="bottom_1" class="light bottomLight light1"></div>
+					<div id="bottom_2" class="light bottomLight light2"></div>
+					<div id="bottom_3" class="light bottomLight light3"></div>
+					<div id="bottom_4" class="light bottomLight light4"></div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 	<script src="data.js"></script>
 	<script src="app.js"></script>
 </body>

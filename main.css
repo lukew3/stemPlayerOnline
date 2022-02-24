@@ -17,6 +17,18 @@ html, body {
 	overflow-x: hidden;
 	overflow-y: hidden;
 }
+nav {
+	display: flex;
+	align-items: center;
+}
+nav * {
+	color: white;
+	margin-right: 15px;
+	text-decoration: none;
+}
+#pageTitle {
+	font-size: 14pt;
+}
 #playerContainer {
 	display: flex;
 	height: 90vh;
