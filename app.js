@@ -2,6 +2,20 @@ const $ = (id) => { return document.getElementById(id) };
 
 let data = songs["we_made_it_kid"];
 
+let offsets = [
+	$("topSlider").getBoundingClientRect(),
+	$("leftSlider").getBoundingClientRect(),
+	$("rightSlider").getBoundingClientRect(),
+	$("bottomSlider").getBoundingClientRect()
+];
+
+let sliderNames = [
+	"top",
+	"left",
+	"right",
+	"bottom"
+]
+
 var track1, track2, track3, track4;
 
 const loadTracks = () => {
@@ -15,6 +29,13 @@ const loadTracks = () => {
 	track4.type = 'audio/wav';
 }
 loadTracks();
+
+const key = {
+	"top": track1,
+	"left": track2,
+	"right": track3,
+	"bottom": track4
+}
 
 async function playAudio() {
 	try {
@@ -54,12 +75,6 @@ $("centerButton").addEventListener("pointerup", () => {
 	$("centerButton").style.backgroundColor = "var(--player)";
 });
 
-const key = {
-	"top": track1,
-	"left": track2,
-	"right": track3,
-	"bottom": track4
-}
 
 const setLightColor = (light, lightIndex) => {
 	if (light.id.split("_")[1] > lightIndex) {
@@ -69,7 +84,10 @@ const setLightColor = (light, lightIndex) => {
 	}
 }
 
+let isolating = false;
 const isolateVolume = (sliderName) => {
+	if (isolating) return;
+	isolating = true;
 	let volumes = [
 		track1.volume,
 		track2.volume,
@@ -99,6 +117,7 @@ const isolateVolume = (sliderName) => {
 				setLightColor(light, volumes[index]*3+1);
 			});
 		});
+		isolating = false;
 		// remove the event listener after it is used once
 		document.removeEventListener('pointerup', resetVolume);
 	}
@@ -111,28 +130,6 @@ const handleLightTap = (sliderName, lightIndex) => {
 		setLightColor(light, lightIndex);
 	});
 }
-
-document.addEventListener('pointerdown', (e) => {
-	let id = e.target.id;
-	let s = id.split("_");
-	if (e.target.classList.contains('light')) {
-		// set volume if light clicked
-		handleLightTap(s[0], s[1]);
-	}
-	// isolate volume if 4th light clicked for over 200ms
-	let released = false;
-	const markRelease = () => {
-		released = true;
-		document.removeEventListener('pointerup', markRelease);
-	}
-	document.addEventListener('pointerup', markRelease);
-	if (s[1] == "4") setTimeout(() => {
-		if (!released) {
-			isolateVolume(s[0]);
-			document.removeEventListener('pointerup', markRelease);
-		}
-	}, 200)
-})
 
 let controlPressed = false;
 document.addEventListener("keydown", (e) => {
@@ -166,25 +163,11 @@ document.addEventListener("keyup", (e) => {
 let pointerdown = false;
 document.addEventListener('pointerdown', (e) => {
 	pointerdown = true;
+	handlePointerDown(e);
 })
 document.addEventListener('pointerup', (e) => {
 	pointerdown = false;
 })
-
-let offsets = [
-	$("topSlider").getBoundingClientRect(),
-	$("leftSlider").getBoundingClientRect(),
-	$("rightSlider").getBoundingClientRect(),
-	$("bottomSlider").getBoundingClientRect()
-];
-
-let sliderNames = [
-	"top",
-	"left",
-	"right",
-	"bottom"
-]
-
 window.addEventListener('resize', (e) => {
 	offsets = [
 		$("topSlider").getBoundingClientRect(),
@@ -194,21 +177,36 @@ window.addEventListener('resize', (e) => {
 	];
 })
 
-console.log(offsets);
 document.onpointermove = (e) => {
 	if (pointerdown) {
-		offsets.forEach((offset, index) => {
-			if (e.clientX >= offset.left && 
-				e.clientX <= offset.right &&
-				e.clientY >= offset.top &&
-				e.clientY <= offset.bottom
-			) {
-				console.log('slider ' + sliderNames[index] + ' pressed');
-				console.log(getLightClicked(e, index));
-				handleLightTap(sliderNames[index], getLightClicked(e, index));
-			}
-		})
+		handlePointerDown(e);
 	}
+}
+
+let lightNum;
+const handlePointerDown = (e) => {
+	let released = false;
+	const markRelease = () => {
+		released = true;
+		document.removeEventListener('pointerup', markRelease);
+	}
+	offsets.forEach((offset, index) => {
+		if (e.clientX >= offset.left && 
+			e.clientX <= offset.right &&
+			e.clientY >= offset.top &&
+			e.clientY <= offset.bottom
+		) {
+			lightNum = getLightClicked(e, index);
+			handleLightTap(sliderNames[index], lightNum);
+			if (lightNum == "4") setTimeout(() => {
+				if (pointerdown && lightNum == "4") {
+					//lightNum is global so that you can check new value after timeout
+					isolateVolume(sliderNames[index]);
+				}
+			}, 200)
+
+		}
+	})
 }
 const getLightClicked = (clickEvent, offsetIndex) => {
 	let segLen;
@@ -252,11 +250,8 @@ const getLightClicked = (clickEvent, offsetIndex) => {
 				return i.toString();
 			}
 		}
+	} else {
+		// if error
+		return "1";
 	}
-	return "1";
 }
-/*
-const handlePointerDown = (e) => {
-
-}
-*/
