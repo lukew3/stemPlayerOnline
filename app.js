@@ -17,7 +17,7 @@ rangeInputs.forEach(input => {
   input.addEventListener('input', handleInputChange)
 })
 
-let data = songs["hurricane"];
+let data = songs["we_made_it_kid"];
 
 var track1, track2, track3, track4;
 
