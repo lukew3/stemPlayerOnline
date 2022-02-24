@@ -45,11 +45,11 @@ const togglePlayback = () => {
 	}
 }
 
-$("centerButton").addEventListener("mousedown", () => {
+$("centerButton").addEventListener("pointerdown", () => {
 	$("centerButton").style.backgroundColor = "#82664b";
 });
 
-$("centerButton").addEventListener("mouseup", () => {
+$("centerButton").addEventListener("pointerup", () => {
 	togglePlayback();
 	$("centerButton").style.backgroundColor = "var(--player)";
 });
@@ -100,9 +100,9 @@ const isolateVolume = (sliderName) => {
 			});
 		});
 		// remove the event listener after it is used once
-		document.removeEventListener('mouseup', resetVolume);
+		document.removeEventListener('pointerup', resetVolume);
 	}
-	document.addEventListener('mouseup', resetVolume)
+	document.addEventListener('pointerup', resetVolume)
 }
 
 const handleLightTap = (sliderName, lightIndex) => {
@@ -112,7 +112,7 @@ const handleLightTap = (sliderName, lightIndex) => {
 	});
 }
 
-document.addEventListener('mousedown', (e) => {
+document.addEventListener('pointerdown', (e) => {
 	let id = e.target.id;
 	let s = id.split("_");
 	if (e.target.classList.contains('light')) {
@@ -123,13 +123,13 @@ document.addEventListener('mousedown', (e) => {
 	let released = false;
 	const markRelease = () => {
 		released = true;
-		document.removeEventListener('mouseup', markRelease);
+		document.removeEventListener('pointerup', markRelease);
 	}
-	document.addEventListener('mouseup', markRelease);
+	document.addEventListener('pointerup', markRelease);
 	if (s[1] == "4") setTimeout(() => {
 		if (!released) {
 			isolateVolume(s[0]);
-			document.removeEventListener('mouseup', markRelease);
+			document.removeEventListener('pointerup', markRelease);
 		}
 	}, 200)
 })
