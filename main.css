@@ -10,7 +10,6 @@
 html {
 	background-color: var(--bg);
 }
-
 #player {
 	height: 95vw;
 	width: 95vw;
@@ -41,8 +40,9 @@ html {
 .slider {
 	display: flex;
 	background-color: var(--slider);
-	width: 170px;
-	height: 80px;
+	width: 34%;
+	height: 15vmin; /* 80px */
+	max-height: 80px;
 	border-radius: 40px;
 	justify-content: center;
 	align-items: center;
@@ -52,31 +52,33 @@ html {
 
 #topSlider {
 	transform: rotate(-90deg);
-	margin-top: 30px;
+	margin-top: 6%;
 }
 #leftSlider {
 	transform: rotate(180deg);
-	margin-left: 25px;
+	margin-left: 5%;
 }
 #centerButton {
-	width: 60px;
-	height: 60px;
+	width: 12%;
+	height: 36%; /* 40px */
 	border-radius: 50%;
 	background-color: var(--player);
 	border: 1px solid var(--player-border);
 	box-shadow: inset 1px 1px 2px 2px rgba(0,0,0,0.2);
 }
 #rightSlider {
-	margin-right: 25px;
+	margin-right: 5%;
 }
 #bottomSlider {
 	transform: rotate(90deg);
-	margin-bottom: 30px;
+	margin-bottom: 6%;
 }
 
 .light {
-	width: 26px;
-	height: 26px;
+	width: 16%;
+	max-width: 26px;
+	height: 34%;
+	max-height: 26px;
 	border: 2px solid var(--light-on);
 	border: none;
 	margin: 5px;

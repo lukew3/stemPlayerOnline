@@ -46,7 +46,7 @@ const togglePlayback = () => {
 }
 
 $("centerButton").addEventListener("mousedown", () => {
-	$("centerButton").style.backgroundColor = "#393939";
+	$("centerButton").style.backgroundColor = "#82664b";
 });
 
 $("centerButton").addEventListener("mouseup", () => {
