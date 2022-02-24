@@ -5,6 +5,10 @@
 	--slider: #997b5c;
 	--light-on: #c6c9d2;
 	--light-off: #515151;
+	--light-1: #f5440a;
+	--light-2: #b24156;
+	--light-3: #743c9b;
+	--light-4: #4339e3;
 }
 
 
@@ -94,5 +98,19 @@ html, body {
 	border: none;
 	margin: 5px;
 	border-radius: 50%;
-	background-color: var(--light-on);
+}
+.light1 {
+	background-color: var(--light-1);
+}
+.light2 {
+	background-color: var(--light-2);
+}
+.light3 {
+	background-color: var(--light-3);
+}
+.light4 {
+	background-color: var(--light-4);
+}
+.lightOff {
+	background-color: var(--light-off);
 }
