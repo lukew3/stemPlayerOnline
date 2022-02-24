@@ -49,9 +49,14 @@ const togglePlayback = () => {
 	}
 }
 
-$("centerButton").addEventListener("click", () => {
+$("centerButton").addEventListener("mousedown", () => {
+	$("centerButton").style.backgroundColor = "#393939";
+});
+
+$("centerButton").addEventListener("mouseup", () => {
 	togglePlayback();
-})
+	$("centerButton").style.backgroundColor = "var(--player)";
+});
 
 const key = {
 	"top": track1,
@@ -59,6 +64,7 @@ const key = {
 	"right": track3,
 	"bottom": track4
 }
+
 const setLightColor = (light, lightIndex) => {
 	if (light.id.split("_")[1] > lightIndex) {
 		light.style.backgroundColor = "var(--light-off)";
