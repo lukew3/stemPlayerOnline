@@ -7,16 +7,12 @@ var track1, track2, track3, track4;
 const loadTracks = () => {
 	track1 = new Audio(data["1"]);
 	track1.type = 'audio/wav';
-	//track1.volume = $("topSlider").value/3;
 	track2 = new Audio(data["2"]);
 	track2.type = 'audio/wav';
-	//track2.volume = $("leftSlider").value/3;
 	track3 = new Audio(data["3"]);
 	track3.type = 'audio/wav';
-	//track3.volume = $("rightSlider").value/3;
 	track4 = new Audio(data["4"]);
 	track4.type = 'audio/wav';
-	//track4.volume = $("bottomSlider").value/3;
 }
 loadTracks();
 
