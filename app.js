@@ -53,51 +53,72 @@ $("centerButton").addEventListener("click", () => {
 	togglePlayback();
 })
 
-const adjustVolume = (slider, track) => {
-	track.volume = slider.value/3;
-}
-/*
-$("topSlider").addEventListener("change", () => {
-	adjustVolume($("topSlider"), track1);
-})
-$("leftSlider").addEventListener("change", () => {
-	adjustVolume($("leftSlider"), track2);
-})
-$("rightSlider").addEventListener("change", () => {
-	adjustVolume($("rightSlider"), track3);
-})
-$("bottomSlider").addEventListener("change", () => {
-	adjustVolume($("bottomSlider"), track4);
-})
-*/
-
 const key = {
 	"top": track1,
 	"left": track2,
 	"right": track3,
 	"bottom": track4
 }
+const setLightColor = (light, lightIndex) => {
+	if (light.id.split("_")[1] > lightIndex) {
+		light.style.backgroundColor = "var(--light-off)";
+	} else {
+		light.style.backgroundColor = "var(--light-on)"
+	}
+}
 
 const isolateVolume = (sliderName) => {
+	let volumes = [
+		track1.volume,
+		track2.volume,
+		track3.volume,
+		track4.volume
+	]
 	track1.volume = 0;
 	track2.volume = 0;
 	track3.volume = 0;
 	track4.volume = 0;
+        Array.from(document.getElementsByClassName('light')).forEach((light) => {
+		light.style.backgroundColor = "var(--light-off)";
+	});
 
 	key[sliderName].volume = 1;
-	document.addEventListener('mouseup', () => {
-		track1.volume = 1;
-		track2.volume = 1;
-		track3.volume = 1;
-		track4.volume = 1;
-	})
+        Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
+		light.style.backgroundColor = "var(--light-on)";
+	});
+	const resetVolume = () => {
+		track1.volume = volumes[0];
+		track2.volume = volumes[1];
+		track3.volume = volumes[2];
+		track4.volume = volumes[3];
+		// set the colors based on the saved volumes
+		['top', 'left', 'right', 'bottom'].forEach((sliderName, index) => {
+        		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
+				setLightColor(light, volumes[index]*3+1);
+			});
+		});
+		// remove the event listener after it is used once
+		document.removeEventListener('mouseup', resetVolume);
+	}
+	document.addEventListener('mouseup', resetVolume)
+}
+
+const handleLightTap = (sliderName, lightIndex) => {
+	key[sliderName].volume = (lightIndex-1)/3;
+        Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
+		setLightColor(light, lightIndex);
+	});
 }
 
 document.addEventListener('mousedown', (e) => {
-	if (e.target.classList.contains('light')) console.log('light clicked');
-	if (e.target.classList.contains('slider')) console.log('slider clicked');
 	let id = e.target.id;
-	if (id.split("_")[1] == "4") isolateVolume(id.split("_")[0])
+	let s = id.split("_");
+	if (e.target.classList.contains('light')) {
+		// set volume if light clicked
+		handleLightTap(s[0], s[1]);
+	}
+	// isolate volume if 4th light clicked
+	if (s[1] == "4") isolateVolume(s[0])
 })
 
 document.addEventListener("keydown", e => {

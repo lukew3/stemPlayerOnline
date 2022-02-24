@@ -2,7 +2,8 @@
 	--bg: #eeeeee;
 	--player: #484848;
 	--slider: #515151;
-	--light: red;
+	--light-on: red;
+	--light-off: black;
 }
 
 html {
@@ -72,9 +73,9 @@ html {
 .light {
 	width: 26px;
 	height: 26px;
-	border: 2px solid var(--light);
+	border: 2px solid var(--light-on);
 	border: none;
 	margin: 5px;
 	border-radius: 50%;
-	background-color: var(--light);
+	background-color: var(--light-on);
 }
