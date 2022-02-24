@@ -134,9 +134,39 @@ document.addEventListener('pointerdown', (e) => {
 	}, 200)
 })
 
-document.addEventListener("keydown", e => {
+let controlPressed = false;
+document.addEventListener("keydown", (e) => {
 	if (e.key == " ") {
 		togglePlayback();
+	} else if (e.key == "Control") {
+		controlPressed = true;
+	} else if (e.key == "ArrowRight") {
+		if (controlPressed)
+			handleLightTap("right", "1");
+		else
+			handleLightTap("right", "4");
+	} else if (e.key == "ArrowLeft") {
+		if (controlPressed)
+			handleLightTap("left", "1");
+		else
+			handleLightTap("left", "4");
+	} else if (e.key == "ArrowUp") {
+		if (controlPressed)
+			handleLightTap("top", "1");
+		else
+			handleLightTap("top", "4");
+	} else if (e.key == "ArrowDown") {
+		if (controlPressed)
+			handleLightTap("bottom", "1");
+		else
+			handleLightTap("bottom", "4");
 	}
-	//use arrow keys to control levels, arrow to increase, ctrl+arrow to lower, hold to isolate track
+
+	//enable holding arrow key to isolate track
 })
+
+document.addEventListener("keyup", (e) => {
+	if (e.key == "Control") {
+		controlPressed = false;
+	}
+});
