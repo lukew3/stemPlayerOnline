@@ -17,13 +17,16 @@ html, body {
 	overflow-x: hidden;
 	overflow-y: hidden;
 }
+* {
+	font-family: 'Roboto', sans-serif;
+}
 nav {
 	display: flex;
 	align-items: center;
 }
 nav * {
 	color: white;
-	margin-right: 15px;
+	margin-left: 10px;
 	text-decoration: none;
 }
 #pageTitle {
