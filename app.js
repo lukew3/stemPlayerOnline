@@ -251,7 +251,7 @@ const getLightClicked = (clickEvent, offsetIndex) => {
 			}
 		}
 	} else {
-		// if error
+		// if there is an error
 		return "1";
 	}
 }
