@@ -1,6 +1,7 @@
 :root {
 	--bg: #2c2f33;
-	--player: #997957;
+	--player: #9c836a;
+	--playerBorder: #856849;
 }
 
 html {
@@ -15,8 +16,8 @@ html {
 	margin: auto;
 	margin-top: 50px;
 	border-radius: 50%;
-	background-color: #9c836a;
-	border: 1px solid #856849;
+	background-color: var(--player);
+	border: 1px solid var(--playerBorder);
 }
 
 .playerSection {
@@ -43,8 +44,8 @@ html {
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	background-color: var(-player);
-	border: 1px solid #856849;
+	background-color: var(--player);
+	border: 1px solid var(--playerBorder);
 }
 #rightSlider {
 }
@@ -68,5 +69,5 @@ input[type="range"]::-webkit-slider-thumb {
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  background: #2c2f33;
+  background: var(--bg);
 }
