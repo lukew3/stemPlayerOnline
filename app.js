@@ -1,22 +1,39 @@
 const $ = (id) => { return document.getElementById(id) };
+const rangeInputs = document.querySelectorAll('input[type="range"]')
 
-let data = songs["we_made_it_kid"];
+function handleInputChange(e) {
+  let target = e.target
+  if (e.target.type !== 'range') {
+    target = document.getElementById('range')
+  }
+  const min = target.min
+  const max = target.max
+  const val = target.value
+
+  target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
+}
+
+rangeInputs.forEach(input => {
+  input.addEventListener('input', handleInputChange)
+})
+
+let data = songs["hurricane"];
 
 var track1, track2, track3, track4;
 
 const loadTracks = () => {
 	track1 = new Audio(data["1"]);
 	track1.type = 'audio/wav';
-	track1.volume = $("topSlider").value/3;
+	track1.volume = $("topSlider").value/4;
 	track2 = new Audio(data["2"]);
 	track2.type = 'audio/wav';
-	track2.volume = $("leftSlider").value/3;
+	track2.volume = $("leftSlider").value/4;
 	track3 = new Audio(data["3"]);
 	track3.type = 'audio/wav';
-	track3.volume = $("rightSlider").value/3;
+	track3.volume = $("rightSlider").value/4;
 	track4 = new Audio(data["4"]);
 	track4.type = 'audio/wav';
-	track4.volume = $("bottomSlider").value/3;
+	track4.volume = $("bottomSlider").value/4;
 }
 loadTracks();
 
@@ -55,7 +72,7 @@ $("centerButton").addEventListener("click", () => {
 })
 
 const adjustVolume = (slider, track) => {
-	track.volume = slider.value/3;
+	track.volume = slider.value/4;
 }
 
 $("topSlider").addEventListener("change", () => {
