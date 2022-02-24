@@ -177,11 +177,11 @@ window.addEventListener('resize', (e) => {
 	];
 })
 
-document.onpointermove = (e) => {
+document.addEventListener("pointermove", (e) => {
 	if (pointerdown) {
 		handlePointerDown(e);
 	}
-}
+})
 
 let lightNum;
 const handlePointerDown = (e) => {
