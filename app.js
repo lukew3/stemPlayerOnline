@@ -165,14 +165,7 @@ document.addEventListener('pointerdown', (e) => {
 	pointerdown = true;
 	handlePointerDown(e);
 })
-document.addEventListener('touchdown', (e) => {
-	pointerdown = true;
-	handlePointerDown(e);
-})
 document.addEventListener('pointerup', (e) => {
-	pointerdown = false;
-})
-document.addEventListener('touchup', (e) => {
 	pointerdown = false;
 })
 window.addEventListener('resize', (e) => {
@@ -185,13 +178,6 @@ window.addEventListener('resize', (e) => {
 })
 
 document.addEventListener("pointermove", (e) => {
-	e.preventDefault();
-	if (pointerdown) {
-		handlePointerDown(e);
-	}
-})
-document.addEventListener("touchmove", (e) => {
-	e.preventDefault();
 	if (pointerdown) {
 		handlePointerDown(e);
 	}
