@@ -163,8 +163,100 @@ document.addEventListener("keyup", (e) => {
 	}
 });
 
-/*
+let pointerdown = false;
+document.addEventListener('pointerdown', (e) => {
+	pointerdown = true;
+})
+document.addEventListener('pointerup', (e) => {
+	pointerdown = false;
+})
+
+let offsets = [
+	$("topSlider").getBoundingClientRect(),
+	$("leftSlider").getBoundingClientRect(),
+	$("rightSlider").getBoundingClientRect(),
+	$("bottomSlider").getBoundingClientRect()
+];
+
+let sliderNames = [
+	"top",
+	"left",
+	"right",
+	"bottom"
+]
+
+window.addEventListener('resize', (e) => {
+	offsets = [
+		$("topSlider").getBoundingClientRect(),
+		$("leftSlider").getBoundingClientRect(),
+		$("rightSlider").getBoundingClientRect(),
+		$("bottomSlider").getBoundingClientRect()
+	];
+})
+
+console.log(offsets);
 document.onpointermove = (e) => {
-	console.log(e);
+	if (pointerdown) {
+		offsets.forEach((offset, index) => {
+			if (e.clientX >= offset.left && 
+				e.clientX <= offset.right &&
+				e.clientY >= offset.top &&
+				e.clientY <= offset.bottom
+			) {
+				console.log('slider ' + sliderNames[index] + ' pressed');
+				console.log(getLightClicked(e, index));
+				handleLightTap(sliderNames[index], getLightClicked(e, index));
+			}
+		})
+	}
+}
+const getLightClicked = (clickEvent, offsetIndex) => {
+	let segLen;
+	let offset = offsets[offsetIndex];
+	let y = clickEvent.clientY;
+	let x = clickEvent.clientX;
+	/*
+	let sliderBase;
+	let sliderDirection;
+	let segLen;
+	*/
+	if (offsetIndex == 0) {
+		//top
+		segLen = offset.height/4;
+		for (let i=1; i<=4; i++) {
+			if (y >= offset.bottom - i * segLen) {
+				return i.toString();
+			}
+		}
+	} else if (offsetIndex == 1) {
+		//left
+		segLen = offset.width/4;
+		for (let i=1; i<=4; i++) {
+			if (x >= offset.right - i * segLen) {
+				return i.toString();
+			}
+		}
+	} else if (offsetIndex == 2) {
+		//right
+		segLen = offset.width/4;
+		for (let i=1; i<=4; i++) {
+			if (x <= offset.left + i * segLen) {
+				return i.toString();
+			}
+		}
+	} else if (offsetIndex == 3) {
+		//bottom
+		segLen = offset.height/4;
+		for (let i=1; i<=4; i++) {
+			if (y <= offset.top + i * segLen) {
+				return i.toString();
+			}
+		}
+	}
+	return "1";
+}
+/*
+const handlePointerDown = (e) => {
+
 }
 */
