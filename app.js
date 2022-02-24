@@ -117,8 +117,19 @@ document.addEventListener('mousedown', (e) => {
 		// set volume if light clicked
 		handleLightTap(s[0], s[1]);
 	}
-	// isolate volume if 4th light clicked
-	if (s[1] == "4") isolateVolume(s[0])
+	// isolate volume if 4th light clicked for over 200ms
+	let released = false;
+	const markRelease = () => {
+		released = true;
+		document.removeEventListener('mouseup', markRelease);
+	}
+	document.addEventListener('mouseup', markRelease);
+	if (s[1] == "4") setTimeout(() => {
+		if (!released) {
+			isolateVolume(s[0]);
+			document.removeEventListener('mouseup', markRelease);
+		}
+	}, 200)
 })
 
 document.addEventListener("keydown", e => {
