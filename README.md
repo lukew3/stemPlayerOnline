@@ -1,7 +1,7 @@
 # Stem Player Online
 An unofficial stem player for your browser 
 
-https://lukew3.github.io/stemPlayerOnline
+https://stemplayeronline.com
 
 ## Todo
 * Pulse lights to show playing tracks
