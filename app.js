@@ -83,10 +83,8 @@ $("centerButton").addEventListener("pointerup", () => {
 
 const setLightColor = (light, lightIndex) => {
 	if (light.id.split("_")[1] > lightIndex) {
-		//light.style.backgroundColor = "var(--light-off)";
 		light.classList.add("lightOff");
 	} else {
-		//light.style.backgroundColor = "var(--light-on)"
 		light.classList.remove("lightOff");
 	}
 }
@@ -103,13 +101,11 @@ const isolateVolume = (sliderName) => {
 	]
 	Object.values(key).forEach((track) => {track.volume = 0;});
         Array.from(document.getElementsByClassName('light')).forEach((light) => {
-		//light.style.backgroundColor = "var(--light-off)";
 		light.classList.add("lightOff");
 	});
 
 	key[sliderName].volume = 1;
         Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-		//light.style.backgroundColor = "var(--light-on)";
 		light.classList.remove("lightOff");
 	});
 	const resetVolume = () => {
