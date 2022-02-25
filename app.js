@@ -9,7 +9,7 @@ let controlPressed = false;
 let pointerdown = false;
 let lightNum;
 let tracks = [];
-let sliders = [];
+let sliderBounds = [];
 let sliderNames = ["top", "left", "right", "bottom"];
 
 // Load starting stems 
@@ -140,7 +140,7 @@ document.addEventListener('pointerup', (e) => {
 })
 
 const getSliders = () => {
-	sliders = [
+	sliderBounds = [
 		$("topSlider").getBoundingClientRect(),
 		$("leftSlider").getBoundingClientRect(),
 		$("rightSlider").getBoundingClientRect(),
@@ -157,11 +157,11 @@ document.addEventListener("pointermove", (e) => {
 })
 
 const handlePointerDown = (e) => {
-	sliders.forEach((slider, index) => {
-		if (e.clientX >= slider.left && 
-			e.clientX <= slider.right &&
-			e.clientY >= slider.top &&
-			e.clientY <= slider.bottom
+	sliderBounds.forEach((bound, index) => {
+		if (e.clientX >= bound.left && 
+			e.clientX <= bound.right &&
+			e.clientY >= bound.top &&
+			e.clientY <= bound.bottom
 		) {
 			lightNum = getLightClicked(e, index);
 			handleLightTap(sliderNames[index], lightNum);
@@ -176,21 +176,21 @@ const handlePointerDown = (e) => {
 		}
 	})
 }
-const getLightClicked = (clickEvent, sliderIndex) => {
+const getLightClicked = (clickEvent, boundIndex) => {
 	let segLen, i;
-	let slider = sliders[sliderIndex];
+	let bound = sliderBounds[boundIndex];
 	let y = clickEvent.clientY;
 	let x = clickEvent.clientX;
 	const inBounds = [
-		() => { return y >= slider.bottom - i * segLen},
-		() => { return x >= slider.right - i * segLen},
-		() => { return x <= slider.left + i * segLen},
-		() => { return y <= slider.top + i * segLen}
+		() => { return y >= bound.bottom - i * segLen},
+		() => { return x >= bound.right - i * segLen},
+		() => { return x <= bound.left + i * segLen},
+		() => { return y <= bound.top + i * segLen}
 	]
-	if ([0, 3].includes(sliderIndex)) segLen = slider.height/4;
-	else if ([1, 2].includes(sliderIndex)) segLen = slider.width/4;
+	if ([0, 3].includes(boundIndex)) segLen = bound.height/4;
+	else if ([1, 2].includes(boundIndex)) segLen = bound.width/4;
 	for (i=1; i<=4; i++)
-		if (inBounds[sliderIndex]()) return i.toString();
+		if (inBounds[boundIndex]()) return i.toString();
 	return "1"; // catch error
 }
 $("folderSelectIcon").addEventListener("click", () => {
