@@ -2,60 +2,41 @@ const $ = (id) => { return document.getElementById(id) };
 
 let data = songs["we_made_it_kid"];
 
-let offsets = [
-	$("topSlider").getBoundingClientRect(),
-	$("leftSlider").getBoundingClientRect(),
-	$("rightSlider").getBoundingClientRect(),
-	$("bottomSlider").getBoundingClientRect()
-];
+let nowPlaying = false;
+let centerButtonPressed = false;
+let isolating = false;
+let controlPressed = false;
+let pointerdown = false;
+let lightNum;
+let tracks = [];
+let sliders = [];
+let sliderNames = ["top", "left", "right", "bottom"];
 
-let sliderNames = [
-	"top",
-	"left",
-	"right",
-	"bottom"
-]
-
-var track1, track2, track3, track4;
-
-const loadTracks = () => {
-	track1 = new Audio(data["1"]);
-	track1.type = 'audio/wav';
-	track2 = new Audio(data["2"]);
-	track2.type = 'audio/wav';
-	track3 = new Audio(data["3"]);
-	track3.type = 'audio/wav';
-	track4 = new Audio(data["4"]);
-	track4.type = 'audio/wav';
+// Load starting stems 
+for (var i=0; i<4; i++) {
+	tracks[i] = new Audio(data[(i+1).toString()]);
+	tracks[i].type = "audio/wav";
 }
-loadTracks();
 
 const key = {
-	"top": track1,
-	"left": track2,
-	"right": track3,
-	"bottom": track4
+	"top": tracks[0],
+	"left": tracks[1],
+	"right": tracks[2],
+	"bottom": tracks[3]
 }
 
-async function playAudio() {
+function playAudio() {
 	try {
-		track1.play();
-		track2.play();
-		track3.play();
-		track4.play();
+		tracks.forEach((track) => {track.play()});
 	} catch (err) {
 		console.log('Failed to play...' + err);
 	}
 }
 
-async function pauseAudio() {
-	track1.pause();
-	track2.pause();
-	track3.pause();
-	track4.pause();
+function pauseAudio() {
+	tracks.forEach((track) => {track.pause();});
 }
 
-let nowPlaying = false;
 const togglePlayback = () => {
 	if (nowPlaying) {
 		pauseAudio();
@@ -66,40 +47,35 @@ const togglePlayback = () => {
 	}
 }
 
-let centerButtonPressed = false;
 $("centerButton").addEventListener("pointerdown", () => {
 	$("centerButton").style.backgroundColor = "#82664b";
 	centerButtonPressed = true;
 });
-
 $("centerButton").addEventListener("pointerup", () => {
 	if (centerButtonPressed) {
 		togglePlayback();
 		$("centerButton").style.backgroundColor = "var(--player)";
+		centerButtonPressed = false;
 	}
-	centerButtonPressed = false;
 });
 
 
 const setLightColor = (light, lightIndex) => {
-	if (light.id.split("_")[1] > lightIndex) {
-		light.classList.add("lightOff");
-	} else {
+	(light.id.split("_")[1] > lightIndex) ?
+		light.classList.add("lightOff") :
 		light.classList.remove("lightOff");
-	}
 }
 
-let isolating = false;
 const isolateVolume = (sliderName) => {
 	if (isolating) return;
 	isolating = true;
 	let volumes = [
-		track1.volume,
-		track2.volume,
-		track3.volume,
-		track4.volume
+		tracks[0].volume,
+		tracks[1].volume,
+		tracks[2].volume,
+		tracks[3].volume
 	]
-	Object.values(key).forEach((track) => {track.volume = 0;});
+	tracks.forEach((track) => {track.volume = 0;});
         Array.from(document.getElementsByClassName('light')).forEach((light) => {
 		light.classList.add("lightOff");
 	});
@@ -109,12 +85,9 @@ const isolateVolume = (sliderName) => {
 		light.classList.remove("lightOff");
 	});
 	const resetVolume = () => {
-		track1.volume = volumes[0];
-		track2.volume = volumes[1];
-		track3.volume = volumes[2];
-		track4.volume = volumes[3];
+		tracks.forEach((track, i) => {track.volume = volumes[i]});
 		// set the colors based on the saved volumes
-		['top', 'left', 'right', 'bottom'].forEach((sliderName, index) => {
+		sliderNames.forEach((sliderName, index) => {
         		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 				setLightColor(light, volumes[index]*3+1);
 			});
@@ -133,7 +106,6 @@ const handleLightTap = (sliderName, lightIndex) => {
 	});
 }
 
-let controlPressed = false;
 document.addEventListener("keydown", (e) => {
 	let curVolume;
 	if (e.key == " ") {
@@ -152,17 +124,13 @@ document.addEventListener("keydown", (e) => {
 		else if (!controlPressed && curVolume != 4)
 			handleLightTap(dir, (curVolume+1).toString());
 	}
-
-	//enable holding arrow key to isolate track
+	//todo: enable holding arrow key to isolate track (or shift+arrow maybe)
 })
 
 document.addEventListener("keyup", (e) => {
-	if (e.key == "Control") {
-		controlPressed = false;
-	}
+	if (e.key == "Control") controlPressed = false;
 });
 
-let pointerdown = false;
 document.addEventListener('pointerdown', (e) => {
 	pointerdown = true;
 	handlePointerDown(e);
@@ -170,31 +138,34 @@ document.addEventListener('pointerdown', (e) => {
 document.addEventListener('pointerup', (e) => {
 	pointerdown = false;
 })
-window.addEventListener('resize', (e) => {
-	offsets = [
+
+const getSliders = () => {
+	sliders = [
 		$("topSlider").getBoundingClientRect(),
 		$("leftSlider").getBoundingClientRect(),
 		$("rightSlider").getBoundingClientRect(),
 		$("bottomSlider").getBoundingClientRect()
 	];
+}
+getSliders();
+window.addEventListener('resize', (e) => {
+	getSliders();
 })
 
 document.addEventListener("pointermove", (e) => {
-	if (pointerdown) {
-		handlePointerDown(e);
-	}
+	if (pointerdown) handlePointerDown(e);
 })
 
-let lightNum;
 const handlePointerDown = (e) => {
-	offsets.forEach((offset, index) => {
-		if (e.clientX >= offset.left && 
-			e.clientX <= offset.right &&
-			e.clientY >= offset.top &&
-			e.clientY <= offset.bottom
+	sliders.forEach((slider, index) => {
+		if (e.clientX >= slider.left && 
+			e.clientX <= slider.right &&
+			e.clientY >= slider.top &&
+			e.clientY <= slider.bottom
 		) {
 			lightNum = getLightClicked(e, index);
 			handleLightTap(sliderNames[index], lightNum);
+			// listen for hold if light 4 is touched
 			if (lightNum == "4") setTimeout(() => {
 				if (pointerdown && lightNum == "4") {
 					//lightNum is global so that you can check new value after timeout
@@ -205,52 +176,22 @@ const handlePointerDown = (e) => {
 		}
 	})
 }
-const getLightClicked = (clickEvent, offsetIndex) => {
-	let segLen;
-	let offset = offsets[offsetIndex];
+const getLightClicked = (clickEvent, sliderIndex) => {
+	let segLen, i;
+	let slider = sliders[sliderIndex];
 	let y = clickEvent.clientY;
 	let x = clickEvent.clientX;
-	/*
-	let sliderBase;
-	let sliderDirection;
-	let segLen;
-	*/
-	if (offsetIndex == 0) {
-		//top
-		segLen = offset.height/4;
-		for (let i=1; i<=4; i++) {
-			if (y >= offset.bottom - i * segLen) {
-				return i.toString();
-			}
-		}
-	} else if (offsetIndex == 1) {
-		//left
-		segLen = offset.width/4;
-		for (let i=1; i<=4; i++) {
-			if (x >= offset.right - i * segLen) {
-				return i.toString();
-			}
-		}
-	} else if (offsetIndex == 2) {
-		//right
-		segLen = offset.width/4;
-		for (let i=1; i<=4; i++) {
-			if (x <= offset.left + i * segLen) {
-				return i.toString();
-			}
-		}
-	} else if (offsetIndex == 3) {
-		//bottom
-		segLen = offset.height/4;
-		for (let i=1; i<=4; i++) {
-			if (y <= offset.top + i * segLen) {
-				return i.toString();
-			}
-		}
-	} else {
-		// if there is an error
-		return "1";
-	}
+	const inBounds = [
+		() => { return y >= slider.bottom - i * segLen},
+		() => { return x >= slider.right - i * segLen},
+		() => { return x <= slider.left + i * segLen},
+		() => { return y <= slider.top + i * segLen}
+	]
+	if ([0, 3].includes(sliderIndex)) segLen = slider.height/4;
+	else if ([1, 2].includes(sliderIndex)) segLen = slider.width/4;
+	for (i=1; i<=4; i++)
+		if (inBounds[sliderIndex]()) return i.toString();
+	return "1"; // catch error
 }
 $("folderSelectIcon").addEventListener("click", () => {
 	$("folderSelectField").click();
@@ -258,14 +199,10 @@ $("folderSelectIcon").addEventListener("click", () => {
 
 $("folderSelectField").addEventListener("change", () => {
 	// load the first 4 mp3 files in the directory as stems
-	let fs = $("folderSelectField");
-	let files = fs.files;
-	// should ensure that there are 4 audio files to play
+	// todo: ensure that 4 audio files are used as stems
+	let files = $("folderSelectField").files;
 	nowPlaying = false;
-	track1.src = URL.createObjectURL(files[0]);
-	track2.src = URL.createObjectURL(files[1]);
-	track3.src = URL.createObjectURL(files[2]);
-	track4.src = URL.createObjectURL(files[3]);
-	let folderName = files[0].webkitRelativePath.split("/")[0];
-	$("folderSelectLabel").innerHTML = folderName;
+	tracks.forEach((track, i) => {track.src = URL.createObjectURL(files[i]);});
+	// set label to folder name
+	$("folderSelectLabel").innerHTML = files[0].webkitRelativePath.split("/")[0];
 });
