@@ -14,45 +14,35 @@ let sliderNames = [
 	"left",
 	"right",
 	"bottom"
-]
+];
 
-var track1, track2, track3, track4;
+let tracks = [];
 
 const loadTracks = () => {
-	track1 = new Audio(data["1"]);
-	track1.type = 'audio/wav';
-	track2 = new Audio(data["2"]);
-	track2.type = 'audio/wav';
-	track3 = new Audio(data["3"]);
-	track3.type = 'audio/wav';
-	track4 = new Audio(data["4"]);
-	track4.type = 'audio/wav';
+	for (var i=0; i<4; i++) {
+		tracks[i] = new Audio(data[(i+1).toString()]);
+		tracks[i].type = "audio/wav";
+	}
 }
 loadTracks();
 
 const key = {
-	"top": track1,
-	"left": track2,
-	"right": track3,
-	"bottom": track4
+	"top": tracks[0],
+	"left": tracks[1],
+	"right": tracks[2],
+	"bottom": tracks[3]
 }
 
 async function playAudio() {
 	try {
-		track1.play();
-		track2.play();
-		track3.play();
-		track4.play();
+		tracks.forEach((track) => {track.play()});
 	} catch (err) {
 		console.log('Failed to play...' + err);
 	}
 }
 
 async function pauseAudio() {
-	track1.pause();
-	track2.pause();
-	track3.pause();
-	track4.pause();
+	tracks.forEach((track) => {track.pause();});
 }
 
 let nowPlaying = false;
@@ -94,12 +84,12 @@ const isolateVolume = (sliderName) => {
 	if (isolating) return;
 	isolating = true;
 	let volumes = [
-		track1.volume,
-		track2.volume,
-		track3.volume,
-		track4.volume
+		tracks[0].volume,
+		tracks[1].volume,
+		tracks[2].volume,
+		tracks[3].volume
 	]
-	Object.values(key).forEach((track) => {track.volume = 0;});
+	tracks.forEach((track) => {track.volume = 0;});
         Array.from(document.getElementsByClassName('light')).forEach((light) => {
 		light.classList.add("lightOff");
 	});
@@ -109,10 +99,10 @@ const isolateVolume = (sliderName) => {
 		light.classList.remove("lightOff");
 	});
 	const resetVolume = () => {
-		track1.volume = volumes[0];
-		track2.volume = volumes[1];
-		track3.volume = volumes[2];
-		track4.volume = volumes[3];
+		tracks[0].volume = volumes[0];
+		tracks[1].volume = volumes[1];
+		tracks[2].volume = volumes[2];
+		tracks[3].volume = volumes[3];
 		// set the colors based on the saved volumes
 		['top', 'left', 'right', 'bottom'].forEach((sliderName, index) => {
         		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
@@ -232,10 +222,7 @@ $("folderSelectField").addEventListener("change", () => {
 	let files = fs.files;
 	// should ensure that there are 4 audio files to play
 	nowPlaying = false;
-	track1.src = URL.createObjectURL(files[0]);
-	track2.src = URL.createObjectURL(files[1]);
-	track3.src = URL.createObjectURL(files[2]);
-	track4.src = URL.createObjectURL(files[3]);
+	tracks.forEach((track, i) => {track.src = URL.createObjectURL(files[i]);});
 	let folderName = files[0].webkitRelativePath.split("/")[0];
 	$("folderSelectLabel").innerHTML = folderName;
 });
