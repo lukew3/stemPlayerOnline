@@ -101,10 +101,7 @@ const isolateVolume = (sliderName) => {
 		track3.volume,
 		track4.volume
 	]
-	track1.volume = 0;
-	track2.volume = 0;
-	track3.volume = 0;
-	track4.volume = 0;
+	Object.values(key).forEach((track) => {track.volume = 0;});
         Array.from(document.getElementsByClassName('light')).forEach((light) => {
 		//light.style.backgroundColor = "var(--light-off)";
 		light.classList.add("lightOff");
@@ -194,11 +191,6 @@ document.addEventListener("pointermove", (e) => {
 
 let lightNum;
 const handlePointerDown = (e) => {
-	let released = false;
-	const markRelease = () => {
-		released = true;
-		document.removeEventListener('pointerup', markRelease);
-	}
 	offsets.forEach((offset, index) => {
 		if (e.clientX >= offset.left && 
 			e.clientX <= offset.right &&
