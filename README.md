@@ -1,5 +1,5 @@
 # Stem Player Online
-An unofficial stem player for your browser 
+Stem player in your browser 
 
 https://stemplayeronline.com
 
