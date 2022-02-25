@@ -1,6 +1,5 @@
 :root {
-	--bg: #2c2f33;
-	--player: #9c836a;
+	--bg: #2c2f33; --player: #9c836a;
 	--player-border: #856849;
 	--slider: #997b5c;
 	--light-on: #c6c9d2;
@@ -19,18 +18,31 @@ html, body {
 }
 * {
 	font-family: 'Roboto', sans-serif;
+	color: #E2E2E2;
 }
 nav {
 	display: flex;
 	align-items: center;
 }
 nav * {
-	color: white;
 	margin-left: 10px;
 	text-decoration: none;
 }
 #pageTitle {
 	font-size: 14pt;
+}
+#folderSelectGroup {
+	display: flex;
+	align-items: center;
+}
+#localFolderSelect {
+	display: none;
+}
+#folderSelectIcon {
+	height: 30px;
+	padding: 3px;
+	margin-right: 5px;
+	cursor: pointer;
 }
 #playerContainer {
 	display: flex;
