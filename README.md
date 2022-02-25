@@ -3,7 +3,7 @@ Use the stem player in your browser. Not affiliated with YEEZY TECH X KANO.
 
 https://stemplayeronline.com
 
-## Todo
+## Future plans
 * Load local stems
 * Fix lagging bug that occurs after playing for a long time
 * Looping functionality
