@@ -252,3 +252,16 @@ const getLightClicked = (clickEvent, offsetIndex) => {
 		return "1";
 	}
 }
+
+
+$("localFolderSelect").addEventListener("change", () => {
+	// load the first 4 mp3 files in the directory as stems
+	let fs = $("localFolderSelect");
+	var files = fs.files;
+	var file = URL.createObjectURL(files[0]);
+	nowPlaying = false;
+	track1.src = URL.createObjectURL(files[0]);
+	track2.src = URL.createObjectURL(files[1]);
+	track3.src = URL.createObjectURL(files[2]);
+	track4.src = URL.createObjectURL(files[3]);
+});
