@@ -206,20 +206,20 @@ const handlePointerDown = (e) => {
 	})
 }
 const getLightClicked = (clickEvent, offsetIndex) => {
-	let segLen;
+	let segLen, i;
 	let offset = offsets[offsetIndex];
 	let y = clickEvent.clientY;
 	let x = clickEvent.clientX;
-	const inBounds = () => {
-		if (offsetIndex == 0) return (y >= offset.bottom - i * segLen);
-		else if (offsetIndex == 1) return (x >= offset.right - i * segLen);
-		else if (offsetIndex == 2) return (x <= offset.left + i * segLen);
-		else if (offsetIndex == 3) return (y <= offset.top + i * segLen);
-	}
-	if (offsetIndex == 0 || offsetIndex == 3) segLen = offset.height/4;
-	else if (offsetIndex == 1 || offsetIndex == 2) segLen = offset.width/4;
-	for (let i=1; i<=4; i++)
-		if (inBounds()) return i.toString();
+	const inBounds = [
+		() => { return y >= offset.bottom - i * segLen},
+		() => { return x >= offset.right - i * segLen},
+		() => { return x <= offset.left + i * segLen},
+		() => { return y <= offset.top + i * segLen}
+	]
+	if ([0, 3].includes(offsetIndex)) segLen = offset.height/4;
+	else if ([1, 2].includes(offsetIndex)) segLen = offset.width/4;
+	for (i=1; i<=4; i++)
+		if (inBounds[offsetIndex]()) return i.toString();
 	return "1"; // catch error
 }
 $("folderSelectIcon").addEventListener("click", () => {
