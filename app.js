@@ -2,13 +2,7 @@ const $ = (id) => { return document.getElementById(id) };
 
 let data = songs["we_made_it_kid"];
 
-let offsets = [
-	$("topSlider").getBoundingClientRect(),
-	$("leftSlider").getBoundingClientRect(),
-	$("rightSlider").getBoundingClientRect(),
-	$("bottomSlider").getBoundingClientRect()
-];
-
+let offsets = [];
 let sliderNames = ["top", "left", "right", "bottom"];
 let tracks = [];
 
@@ -154,13 +148,18 @@ document.addEventListener('pointerdown', (e) => {
 document.addEventListener('pointerup', (e) => {
 	pointerdown = false;
 })
-window.addEventListener('resize', (e) => {
+
+const getSliderOffsets = () => {
 	offsets = [
 		$("topSlider").getBoundingClientRect(),
 		$("leftSlider").getBoundingClientRect(),
 		$("rightSlider").getBoundingClientRect(),
 		$("bottomSlider").getBoundingClientRect()
 	];
+}
+getSliderOffsets();
+window.addEventListener('resize', (e) => {
+	getSliderOffsets();
 })
 
 document.addEventListener("pointermove", (e) => {
