@@ -9,13 +9,7 @@ let offsets = [
 	$("bottomSlider").getBoundingClientRect()
 ];
 
-let sliderNames = [
-	"top",
-	"left",
-	"right",
-	"bottom"
-];
-
+let sliderNames = ["top", "left", "right", "bottom"];
 let tracks = [];
 
 const loadTracks = () => {
