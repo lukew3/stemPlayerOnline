@@ -25,7 +25,7 @@ const key = {
 	"bottom": tracks[3]
 }
 
-async function playAudio() {
+function playAudio() {
 	try {
 		tracks.forEach((track) => {track.play()});
 	} catch (err) {
@@ -33,7 +33,7 @@ async function playAudio() {
 	}
 }
 
-async function pauseAudio() {
+function pauseAudio() {
 	tracks.forEach((track) => {track.pause();});
 }
 
@@ -124,14 +124,11 @@ document.addEventListener("keydown", (e) => {
 		else if (!controlPressed && curVolume != 4)
 			handleLightTap(dir, (curVolume+1).toString());
 	}
-
-	//enable holding arrow key to isolate track
+	//todo: enable holding arrow key to isolate track (or shift+arrow maybe)
 })
 
 document.addEventListener("keyup", (e) => {
-	if (e.key == "Control") {
-		controlPressed = false;
-	}
+	if (e.key == "Control") controlPressed = false;
 });
 
 document.addEventListener('pointerdown', (e) => {
@@ -156,9 +153,7 @@ window.addEventListener('resize', (e) => {
 })
 
 document.addEventListener("pointermove", (e) => {
-	if (pointerdown) {
-		handlePointerDown(e);
-	}
+	if (pointerdown) handlePointerDown(e);
 })
 
 const handlePointerDown = (e) => {
@@ -170,6 +165,7 @@ const handlePointerDown = (e) => {
 		) {
 			lightNum = getLightClicked(e, index);
 			handleLightTap(sliderNames[index], lightNum);
+			// listen for hold if light 4 is touched
 			if (lightNum == "4") setTimeout(() => {
 				if (pointerdown && lightNum == "4") {
 					//lightNum is global so that you can check new value after timeout
@@ -203,11 +199,10 @@ $("folderSelectIcon").addEventListener("click", () => {
 
 $("folderSelectField").addEventListener("change", () => {
 	// load the first 4 mp3 files in the directory as stems
-	let fs = $("folderSelectField");
-	let files = fs.files;
-	// should ensure that there are 4 audio files to play
+	// todo: ensure that 4 audio files are used as stems
+	let files = $("folderSelectField").files;
 	nowPlaying = false;
 	tracks.forEach((track, i) => {track.src = URL.createObjectURL(files[i]);});
-	let folderName = files[0].webkitRelativePath.split("/")[0];
-	$("folderSelectLabel").innerHTML = folderName;
+	// set label to folder name
+	$("folderSelectLabel").innerHTML = files[0].webkitRelativePath.split("/")[0];
 });
