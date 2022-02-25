@@ -2,11 +2,17 @@ const $ = (id) => { return document.getElementById(id) };
 
 let data = songs["we_made_it_kid"];
 
+let nowPlaying = false;
+let centerButtonPressed = false;
+let isolating = false;
+let controlPressed = false;
+let pointerdown = false;
+let lightNum;
 let tracks = [];
 let sliders = [];
 let sliderNames = ["top", "left", "right", "bottom"];
 
-
+// Load starting stems 
 for (var i=0; i<4; i++) {
 	tracks[i] = new Audio(data[(i+1).toString()]);
 	tracks[i].type = "audio/wav";
@@ -31,7 +37,6 @@ async function pauseAudio() {
 	tracks.forEach((track) => {track.pause();});
 }
 
-let nowPlaying = false;
 const togglePlayback = () => {
 	if (nowPlaying) {
 		pauseAudio();
@@ -42,7 +47,6 @@ const togglePlayback = () => {
 	}
 }
 
-let centerButtonPressed = false;
 $("centerButton").addEventListener("pointerdown", () => {
 	$("centerButton").style.backgroundColor = "#82664b";
 	centerButtonPressed = true;
@@ -64,7 +68,6 @@ const setLightColor = (light, lightIndex) => {
 	}
 }
 
-let isolating = false;
 const isolateVolume = (sliderName) => {
 	if (isolating) return;
 	isolating = true;
@@ -105,7 +108,6 @@ const handleLightTap = (sliderName, lightIndex) => {
 	});
 }
 
-let controlPressed = false;
 document.addEventListener("keydown", (e) => {
 	let curVolume;
 	if (e.key == " ") {
@@ -134,7 +136,6 @@ document.addEventListener("keyup", (e) => {
 	}
 });
 
-let pointerdown = false;
 document.addEventListener('pointerdown', (e) => {
 	pointerdown = true;
 	handlePointerDown(e);
@@ -162,7 +163,6 @@ document.addEventListener("pointermove", (e) => {
 	}
 })
 
-let lightNum;
 const handlePointerDown = (e) => {
 	sliders.forEach((slider, index) => {
 		if (e.clientX >= slider.left && 
