@@ -260,6 +260,7 @@ $("folderSelectField").addEventListener("change", () => {
 	// load the first 4 mp3 files in the directory as stems
 	let fs = $("folderSelectField");
 	let files = fs.files;
+	// should ensure that there are 4 audio files to play
 	nowPlaying = false;
 	track1.src = URL.createObjectURL(files[0]);
 	track2.src = URL.createObjectURL(files[1]);
