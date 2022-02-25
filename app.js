@@ -210,7 +210,7 @@ const getLightClicked = (clickEvent, offsetIndex) => {
 	let offset = offsets[offsetIndex];
 	let y = clickEvent.clientY;
 	let x = clickEvent.clientX;
-	const inBounds = (offsetIndex, offset, x, y, segLen, i) => {
+	const inBounds = () => {
 		if (offsetIndex == 0) return (y >= offset.bottom - i * segLen);
 		else if (offsetIndex == 1) return (x >= offset.right - i * segLen);
 		else if (offsetIndex == 2) return (x <= offset.left + i * segLen);
@@ -219,7 +219,7 @@ const getLightClicked = (clickEvent, offsetIndex) => {
 	if (offsetIndex == 0 || offsetIndex == 3) segLen = offset.height/4;
 	else if (offsetIndex == 1 || offsetIndex == 2) segLen = offset.width/4;
 	for (let i=1; i<=4; i++)
-		if (inBounds(offsetIndex, offset, x, y, segLen, i)) return i.toString();
+		if (inBounds()) return i.toString();
 	return "1"; // catch error
 }
 $("folderSelectIcon").addEventListener("click", () => {
