@@ -2,17 +2,15 @@ const $ = (id) => { return document.getElementById(id) };
 
 let data = songs["we_made_it_kid"];
 
+let tracks = [];
 let sliders = [];
 let sliderNames = ["top", "left", "right", "bottom"];
-let tracks = [];
 
-const loadTracks = () => {
-	for (var i=0; i<4; i++) {
-		tracks[i] = new Audio(data[(i+1).toString()]);
-		tracks[i].type = "audio/wav";
-	}
+
+for (var i=0; i<4; i++) {
+	tracks[i] = new Audio(data[(i+1).toString()]);
+	tracks[i].type = "audio/wav";
 }
-loadTracks();
 
 const key = {
 	"top": tracks[0],
