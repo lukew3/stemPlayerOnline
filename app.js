@@ -55,17 +55,15 @@ $("centerButton").addEventListener("pointerup", () => {
 	if (centerButtonPressed) {
 		togglePlayback();
 		$("centerButton").style.backgroundColor = "var(--player)";
+		centerButtonPressed = false;
 	}
-	centerButtonPressed = false;
 });
 
 
 const setLightColor = (light, lightIndex) => {
-	if (light.id.split("_")[1] > lightIndex) {
-		light.classList.add("lightOff");
-	} else {
+	(light.id.split("_")[1] > lightIndex) ?
+		light.classList.add("lightOff") :
 		light.classList.remove("lightOff");
-	}
 }
 
 const isolateVolume = (sliderName) => {
