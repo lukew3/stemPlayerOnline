@@ -87,12 +87,9 @@ const isolateVolume = (sliderName) => {
 		light.classList.remove("lightOff");
 	});
 	const resetVolume = () => {
-		tracks[0].volume = volumes[0];
-		tracks[1].volume = volumes[1];
-		tracks[2].volume = volumes[2];
-		tracks[3].volume = volumes[3];
+		tracks.forEach((track, i) => {track.volume = volumes[i]});
 		// set the colors based on the saved volumes
-		['top', 'left', 'right', 'bottom'].forEach((sliderName, index) => {
+		sliderNames.forEach((sliderName, index) => {
         		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 				setLightColor(light, volumes[index]*3+1);
 			});
