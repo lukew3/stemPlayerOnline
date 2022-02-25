@@ -2,7 +2,7 @@ const $ = (id) => { return document.getElementById(id) };
 
 let data = songs["we_made_it_kid"];
 
-let offsets = [];
+let sliders = [];
 let sliderNames = ["top", "left", "right", "bottom"];
 let tracks = [];
 
@@ -49,7 +49,6 @@ $("centerButton").addEventListener("pointerdown", () => {
 	$("centerButton").style.backgroundColor = "#82664b";
 	centerButtonPressed = true;
 });
-
 $("centerButton").addEventListener("pointerup", () => {
 	if (centerButtonPressed) {
 		togglePlayback();
@@ -146,17 +145,17 @@ document.addEventListener('pointerup', (e) => {
 	pointerdown = false;
 })
 
-const getSliderOffsets = () => {
-	offsets = [
+const getSliders = () => {
+	sliders = [
 		$("topSlider").getBoundingClientRect(),
 		$("leftSlider").getBoundingClientRect(),
 		$("rightSlider").getBoundingClientRect(),
 		$("bottomSlider").getBoundingClientRect()
 	];
 }
-getSliderOffsets();
+getSliders();
 window.addEventListener('resize', (e) => {
-	getSliderOffsets();
+	getSliders();
 })
 
 document.addEventListener("pointermove", (e) => {
@@ -167,11 +166,11 @@ document.addEventListener("pointermove", (e) => {
 
 let lightNum;
 const handlePointerDown = (e) => {
-	offsets.forEach((offset, index) => {
-		if (e.clientX >= offset.left && 
-			e.clientX <= offset.right &&
-			e.clientY >= offset.top &&
-			e.clientY <= offset.bottom
+	sliders.forEach((slider, index) => {
+		if (e.clientX >= slider.left && 
+			e.clientX <= slider.right &&
+			e.clientY >= slider.top &&
+			e.clientY <= slider.bottom
 		) {
 			lightNum = getLightClicked(e, index);
 			handleLightTap(sliderNames[index], lightNum);
@@ -185,21 +184,21 @@ const handlePointerDown = (e) => {
 		}
 	})
 }
-const getLightClicked = (clickEvent, offsetIndex) => {
+const getLightClicked = (clickEvent, sliderIndex) => {
 	let segLen, i;
-	let offset = offsets[offsetIndex];
+	let slider = sliders[sliderIndex];
 	let y = clickEvent.clientY;
 	let x = clickEvent.clientX;
 	const inBounds = [
-		() => { return y >= offset.bottom - i * segLen},
-		() => { return x >= offset.right - i * segLen},
-		() => { return x <= offset.left + i * segLen},
-		() => { return y <= offset.top + i * segLen}
+		() => { return y >= slider.bottom - i * segLen},
+		() => { return x >= slider.right - i * segLen},
+		() => { return x <= slider.left + i * segLen},
+		() => { return y <= slider.top + i * segLen}
 	]
-	if ([0, 3].includes(offsetIndex)) segLen = offset.height/4;
-	else if ([1, 2].includes(offsetIndex)) segLen = offset.width/4;
+	if ([0, 3].includes(sliderIndex)) segLen = slider.height/4;
+	else if ([1, 2].includes(sliderIndex)) segLen = slider.width/4;
 	for (i=1; i<=4; i++)
-		if (inBounds[offsetIndex]()) return i.toString();
+		if (inBounds[sliderIndex]()) return i.toString();
 	return "1"; // catch error
 }
 $("folderSelectIcon").addEventListener("click", () => {
