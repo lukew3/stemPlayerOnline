@@ -1,5 +1,5 @@
 # Stem Player Online
-Stem player in your browser 
+Stem player in your browser. Not affiliated with YEEZY TECH X KANO.
 
 https://stemplayeronline.com
 
