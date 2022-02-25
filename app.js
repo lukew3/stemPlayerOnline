@@ -210,47 +210,17 @@ const getLightClicked = (clickEvent, offsetIndex) => {
 	let offset = offsets[offsetIndex];
 	let y = clickEvent.clientY;
 	let x = clickEvent.clientX;
-	/*
-	let sliderBase;
-	let sliderDirection;
-	let segLen;
-	*/
-	if (offsetIndex == 0) {
-		//top
-		segLen = offset.height/4;
-		for (let i=1; i<=4; i++) {
-			if (y >= offset.bottom - i * segLen) {
-				return i.toString();
-			}
-		}
-	} else if (offsetIndex == 1) {
-		//left
-		segLen = offset.width/4;
-		for (let i=1; i<=4; i++) {
-			if (x >= offset.right - i * segLen) {
-				return i.toString();
-			}
-		}
-	} else if (offsetIndex == 2) {
-		//right
-		segLen = offset.width/4;
-		for (let i=1; i<=4; i++) {
-			if (x <= offset.left + i * segLen) {
-				return i.toString();
-			}
-		}
-	} else if (offsetIndex == 3) {
-		//bottom
-		segLen = offset.height/4;
-		for (let i=1; i<=4; i++) {
-			if (y <= offset.top + i * segLen) {
-				return i.toString();
-			}
-		}
-	} else {
-		// if there is an error
-		return "1";
+	const inBounds = (offsetIndex, offset, x, y, segLen, i) => {
+		if (offsetIndex == 0) return (y >= offset.bottom - i * segLen);
+		else if (offsetIndex == 1) return (x >= offset.right - i * segLen);
+		else if (offsetIndex == 2) return (x <= offset.left + i * segLen);
+		else if (offsetIndex == 3) return (y <= offset.top + i * segLen);
 	}
+	if (offsetIndex == 0 || offsetIndex == 3) segLen = offset.height/4;
+	else if (offsetIndex == 1 || offsetIndex == 2) segLen = offset.width/4;
+	for (let i=1; i<=4; i++)
+		if (inBounds(offsetIndex, offset, x, y, segLen, i)) return i.toString();
+	return "1"; // catch error
 }
 $("folderSelectIcon").addEventListener("click", () => {
 	$("folderSelectField").click();
