@@ -35,7 +35,7 @@ nav * {
 	display: flex;
 	align-items: center;
 }
-#localFolderSelect {
+#folderSelectField {
 	display: none;
 }
 #folderSelectIcon {
