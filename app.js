@@ -10,7 +10,7 @@ let pointerdown = false;
 let lightNum;
 let tracks = [];
 let sliderBounds = [];
-let sliderNames = ["top", "left", "right", "bottom"];
+let sliderNames = ["right", "top", "left", "bottom"];
 
 // Load starting stems 
 for (var i=0; i<4; i++) {
@@ -19,9 +19,9 @@ for (var i=0; i<4; i++) {
 }
 
 const key = {
-	"top": tracks[0],
-	"left": tracks[1],
-	"right": tracks[2],
+	"right": tracks[0],
+	"top": tracks[1],
+	"left": tracks[2],
 	"bottom": tracks[3]
 }
 
@@ -141,9 +141,9 @@ document.addEventListener('pointerup', (e) => {
 
 const getSliders = () => {
 	sliderBounds = [
+		$("rightSlider").getBoundingClientRect(),
 		$("topSlider").getBoundingClientRect(),
 		$("leftSlider").getBoundingClientRect(),
-		$("rightSlider").getBoundingClientRect(),
 		$("bottomSlider").getBoundingClientRect()
 	];
 }
@@ -182,13 +182,13 @@ const getLightClicked = (clickEvent, boundIndex) => {
 	let y = clickEvent.clientY;
 	let x = clickEvent.clientX;
 	const inBounds = [
+		() => { return x <= bound.left + i * segLen},
 		() => { return y >= bound.bottom - i * segLen},
 		() => { return x >= bound.right - i * segLen},
-		() => { return x <= bound.left + i * segLen},
 		() => { return y <= bound.top + i * segLen}
 	]
-	if ([0, 3].includes(boundIndex)) segLen = bound.height/4;
-	else if ([1, 2].includes(boundIndex)) segLen = bound.width/4;
+	if ([1, 3].includes(boundIndex)) segLen = bound.height/4;
+	else if ([2, 0].includes(boundIndex)) segLen = bound.width/4;
 	for (i=1; i<=4; i++)
 		if (inBounds[boundIndex]()) return i.toString();
 	return "1"; // catch error
