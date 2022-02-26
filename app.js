@@ -202,6 +202,7 @@ $("folderSelectField").addEventListener("change", () => {
 	// todo: ensure that 4 audio files are used as stems
 	let files = $("folderSelectField").files;
 	nowPlaying = false;
+	// this will automatically place tracks in the right position if they are numbered
 	tracks.forEach((track, i) => {track.src = URL.createObjectURL(files[i]);});
 	// set label to folder name
 	$("folderSelectLabel").innerHTML = files[0].webkitRelativePath.split("/")[0];
