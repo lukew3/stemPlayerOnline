@@ -7,6 +7,7 @@ let centerButtonPressed = false;
 let isolating = false;
 let controlPressed = false;
 let pointerdown = false;
+let maxVolume = 1;
 let lightNum;
 let tracks = [];
 let sliderBounds = [];
@@ -59,6 +60,13 @@ $("centerButton").addEventListener("pointerup", () => {
 	}
 });
 
+const volumeToLight = (vol) => {
+	return vol*3/maxVolume+1;
+}
+
+const lightToVolume = (light) => {
+	return (light-1)/3*maxVolume;
+}
 
 const setLightColor = (light, lightIndex) => {
 	(light.id.split("_")[1] > lightIndex) ?
@@ -80,7 +88,7 @@ const isolateVolume = (sliderName) => {
 		light.classList.add("lightOff");
 	});
 
-	key[sliderName].volume = 1;
+	key[sliderName].volume = maxVolume;
         Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 		light.classList.remove("lightOff");
 	});
@@ -89,7 +97,7 @@ const isolateVolume = (sliderName) => {
 		// set the colors based on the saved volumes
 		sliderNames.forEach((sliderName, index) => {
         		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-				setLightColor(light, volumes[index]*3+1);
+				setLightColor(light, volumeToLight(volumes[index]));
 			});
 		});
 		isolating = false;
@@ -100,7 +108,7 @@ const isolateVolume = (sliderName) => {
 }
 
 const handleLightTap = (sliderName, lightIndex) => {
-	key[sliderName].volume = (lightIndex-1)/3;
+	key[sliderName].volume = lightToVolume(lightIndex);
         Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 		setLightColor(light, lightIndex);
 	});
