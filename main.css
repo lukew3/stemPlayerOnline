@@ -167,19 +167,31 @@ nav * {
 #volumeButtons, #selectButtons {
 	width: 100px;
 	display: flex;
+	justify-content: space-between;
 }
 #rightDotButton, #minusButton {
 	text-align: right;
 }
-#volumeButtons div {
-	width: 30px;
-	padding: 0px 10px;
-	height: 25px;
-	line-height: 25px;
-  	user-select: none;
+#plusButtonVertical {
+	position: absolute;
+	height: 2px;
+	width: 10px;
+	margin: 11px 10px;
+	background-color: #68533c;
+	transform: rotate(90deg);
 }
-#selectButtons {
-	justify-content: space-between;
+#plusButtonHorizontal {
+	position: absolute;
+	height: 2px;
+	width: 10px;
+	margin: 11px 10px;
+	background-color: #68533c;
+}
+#minusButton {
+	height: 2px;
+	width: 10px;
+	margin: 10.5px 10px;
+	background-color: #68533c;
 }
 .dotButton {
 	height: 10px;
