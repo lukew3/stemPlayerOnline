@@ -1,17 +1,17 @@
-const $ = (id) => { return document.getElementById(id) };
-
+const $ = (id) => { return document.getElementById(id) }; 
 let data = songs["we_made_it_kid"];
 
 let nowPlaying = false;
-let centerButtonPressed = false;
-let isolating = false;
-let controlPressed = false;
+let centerButtonPressed = false; let isolating = false; let controlPressed = false;
 let pointerdown = false;
 let maxVolume = 1;
+let wholeMaxVolume = 8; // Max volume in non-decimal
 let lightNum;
 let tracks = [];
+let levels = [4, 4, 4, 4];
 let sliderBounds = [];
 let sliderNames = ["right", "top", "left", "bottom"];
+let hideLightsTimeout;
 
 // Load starting stems 
 for (var i=0; i<4; i++) {
@@ -60,12 +60,22 @@ $("centerButton").addEventListener("pointerup", () => {
 	}
 });
 
-const volumeToLight = (vol) => {
-	return vol*3/maxVolume+1;
+const levelToVolume = (level) => {
+	return (level-1)/3*maxVolume;
 }
 
-const lightToVolume = (light) => {
-	return (light-1)/3*maxVolume;
+const allLightsOff = () => {
+        Array.from(document.getElementsByClassName('light')).forEach((light) => {
+		light.classList.add("lightOff");
+	});
+}
+
+const showStemLights = () => {
+	sliderNames.forEach((sliderName, index) => {
+		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
+			setLightColor(light, levels[index]);
+		});
+	});
 }
 
 const setLightColor = (light, lightIndex) => {
@@ -77,27 +87,24 @@ const setLightColor = (light, lightIndex) => {
 const isolateVolume = (sliderName) => {
 	if (isolating) return;
 	isolating = true;
-	let volumes = [
-		tracks[0].volume,
-		tracks[1].volume,
-		tracks[2].volume,
-		tracks[3].volume
+	let tempLevels = [
+		levels[0],
+		levels[1],
+		levels[2],
+		levels[3]
 	]
 	tracks.forEach((track) => {track.volume = 0;});
-        Array.from(document.getElementsByClassName('light')).forEach((light) => {
-		light.classList.add("lightOff");
-	});
+	allLightsOff();
 
 	key[sliderName].volume = maxVolume;
         Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 		light.classList.remove("lightOff");
 	});
 	const resetVolume = () => {
-		tracks.forEach((track, i) => {track.volume = volumes[i]});
-		// set the colors based on the saved volumes
+		tracks.forEach((track, i) => {track.volume = levelToVolume(tempLevels[i]);});
 		sliderNames.forEach((sliderName, index) => {
         		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-				setLightColor(light, volumeToLight(volumes[index]));
+				setLightColor(light, tempLevels[index]);
 			});
 		});
 		isolating = false;
@@ -108,7 +115,8 @@ const isolateVolume = (sliderName) => {
 }
 
 const handleLightTap = (sliderName, lightIndex) => {
-	key[sliderName].volume = lightToVolume(lightIndex);
+	key[sliderName].volume = levelToVolume(lightIndex);
+	levels[sliderNames.indexOf(sliderName)] = parseInt(lightIndex);
         Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 		setLightColor(light, lightIndex);
 	});
@@ -214,4 +222,45 @@ $("folderSelectField").addEventListener("change", () => {
 	tracks.forEach((track, i) => {track.src = URL.createObjectURL(files[i]);});
 	// set label to folder name
 	$("folderSelectLabel").innerHTML = files[0].webkitRelativePath.split("/")[0];
+});
+
+const updateVolumes = (prevWholeMaxVol) => {
+	tracks.forEach((track, index) => {
+		track.volume = ((levels[index]-1)/3)*(wholeMaxVolume/8);
+	});
+}
+
+const volumeLights = ["bottom_4", "bottom_3", "bottom_2", "bottom_1", "top_1", "top_2", "top_3", "top_4"];
+const displayVolume = () => {
+	allLightsOff();
+	for (let i=0; i<8; i++) {
+		$(volumeLights[i]).style.backgroundColor = null;
+	}
+	for (let i=0; i<wholeMaxVolume; i++) {
+		$(volumeLights[i]).style.backgroundColor = "blue";
+	}
+	clearTimeout(hideLightsTimeout);
+	hideLightsTimeout = setTimeout(() => {
+		for (let i=0; i<8; i++) {
+			$(volumeLights[i]).style.backgroundColor = null;
+		}
+		showStemLights();
+	}, 800);
+}
+
+$("minusButton").addEventListener("click", () => {
+	if (wholeMaxVolume != 0) {
+		wholeMaxVolume--;
+		maxVolume = wholeMaxVolume/8;
+		updateVolumes();
+	}
+	displayVolume();
+});
+$("plusButton").addEventListener("click", () => {
+	if (wholeMaxVolume != 8) {
+		wholeMaxVolume++;
+		maxVolume = wholeMaxVolume/8;
+		updateVolumes();
+	}
+	displayVolume();
 });
