@@ -1,6 +1,6 @@
 const $ = (id) => { return document.getElementById(id) };
 
-let data = songs["happy"];
+let data = songs["follow_god"];
 
 let nowPlaying = false;
 let centerButtonPressed = false;
