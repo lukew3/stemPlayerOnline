@@ -171,10 +171,20 @@ nav * {
 #rightDotButton, #minusButton {
 	text-align: right;
 }
-#volumeButtons div, #selectButtons div {
+#volumeButtons div {
 	width: 30px;
 	padding: 0px 10px;
 	height: 25px;
 	line-height: 25px;
   	user-select: none;
+}
+#selectButtons {
+	justify-content: space-between;
+}
+.dotButton {
+	height: 10px;
+	width: 10px;
+	margin: 7.5px;
+	background-color: #68533c;
+	border-radius: 50%;
 }
