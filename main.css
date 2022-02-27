@@ -169,10 +169,7 @@ nav * {
 	display: flex;
 	justify-content: space-between;
 }
-#rightDotButton, #minusButton {
-	text-align: right;
-}
-#plusButtonVertical {
+#plusIconVertical {
 	position: absolute;
 	height: 2px;
 	width: 10px;
@@ -180,18 +177,21 @@ nav * {
 	background-color: #68533c;
 	transform: rotate(90deg);
 }
-#plusButtonHorizontal {
+#plusIconHorizontal {
 	position: absolute;
 	height: 2px;
 	width: 10px;
 	margin: 11px 10px;
 	background-color: #68533c;
 }
-#minusButton {
+#minusIcon {
 	height: 2px;
 	width: 10px;
 	margin: 10.5px 10px;
 	background-color: #68533c;
+}
+#minusIcon, #rightDotIcon {
+	float: right;
 }
 .dotButton {
 	height: 10px;
@@ -199,4 +199,7 @@ nav * {
 	margin: 7.5px;
 	background-color: #68533c;
 	border-radius: 50%;
+}
+.halfButton {
+	width: 50px;
 }
