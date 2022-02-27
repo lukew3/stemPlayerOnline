@@ -1,5 +1,6 @@
-const $ = (id) => { return document.getElementById(id) }; 
-let data = songs["we_made_it_kid"];
+const $ = (id) => { return document.getElementById(id) };
+
+let data = songs["follow_god"];
 
 let nowPlaying = false;
 let centerButtonPressed = false; let isolating = false; let controlPressed = false;
@@ -115,6 +116,7 @@ const isolateVolume = (sliderName) => {
 }
 
 const handleLightTap = (sliderName, lightIndex) => {
+  if (levels[sliderNames.indexOf(sliderName)] == parseInt(lightIndex)) return; //Dont update volume or lights if same light as active light is selected
 	key[sliderName].volume = levelToVolume(lightIndex);
 	levels[sliderNames.indexOf(sliderName)] = parseInt(lightIndex);
         Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
@@ -123,7 +125,7 @@ const handleLightTap = (sliderName, lightIndex) => {
 }
 
 document.addEventListener("keydown", (e) => {
-	let curVolume;
+	let newVolume;
 	if (e.key == " ") {
 		togglePlayback();
 	} else if (e.key == "Control") {
@@ -134,10 +136,10 @@ document.addEventListener("keydown", (e) => {
 		else if (e.key == "ArrowUp") dir = "top";
 		else if (e.key == "ArrowDown") dir = "bottom";
 		else if (e.key == "ArrowLeft") dir = "left";
-		curVolume = key[dir].volume * 3 + 1;
-		if (controlPressed && curVolume != 1)
-			handleLightTap(dir, (curVolume-1).toString());
-		else if (!controlPressed && curVolume != 4)
+		newVolume = key[dir].volume * 3 + 1;
+		if (controlPressed && newVolume != 1)
+			handleLightTap(dir, (newVolume-1).toString());
+		else if (!controlPressed && newVolume!= 4)
 			handleLightTap(dir, (curVolume+1).toString());
 	}
 	//todo: enable holding arrow key to isolate track (or shift+arrow maybe)
@@ -182,7 +184,7 @@ const handlePointerDown = (e) => {
 			lightNum = getLightClicked(e, index);
 			handleLightTap(sliderNames[index], lightNum);
 			// listen for hold if light 4 is touched
-			if (lightNum == "4") setTimeout(() => {
+			if (lightNum == "4" && !isolating) setTimeout(() => {
 				if (pointerdown && lightNum == "4") {
 					//lightNum is global so that you can check new value after timeout
 					isolateVolume(sliderNames[index]);

@@ -1,5 +1,5 @@
 # Stem Player Online
-Use the stem player in your browser. Not affiliated with YEEZY TECH X KANO.
+An online stem player. Inspired by but not affiliated with YEEZY TECH X KANO Stem Player.
 
 https://stemplayeronline.com
 
@@ -20,6 +20,7 @@ Keyboard shortcuts have been included to help better the experience of using the
 * Enable loading local stem library
 * Custom colors and gradient generation
 * Fix lagging bug that occurs after playing stems for a long time
+* Fix bug causing latency when stem is isolated or unisolated. It seems that the lights change colors before volume is set
 * Add looping functionality
 * Add Quick menu tools
   * Reverse
