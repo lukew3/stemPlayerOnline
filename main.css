@@ -162,12 +162,15 @@ nav * {
 	margin: 0px 10px;
 	border-radius: 12.5px;
 	border: 1px solid var(--player-border);
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 #volumeButtons, #selectButtons {
 	width: 100px;
 	display: flex;
 	justify-content: space-between;
+}
+#plusButton, #minusButton {
+	cursor: pointer;
 }
 #plusIconVertical {
 	position: absolute;
