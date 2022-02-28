@@ -19,13 +19,6 @@ const songs = [
 		"https://lukew3.com/recolorbot/photos/JIK_Follow_God_2.mp3",
 		"https://lukew3.com/recolorbot/photos/JIK_Follow_God_3.mp3",
 		"https://lukew3.com/recolorbot/photos/JIK_Follow_God_4.mp3"
-	],
-	[
-		// Daft Punk - One More Time
-		"https://lukew3.com/recolorbot/photos/One-More-Time_other.mp3",
-		"https://lukew3.com/recolorbot/photos/One-More-Time_vocals.mp3",
-		"https://lukew3.com/recolorbot/photos/One-More-Time_bass.mp3",
-		"https://lukew3.com/recolorbot/photos/One-More-Time_drums.mp3"
 	]
 ]
 
