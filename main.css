@@ -169,9 +169,6 @@ nav * {
 	display: flex;
 	justify-content: space-between;
 }
-#plusButton, #minusButton {
-	cursor: pointer;
-}
 #plusIconVertical {
 	position: absolute;
 	height: 2px;
@@ -205,4 +202,5 @@ nav * {
 }
 .halfButton {
 	width: 50px;
+	cursor: pointer;
 }

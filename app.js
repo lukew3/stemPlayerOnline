@@ -1,9 +1,11 @@
 const $ = (id) => { return document.getElementById(id) };
 
-let data = songs["follow_god"];
+let songIndex = 0;
 
 let nowPlaying = false;
-let centerButtonPressed = false; let isolating = false; let controlPressed = false;
+let centerButtonPressed = false;
+let isolating = false;
+let controlPressed = false;
 let pointerdown = false;
 let maxVolume = 1;
 let wholeMaxVolume = 8; // Max volume in non-decimal
@@ -16,8 +18,15 @@ let hideLightsTimeout;
 
 // Load starting stems 
 for (var i=0; i<4; i++) {
-	tracks[i] = new Audio(data[(i+1).toString()]);
+	tracks[i] = new Audio(songs[songIndex][i]);
 	tracks[i].type = "audio/wav";
+}
+const loadSong = () => {
+	let song = songs[songIndex];
+	for (var i=0; i<4; i++) {
+		tracks[i].src = song[i];
+	}
+	playAudio();
 }
 
 const key = {
@@ -30,6 +39,7 @@ const key = {
 function playAudio() {
 	try {
 		tracks.forEach((track) => {track.play()});
+		nowPlaying = true;
 	} catch (err) {
 		console.log('Failed to play...' + err);
 	}
@@ -37,15 +47,14 @@ function playAudio() {
 
 function pauseAudio() {
 	tracks.forEach((track) => {track.pause();});
+	nowPlaying = false;
 }
 
 const togglePlayback = () => {
 	if (nowPlaying) {
 		pauseAudio();
-		nowPlaying = false;
 	} else {
 		playAudio();
-		nowPlaying = true;
 	}
 }
 
@@ -264,4 +273,17 @@ $("plusButton").addEventListener("click", () => {
 		updateVolumes();
 	}
 	displayVolume();
+});
+
+$("leftDotButton").addEventListener("click", () => {
+	if (songIndex != 0) {
+		songIndex--;
+		loadSong();
+	}
+});
+$("rightDotButton").addEventListener("click", () => {
+	if (songIndex + 1 != songs.length) {
+		songIndex++;
+		loadSong();
+	}
 });
