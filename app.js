@@ -20,6 +20,7 @@ let hideLightsTimeout;
 for (var i=0; i<4; i++) {
 	tracks[i] = new Audio(songs[songIndex][i]);
 	tracks[i].type = "audio/wav";
+	tracks[i].onended = () => {nowPlaying = false;};
 }
 const loadSong = () => {
 	let song = songs[songIndex];
