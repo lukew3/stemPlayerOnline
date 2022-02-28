@@ -27,7 +27,7 @@ const loadSong = () => {
 	for (var i=0; i<4; i++) {
 		tracks[i].src = song[i];
 	}
-	playAudio();
+	setTimeout(playAudio, 500);
 }
 
 const key = {
