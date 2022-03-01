@@ -1,4 +1,4 @@
-const songs = [
+const playlist = [
 	[
 		// Ye - Pure Souls
 		"https://drive.google.com/uc?export=download&id=1rB0J_exbQI2SfuDZr8-Rhl7JCxp9vnWN",

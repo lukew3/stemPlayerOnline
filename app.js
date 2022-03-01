@@ -18,12 +18,12 @@ let hideLightsTimeout;
 
 // Load starting stems 
 for (var i=0; i<4; i++) {
-	tracks[i] = new Audio(songs[songIndex][i]);
+	tracks[i] = new Audio(playlist[songIndex][i]);
 	tracks[i].type = "audio/wav";
 	tracks[i].onended = () => {nowPlaying = false;};
 }
 const loadSong = () => {
-	let song = songs[songIndex];
+	let song = playlist[songIndex];
 	for (var i=0; i<4; i++) {
 		tracks[i].src = song[i];
 	}
@@ -283,7 +283,7 @@ $("leftDotButton").addEventListener("click", () => {
 	}
 });
 $("rightDotButton").addEventListener("click", () => {
-	if (songIndex + 1 != songs.length) {
+	if (songIndex + 1 != playlist.length) {
 		songIndex++;
 		loadSong();
 	}
