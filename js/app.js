@@ -85,9 +85,22 @@ const levelToVolume = (level) => {
 	return (level-1)/3*maxVolume;
 }
 
+const setLightBrightness = (light, brightness) => {
+	if (brightness == 0) {
+		light.classList.add("lightOff");
+		light.classList.remove("lightBright");
+	} else if (brightness == 1) {
+		light.classList.remove("lightOff");
+		light.classList.remove("lightBright");
+	} else if (brightness == 2) {
+		light.classList.remove("lightOff");
+		light.classList.add("lightBright");
+	}
+}
+
 const allLightsOff = () => {
         Array.from(document.getElementsByClassName('light')).forEach((light) => {
-		light.classList.add("lightOff");
+		setLightBrightness(light, 0);
 	});
 }
 
@@ -101,8 +114,8 @@ const showStemLights = () => {
 
 const setLightColor = (light, lightIndex) => {
 	(light.id.split("_")[1] > lightIndex) ?
-		light.classList.add("lightOff") :
-		light.classList.remove("lightOff");
+		setLightBrightness(light, 0) :
+		setLightBrightness(light, 1);
 }
 
 const isolateVolume = (sliderName) => {
@@ -119,7 +132,7 @@ const isolateVolume = (sliderName) => {
 
 	key[sliderName].volume = maxVolume;
         Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-		light.classList.remove("lightOff");
+		setLightBrightness(light, 1);
 	});
 	const resetVolume = () => {
 		tracks.forEach((track, i) => {track.volume = levelToVolume(tempLevels[i]);});
