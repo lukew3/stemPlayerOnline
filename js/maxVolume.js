@@ -12,7 +12,7 @@ const displayVolume = () => {
                 $(volumeLights[i]).style.backgroundColor = null;
         }
         for (let i=0; i<wholeMaxVolume; i++) {
-                $(volumeLights[i]).style.backgroundColor = "blue";
+                $(volumeLights[i]).style.backgroundColor = "var(--maxVolColor)";
         }
         clearTimeout(hideLightsTimeout);
         hideLightsTimeout = setTimeout(() => {
