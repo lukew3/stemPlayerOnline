@@ -11,6 +11,7 @@ let lightNum;
 let tracks = [];
 let levels = [4, 4, 4, 4];
 let sliderNames = ["right", "top", "left", "bottom"];
+let tracksReady = [false, false, false, false]
 let hideLightsTimeout;
 
 // Load starting stems 
@@ -20,6 +21,7 @@ for (var i=0; i<4; i++) {
 	tracks[i].onended = () => {nowPlaying = false;};
 }
 const loadSong = () => {
+	tracksReady = [false, false, false, false];
 	let song = playlist[songIndex];
 	for (var i=0; i<4; i++) {
 		tracks[i].src = song[i];
@@ -34,13 +36,24 @@ const key = {
 	"bottom": tracks[3]
 }
 
+tracks.forEach((track, i) => {
+	track.addEventListener("canplaythrough", (e) => {
+		tracksReady[i] = true;
+	})
+})
 function playAudio() {
-	try {
-		tracks.forEach((track) => {track.play()});
-		nowPlaying = true;
-	} catch (err) {
-		console.log('Failed to play...' + err);
-	}
+	setTimeout(() => {
+		if (tracksReady.indexOf(false) === -1) {
+			try {
+				tracks.forEach((track) => {track.play()});
+				nowPlaying = true;
+			} catch (err) {
+				console.log('Failed to play...' + err);
+			}
+		} else {
+			playAudio();
+		}
+	}, 100)
 }
 
 function pauseAudio() {
