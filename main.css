@@ -210,8 +210,23 @@ nav * {
 	width: 50px;
 	cursor: pointer;
 }
-/*
 .colorInput {
 	display: none;
 }
-*/
+#colorIcons {
+	display: flex;
+}
+.colorIcon {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	cursor: pointer;
+	margin: 3px;
+	border: 1px solid black;
+}
+#color4Icon {
+	background-color: var(--light-4);
+}
+#color1Icon {
+	background-color: var(--light-1);
+}

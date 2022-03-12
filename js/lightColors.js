@@ -41,7 +41,12 @@ const generateGradient = () => {
 	r.style.setProperty('--light-3', color3);
 	r.style.setProperty('--light-4', color4);
 }
-
+$("color4Icon").addEventListener("click", () => {
+	$("color4Input").click();
+})
+$("color1Icon").addEventListener("click", () => {
+	$("color1Input").click();
+})
 $("color4Input").addEventListener("change", () => {
 	generateGradient();
 })
