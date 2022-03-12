@@ -1,5 +1,3 @@
-const $ = (id) => { return document.getElementById(id) };
-
 let songIndex = 1;
 
 let nowPlaying = false;

@@ -5,10 +5,16 @@
 	--slider: #997b5c;
 	--light-on: #c6c9d2;
 	--light-off: #515151;
+	/*
 	--light-1: #f5440a;
 	--light-2: #b24156;
 	--light-3: #743c9b;
 	--light-4: #4339e3;
+	*/
+	--light-1: #515151;
+	--light-2: #515151;
+	--light-3: #515151;
+	--light-4: #515151;
 }
 
 
@@ -204,3 +210,8 @@ nav * {
 	width: 50px;
 	cursor: pointer;
 }
+/*
+.colorInput {
+	display: none;
+}
+*/
