@@ -58,7 +58,7 @@ nav * {
 	margin: auto;
 }
 #content {
-	height: 85vh;
+	height: calc(85vh - 36px);
 	display: flex;
 
 }
