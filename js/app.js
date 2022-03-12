@@ -12,7 +12,6 @@ let wholeMaxVolume = 8; // Max volume in non-decimal
 let lightNum;
 let tracks = [];
 let levels = [4, 4, 4, 4];
-let sliderBounds = [];
 let sliderNames = ["right", "top", "left", "bottom"];
 let hideLightsTimeout;
 
@@ -134,30 +133,7 @@ const handleLightTap = (sliderName, lightIndex) => {
 	});
 }
 
-document.addEventListener("keydown", (e) => {
-	if (e.key == " ") {
-		togglePlayback();
-	} else if (e.key == "Control") {
-		controlPressed = true;
-	} else if (e.key.substring(0,5) == "Arrow") {
-		let dir;
-		if (e.key == "ArrowRight") dir = "right";
-		else if (e.key == "ArrowUp") dir = "top";
-		else if (e.key == "ArrowLeft") dir = "left";
-		else if (e.key == "ArrowDown") dir = "bottom";
-		dirLevel = levels[sliderNames.indexOf(dir)];
-		if (controlPressed && dirLevel != 1)
-			handleLightTap(dir, (dirLevel-1).toString());
-		else if (!controlPressed && dirLevel != 4)
-			handleLightTap(dir, (dirLevel+1).toString());
-	}
-	//todo: enable holding arrow key to isolate track (or shift+arrow maybe)
-})
-
-document.addEventListener("keyup", (e) => {
-	if (e.key == "Control") controlPressed = false;
-});
-
+/* Detect slider click */
 document.addEventListener('pointerdown', (e) => {
 	pointerdown = true;
 	handlePointerDown(e);
@@ -166,6 +142,7 @@ document.addEventListener('pointerup', (e) => {
 	pointerdown = false;
 })
 
+let sliderBounds = [];
 const getSliders = () => {
 	sliderBounds = [
 		$("rightSlider").getBoundingClientRect(),
@@ -220,6 +197,8 @@ const getLightClicked = (clickEvent, boundIndex) => {
 		if (inBounds[boundIndex]()) return i.toString();
 	return "1"; // catch error
 }
+
+/* Folder Select */
 $("folderSelectIcon").addEventListener("click", () => {
 	$("folderSelectField").click();
 });
@@ -235,56 +214,3 @@ $("folderSelectField").addEventListener("change", () => {
 	$("folderSelectLabel").innerHTML = files[0].webkitRelativePath.split("/")[0];
 });
 
-const updateVolumes = (prevWholeMaxVol) => {
-	tracks.forEach((track, index) => {
-		track.volume = ((levels[index]-1)/3)*(wholeMaxVolume/8);
-	});
-}
-
-const volumeLights = ["bottom_4", "bottom_3", "bottom_2", "bottom_1", "top_1", "top_2", "top_3", "top_4"];
-const displayVolume = () => {
-	allLightsOff();
-	for (let i=0; i<8; i++) {
-		$(volumeLights[i]).style.backgroundColor = null;
-	}
-	for (let i=0; i<wholeMaxVolume; i++) {
-		$(volumeLights[i]).style.backgroundColor = "blue";
-	}
-	clearTimeout(hideLightsTimeout);
-	hideLightsTimeout = setTimeout(() => {
-		for (let i=0; i<8; i++) {
-			$(volumeLights[i]).style.backgroundColor = null;
-		}
-		showStemLights();
-	}, 800);
-}
-
-$("minusButton").addEventListener("click", () => {
-	if (wholeMaxVolume != 0) {
-		wholeMaxVolume--;
-		maxVolume = wholeMaxVolume/8;
-		updateVolumes();
-	}
-	displayVolume();
-});
-$("plusButton").addEventListener("click", () => {
-	if (wholeMaxVolume != 8) {
-		wholeMaxVolume++;
-		maxVolume = wholeMaxVolume/8;
-		updateVolumes();
-	}
-	displayVolume();
-});
-
-$("leftDotButton").addEventListener("click", () => {
-	if (songIndex != 0) {
-		songIndex--;
-		loadSong();
-	}
-});
-$("rightDotButton").addEventListener("click", () => {
-	if (songIndex + 1 != playlist.length) {
-		songIndex++;
-		loadSong();
-	}
-});
