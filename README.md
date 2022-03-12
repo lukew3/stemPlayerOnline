@@ -26,3 +26,4 @@ Keyboard shortcuts have been included to help better the experience of using the
   * Change speed
 * Pulse lights to show playing tracks
 * Show pointer grabbing when moving slider?
+* Create loading animation to inform user that track is loading
