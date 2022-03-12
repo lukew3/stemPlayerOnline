@@ -241,12 +241,12 @@ $("leftDotButton").addEventListener("click", () => {
         if (songIndex != 0) {
                 songIndex--;
                 loadSong();
-        }                                                                                                                             
+        }
 });                                                                                                                                   
-$("rightDotButton").addEventListener("click", () => {                                                                                 
-        if (songIndex + 1 != playlist.length) {                                                                                       
-                songIndex++;                                                                                                          
-                loadSong();                                                                                                           
-        }                                                                                                                             
+$("rightDotButton").addEventListener("click", () => {
+        if (songIndex + 1 != playlist.length) {
+                songIndex++;
+                loadSong();
+        }
 });
 

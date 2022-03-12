@@ -16,6 +16,7 @@
 	--light-3: #515151;
 	--light-4: #515151;
 	--maxVolColor: #303FDB;
+	--loopColor: orange;
 }
 
 
@@ -182,7 +183,7 @@ nav * {
 	margin: 0px 10px;
 	border-radius: 12.5px;
 	border: 1px solid var(--player-border);
-	/*cursor: pointer;*/
+	cursor: pointer;
 }
 #volumeButtons, #selectButtons {
 	width: 100px;
@@ -222,7 +223,6 @@ nav * {
 }
 .halfButton {
 	width: 50px;
-	cursor: pointer;
 }
 .colorInput {
 	display: none;
