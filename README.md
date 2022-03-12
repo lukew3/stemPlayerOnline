@@ -17,7 +17,7 @@ Keyboard shortcuts have been included to help better the experience of using the
 * `<Arrowkey>` - Each arrow key controls the volume of it's respective slider. Pressing the arrow key will increase the volume and holding control while pressing the arrow key will decrease the volume.
 
 ## Future plans
-* Enable loading local stem library
+* Enable loading multiple songs from local stem library
 * Custom colors and gradient generation
 * Fix lagging bug that occurs after playing stems for a long time
 * Fix bug causing tracks to play out of sync, especially when they are switched to. (Probably need to await src load)
