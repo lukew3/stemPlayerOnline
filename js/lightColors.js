@@ -2,18 +2,11 @@ const colorHex2Dec = (color) => {
 	return [parseInt(color.substring(1,3), 16), parseInt(color.substring(3,5), 16),  parseInt(color.substring(5,7), 16)]
 }
 const colorDec2Hex = (colorDec) => {
-	/*
-	let p1 = "0" + colorDec[0].toString(16); p1 = p1.substring(0,2);
-	let p2 = "0" + colorDec[1].toString(16); p2.length = 2;
-	let p3 = "0" + colorDec[2].toString(16); p3.length = 2;
-	*/
-	let p1 = colorDec[0].toString(16);
-	if (p1.length < 2) p1 = "0" + p1;
-	let p2 = colorDec[1].toString(16);
-	if (p2.length < 2) p2 = "0" + p2;
-	let p3 = colorDec[2].toString(16);
-	if (p3.length < 2) p3 = "0" + p3;
-	return "#" + p1 + p2 + p3;
+	const add0 = (val) => {return (val<17) ? "0" : ""};
+	let r = add0(colorDec[0]) + colorDec[0].toString(16);
+	let g = add0(colorDec[1]) + colorDec[1].toString(16);
+	let b = add0(colorDec[2]) + colorDec[2].toString(16);
+	return "#" + r + g + b;
 }
 const generateGradient = () => {
 	let color4 = $('color4Input').value;
