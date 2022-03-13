@@ -25,7 +25,8 @@ const moveHorizDot = () => {
 }
 
 let vertLoopIndex;
-let loopDuration = 8;
+let loopDuration = 7;
+let loopStart = 0; // Time in song where loop starts
 let inLoop = false;
 let vertLoopTimeout;
 const vertArray = ['bottom_4', 'bottom_3', 'bottom_2', 'bottom_1', 'top_1', 'top_2', 'top_3', 'top_4'];
@@ -41,6 +42,12 @@ const verticalLoop = () => {
 				vertLoopIndex++;
 			} else {
 				vertLoopIndex = 0;
+				tracksReady = [false, false, false, false];
+				tracks.forEach((track) => {
+					track.pause();
+					track.currentTime = loopStart;
+				})
+				playAudio();
 			}
 			verticalLoop();
 		}, beatDuration)
@@ -60,7 +67,7 @@ $("menuButton").addEventListener("click", () => {
 			}
 		})
 		moveHorizDot();
-		loopDuration = 8;
+		loopDuration = 7;
 		vertLoopIndex = 0;
 		verticalLoop();
 	} else {
@@ -81,6 +88,9 @@ $("menuButton").addEventListener("click", () => {
 
 const loopHandleLightTap = (sliderName, lightIndex) => {
 	let nextLight;
+	if (loopDuration === 7) {
+		loopStart = tracks[0].currentTime;
+	}
 	if (["top","bottom"].includes(sliderName)) {
 		let maxFound = false;
 		let lightId = `${sliderName}_${lightIndex}`;
@@ -97,6 +107,7 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 					nextLight.style.backgroundColor = null;
 					nextLight.style.boxShadow = null;
 					vertLoopIndex = 0;
+					loopStart = tracks[0].currentTime;
 				}
 			} else {
 				$(vertArray[i]).style.backgroundColor = "var(--loopColor)";
