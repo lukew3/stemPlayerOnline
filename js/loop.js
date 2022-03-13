@@ -10,7 +10,7 @@ const moveHorizDot = () => {
 	nextLight.style.boxShadow = "0px 0px 3px 3px var(--loopColor)";
 	horizLoopTimeout = setTimeout(() => {
 		// TODO: should also only show animation when the audio is currently playing
-		if (inLoopMode) {
+		if (inLoopMode && nowPlaying) {
 			let lastLight = $(horizArray[horizLoopTracker]);
 			lastLight.style.boxShadow = null;
 			lastLight.style.backgroundColor = null;
@@ -19,14 +19,14 @@ const moveHorizDot = () => {
 			} else {
 				horizLoopTracker = 0;
 			}
-			moveHorizDot();
 		}
+		moveHorizDot();
 	}, beatDuration)
 }
 
 let vertLoopIndex;
 let loopDuration = 7;
-let loopStart = 0; // Time in song where loop starts
+let loopStart = 0; // Time in song where loop starts (should this be rounded to the nearest beat?)
 let inLoop = false;
 let vertLoopTimeout;
 const vertArray = ['bottom_4', 'bottom_3', 'bottom_2', 'bottom_1', 'top_1', 'top_2', 'top_3', 'top_4'];
@@ -45,7 +45,7 @@ const verticalLoop = () => {
 				tracksReady = [false, false, false, false];
 				tracks.forEach((track) => {
 					track.pause();
-					track.currentTime = loopStart;
+					track.fastSeek(loopStart);
 				})
 				playAudio();
 			}
