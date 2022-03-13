@@ -244,3 +244,8 @@ nav * {
 #color1Icon {
 	background-color: var(--light-1);
 }
+#loading {
+       position: absolute;
+       margin-top: -30px;
+       display: none;
+}
