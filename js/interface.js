@@ -1,12 +1,12 @@
 // include getsliders, handleLighttap, etc
 
 const handleLightTap = (sliderName, lightIndex) => {
-  if (levels[sliderNames.indexOf(sliderName)] == parseInt(lightIndex)) return; //Dont update volume or lights if same light as active light is selected
-        key[sliderName].volume = levelToVolume(lightIndex);
-        levels[sliderNames.indexOf(sliderName)] = parseInt(lightIndex);
-        Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-                setLightColor(light, lightIndex);
-        });
+	if (levels[sliderNames.indexOf(sliderName)] == parseInt(lightIndex)) return; //Dont update volume or lights if same light as active light is selected
+	key[sliderName].volume = levelToVolume(lightIndex);
+	levels[sliderNames.indexOf(sliderName)] = parseInt(lightIndex);
+	Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
+		setLightColor(light, lightIndex);
+	});
 }
 
 /* Detect slider click */
@@ -43,15 +43,18 @@ const handlePointerDown = (e) => {
                         e.clientY <= bound.bottom
                 ) {
                         lightNum = getLightClicked(e, index);
-                        handleLightTap(sliderNames[index], lightNum);
-                        // listen for hold if light 4 is touched
-                        if (lightNum == "4" && !isolating) setTimeout(() => {
-                                if (pointerdown && lightNum == "4") {
-                                        //lightNum is global so that you can check new value after timeout
-                                        isolateStem(sliderNames[index]);
-                                }
-                        }, 200)
- 
+			if (inLoopMode) {
+				loopHandleLightTap(sliderNames[index], lightNum)
+			} else {
+				handleLightTap(sliderNames[index], lightNum);
+				// listen for hold if light 4 is touched
+				if (lightNum == "4" && !isolating) setTimeout(() => {
+					if (pointerdown && lightNum == "4") {
+						//lightNum is global so that you can check new value after timeout
+						isolateStem(sliderNames[index]);
+					}
+				}, 200)
+ 			}
                 }
         })
 }
