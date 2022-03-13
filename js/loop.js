@@ -48,7 +48,11 @@ const verticalLoop = () => {
 				tracksReady = [false, false, false, false];
 				tracks.forEach((track) => {
 					track.pause();
-					track.fastSeek(loopStart);
+					try {
+						track.fastSeek(loopStart);
+					} catch {
+						track.currentTime = loopStart;
+					}
 				})
 				playAudio();
 			}
