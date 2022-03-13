@@ -6,7 +6,6 @@ let horizLoopTracker = 0;
 let horizLoopTimeout;
 const moveHorizDot = () => {
 	let nextLight = $(horizArray[horizLoopTracker]);
-	setLightBrightness(nextLight, 2);
 	nextLight.style.backgroundColor = "var(--loopColor)";
 	nextLight.style.boxShadow = "0px 0px 3px 3px var(--loopColor)";
 	horizLoopTimeout = setTimeout(() => {
@@ -14,7 +13,6 @@ const moveHorizDot = () => {
 		if (inLoopMode) {
 			let lastLight = $(horizArray[horizLoopTracker]);
 			lastLight.style.boxShadow = null;
-			setLightBrightness(lastLight, 0);
 			lastLight.style.backgroundColor = null;
 			if (horizLoopTracker < 7) {
 				horizLoopTracker++;
@@ -34,13 +32,11 @@ const vertArray = ['bottom_4', 'bottom_3', 'bottom_2', 'bottom_1', 'top_1', 'top
 const verticalLoop = () => {
 	if (loopDuration < 7) {
 		let nextLight = $(vertArray[vertLoopIndex]);
-		setLightBrightness(nextLight, 2);
 		nextLight.style.backgroundColor = "var(--loopColor)";
 		nextLight.style.boxShadow = "0px 0px 3px 3px var(--loopColor)";
 		vertLoopTimeout = setTimeout(() => {
 			let lastLight = $(vertArray[vertLoopIndex]);
 			lastLight.style.boxShadow = null;
-			setLightBrightness(lastLight, 0);
 			if (vertLoopIndex < loopDuration) {
 				vertLoopIndex++;
 			} else {
@@ -98,7 +94,6 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 				loopDuration = i;
 				if (vertLoopIndex > i) {
 					nextLight = $(vertArray[vertLoopIndex]);
-					setLightBrightness(nextLight, 0);
 					nextLight.style.backgroundColor = null;
 					nextLight.style.boxShadow = null;
 					vertLoopIndex = 0;
@@ -109,7 +104,6 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 		}
 		if (loopDuration == 7) {
 			nextLight = $(vertArray[vertLoopIndex]);
-			setLightBrightness(nextLight, 1);
 			nextLight.style.backgroundColor = "var(--loopColor)";
 			nextLight.style.boxShadow = null;
 		}
