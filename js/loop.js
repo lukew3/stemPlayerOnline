@@ -9,6 +9,7 @@ const moveHorizDot = () => {
 	nextLight.style.backgroundColor = "var(--loopColor)";
 	nextLight.style.boxShadow = "0px 0px 3px 3px var(--loopColor)";
 	horizLoopTimeout = setTimeout(() => {
+		// TODO: should also only show animation when the audio is currently playing
 		if (inLoopMode) {
 			let lastLight = $(horizArray[horizLoopTracker]);
 			lastLight.style.boxShadow = null;
