@@ -31,7 +31,7 @@ tracks.forEach((track, i) => {
         })
 })
 function playAudio() {
-	$("loading").style.display = "block";
+	//$("loading").style.display = "block";
         setTimeout(() => {
                 if (tracksReady.indexOf(false) === -1) {
                         try {
@@ -40,7 +40,7 @@ function playAudio() {
                         } catch (err) {
 				console.log('Failed to play...' + err);
                         }
-			$("loading").style.display = "none";
+			//$("loading").style.display = "none";
                 } else {
                         playAudio();
                 }
