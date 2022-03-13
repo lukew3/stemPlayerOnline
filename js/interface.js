@@ -76,3 +76,24 @@ const getLightClicked = (clickEvent, boundIndex) => {
         return "1"; // catch error
 }
 
+$("leftDotButton").addEventListener("click", () => {
+	if (!inLoopMode) {
+		if (songIndex != 0) {
+			songIndex--;
+			loadSong();
+		}
+	} else if (loopStart*1000 >= beatDuration) {
+		loopStart -= beatDuration/1000;
+	}
+});
+
+$("rightDotButton").addEventListener("click", () => {
+	if (!inLoopMode) {
+		if (songIndex + 1 != playlist.length) {
+			songIndex++;
+			loadSong();
+		}
+	} else {
+		loopStart += beatDuration/1000;
+	}
+});
