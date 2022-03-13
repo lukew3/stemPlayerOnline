@@ -1,5 +1,6 @@
 let inLoopMode = false;
-let beatDuration = 500; // Milliseconds per beat
+let bpm = 120; 
+let beatDuration = 60/bpm*1000;// Milliseconds per beat
 // Index of the location of the dot moving horizontally
 const horizArray = ['left_4', 'left_3', 'left_2', 'left_1', 'right_1', 'right_2', 'right_3', 'right_4'];
 let horizLoopTracker = 0;
@@ -12,8 +13,10 @@ const moveHorizDot = () => {
 		// TODO: should also only show animation when the audio is currently playing
 		if (inLoopMode && nowPlaying) {
 			let lastLight = $(horizArray[horizLoopTracker]);
+			if (horizLoopTracker !== speedDotIndex) {
+				lastLight.style.backgroundColor = null;
+			} 
 			lastLight.style.boxShadow = null;
-			lastLight.style.backgroundColor = null;
 			if (horizLoopTracker < 7) {
 				horizLoopTracker++;
 			} else {
@@ -70,6 +73,7 @@ $("menuButton").addEventListener("click", () => {
 		loopDuration = 7;
 		vertLoopIndex = 0;
 		verticalLoop();
+		$(horizArray[speedDotIndex]).style.backgroundColor = "var(--loopColor)";
 	} else {
 		showStemLights();
 		inLoopMode = false;
@@ -85,6 +89,25 @@ $("menuButton").addEventListener("click", () => {
 		clearTimeout(vertLoopTimeout);
 	}
 })
+
+let speedDotIndex = 5;
+const setSpeed = (sliderName, lightIndex) => {
+	lightIndex = parseInt(lightIndex);
+	if (sliderName == "right") {
+		let pbRate = 1;
+		if (lightIndex == 1) pbRate = 0.5;
+		else if (lightIndex == 2) pbRate = 1;
+		else if (lightIndex == 3) pbRate = 1.5;
+		else if (lightIndex == 4) pbRate = 2;
+		beatDuration = 60/bpm*1000/pbRate;
+		tracks.forEach((track) => {
+			track.playbackRate = pbRate; 
+		})
+		$(horizArray[speedDotIndex]).style.backgroundColor = null;
+		speedDotIndex = 3 + lightIndex;
+		$(horizArray[speedDotIndex]).style.backgroundColor = "var(--loopColor)";
+	}
+}
 
 const loopHandleLightTap = (sliderName, lightIndex) => {
 	let nextLight;
@@ -120,5 +143,8 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 		}
 		clearTimeout(vertLoopTimeout);
 		verticalLoop();
+	} else if (["left", "right"].includes(sliderName)) {
+		setSpeed(sliderName, lightIndex);
 	}
 }
+
