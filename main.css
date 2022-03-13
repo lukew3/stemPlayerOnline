@@ -43,6 +43,7 @@ nav * {
 #folderSelectGroup {
 	display: flex;
 	align-items: center;
+	cursor: pointer;
 }
 #folderSelectField {
 	display: none;
@@ -51,7 +52,6 @@ nav * {
 	height: 25px;
 	padding: 3px;
 	margin-right: 5px;
-	cursor: pointer;
 }
 #playerContainer {
 	display: flex;

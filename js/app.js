@@ -89,7 +89,7 @@ const isolateStem = (sliderName) => {
 }
 
 /* Folder Select */
-$("folderSelectIcon").addEventListener("click", () => {
+$("folderSelectGroup").addEventListener("click", () => {
 	$("folderSelectField").click();
 });
 
