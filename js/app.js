@@ -1,4 +1,3 @@
-let centerButtonPressed = false;
 let isolating = false;
 let controlPressed = false;
 let pointerdown = false;
@@ -8,18 +7,6 @@ let lightNum;
 let levels = [4, 4, 4, 4];
 let sliderNames = ["right", "top", "left", "bottom"];
 let hideLightsTimeout;
-
-$("centerButton").addEventListener("pointerdown", () => {
-	$("centerButton").style.backgroundColor = "#82664b";
-	centerButtonPressed = true;
-});
-$("centerButton").addEventListener("pointerup", () => {
-	if (centerButtonPressed) {
-		togglePlayback();
-		$("centerButton").style.backgroundColor = "var(--player)";
-		centerButtonPressed = false;
-	}
-});
 
 const levelToVolume = (level) => {
 	return (level-1)/3*maxVolume;

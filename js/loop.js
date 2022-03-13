@@ -63,34 +63,40 @@ const verticalLoop = () => {
 	}
 }
 
+const enterLoopMode = () => {
+	allLightsOff();
+	inLoopMode = true;
+	// Init loop mode
+	["top", "bottom"].forEach((dir) => {
+		for(let i=1; i<5; i++) {
+			$(`${dir}_${i}`).style.backgroundColor = "var(--loopColor)";
+		}
+	})
+	moveHorizDot();
+	loopDuration = 7;
+	vertLoopIndex = 0;
+	verticalLoop();
+	$(horizArray[speedDotIndex]).style.backgroundColor = "var(--loopColor)";
+}
+const exitLoopMode = () => {
+	showStemLights();
+	inLoopMode = false;
+	// Clear manually set background colors
+	// Could just apply a class and remove it instead
+	["top", "bottom", "left", "right"].forEach((dir) => {
+		for(let i=1; i<5; i++) {
+			$(`${dir}_${i}`).style.backgroundColor = null;
+			$(`${dir}_${i}`).style.boxShadow = null;
+		}
+	})
+	clearTimeout(horizLoopTimeout);
+	clearTimeout(vertLoopTimeout);
+}
 $("menuButton").addEventListener("click", () => {
 	if (!inLoopMode) {
-		allLightsOff();
-		inLoopMode = true;
-		// Init loop mode
-		["top", "bottom"].forEach((dir) => {
-			for(let i=1; i<5; i++) {
-				$(`${dir}_${i}`).style.backgroundColor = "var(--loopColor)";
-			}
-		})
-		moveHorizDot();
-		loopDuration = 7;
-		vertLoopIndex = 0;
-		verticalLoop();
-		$(horizArray[speedDotIndex]).style.backgroundColor = "var(--loopColor)";
+		enterLoopMode();
 	} else {
-		showStemLights();
-		inLoopMode = false;
-		// Clear manually set background colors
-		// Could just apply a class and remove it instead
-		["top", "bottom", "left", "right"].forEach((dir) => {
-			for(let i=1; i<5; i++) {
-				$(`${dir}_${i}`).style.backgroundColor = null;
-				$(`${dir}_${i}`).style.boxShadow = null;
-			}
-		})
-		clearTimeout(horizLoopTimeout);
-		clearTimeout(vertLoopTimeout);
+		exitLoopMode();
 	}
 })
 
