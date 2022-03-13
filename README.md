@@ -3,6 +3,8 @@ An online stem player. Inspired by but not affiliated with YEEZY TECH X KANO Ste
 
 https://stemplayeronline.com
 
+See [the project board](https://github.com/lukew3/stemPlayerOnline/projects/1) to see what features are coming up next.
+
 ## Usage
 This site aims to function as closely to the original stem player device as possible. All usage instructions unique to the site are listed below.
 
@@ -15,12 +17,3 @@ Keyboard shortcuts have been included to help better the experience of using the
 
 * `Spacebar` - Toggles playback, pausing and playing the entire track
 * `<Arrowkey>` - Each arrow key controls the volume of it's respective slider. Pressing the arrow key will increase the volume and holding control while pressing the arrow key will decrease the volume.
-
-## Future plans
-* Enable loading multiple songs from local stem library
-* Fix bug causing latency when stem is isolated or unisolated. It seems that the lights change colors before volume is set
-* Fix bug causing mp3 tracks to go out of sync after a loop
-* Reverse and change playback speed
-* Apply effects to sounds
-* Pulse lights to show playing tracks
-* Create loading animation to inform user that track is loading
