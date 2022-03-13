@@ -75,6 +75,48 @@ const getLightClicked = (clickEvent, boundIndex) => {
                 if (inBounds[boundIndex]()) return i.toString();
         return "1"; // catch error
 }
+let centerButtonPressed = false;
+$("centerButton").addEventListener("pointerdown", () => {
+        $("centerButton").style.backgroundColor = "#82664b";
+        centerButtonPressed = true;
+});
+$("centerButton").addEventListener("pointerup", () => {
+        if (centerButtonPressed) {
+		if (!inLoopMode) {
+			togglePlayback();
+		} else {
+			if (loopDuration == 7 && speedDotIndex == 5) {
+				exitLoopMode();
+			} else {
+				loopHandleLightTap("top", "4");
+				setSpeed("right", "2"); // Should speed be getting reset here?
+			}
+		}
+                $("centerButton").style.backgroundColor = "var(--player)";
+                centerButtonPressed = false;
+        }
+});
+
+$("minusButton").addEventListener("click", () => {
+	if (!inLoopMode) {
+		if (wholeMaxVolume != 0) {
+			wholeMaxVolume--;
+			maxVolume = wholeMaxVolume/8;
+			updateVolumes();
+		}
+		displayVolume();
+	}
+});
+$("plusButton").addEventListener("click", () => {
+	if (!inLoopMode) {
+		if (wholeMaxVolume != 8) {
+			wholeMaxVolume++;
+			maxVolume = wholeMaxVolume/8;
+			updateVolumes();
+		}
+		displayVolume();
+	}
+});
 
 $("leftDotButton").addEventListener("click", () => {
 	if (!inLoopMode) {
@@ -98,25 +140,4 @@ $("rightDotButton").addEventListener("click", () => {
 	}
 });
 
-let centerButtonPressed = false;
-$("centerButton").addEventListener("pointerdown", () => {
-        $("centerButton").style.backgroundColor = "#82664b";
-        centerButtonPressed = true;
-});
-$("centerButton").addEventListener("pointerup", () => {
-        if (centerButtonPressed) {
-		if (!inLoopMode) {
-                	togglePlayback();
-		} else {
-			if (loopDuration == 7 && speedDotIndex == 5) {
-				exitLoopMode();
-			} else {
-				loopHandleLightTap("top", "4");
-				setSpeed("right", "2"); // Should speed be getting reset here?
-			}
-		}
-                $("centerButton").style.backgroundColor = "var(--player)";
-                centerButtonPressed = false;
-        }
-});
 

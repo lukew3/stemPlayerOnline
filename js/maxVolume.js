@@ -22,21 +22,3 @@ const displayVolume = () => {
                 showStemLights();
         }, 800);
 }
- 
-$("minusButton").addEventListener("click", () => {
-        if (wholeMaxVolume != 0) {
-                wholeMaxVolume--;
-                maxVolume = wholeMaxVolume/8;
-                updateVolumes();
-        }
-        displayVolume();
-});
-$("plusButton").addEventListener("click", () => {
-        if (wholeMaxVolume != 8) {
-                wholeMaxVolume++;
-                maxVolume = wholeMaxVolume/8;
-                updateVolumes();
-        }
-        displayVolume();
-});
- 
