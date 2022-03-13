@@ -19,9 +19,8 @@ Keyboard shortcuts have been included to help better the experience of using the
 ## Future plans
 * Enable loading multiple songs from local stem library
 * Fix bug causing latency when stem is isolated or unisolated. It seems that the lights change colors before volume is set
-* Add looping functionality
-* Reverse playback
-* Change playback speed
+* Fix bug causing mp3 tracks to go out of sync after a loop
+* Reverse and change playback speed
 * Apply effects to sounds
 * Pulse lights to show playing tracks
 * Create loading animation to inform user that track is loading
