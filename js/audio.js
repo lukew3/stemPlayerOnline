@@ -1,4 +1,4 @@
-let songIndex = 1;
+let songIndex = 7;
 let nowPlaying = false;
 let tracks = [];
 let tracksReady = [false, false, false, false];
