@@ -19,6 +19,6 @@ const displayVolume = () => {
                 for (let i=0; i<8; i++) {
                         $(volumeLights[i]).style.backgroundColor = null;
                 }
-                showStemLights();
+                if (!inLoopMode) showStemLights();
         }, 800);
 }
