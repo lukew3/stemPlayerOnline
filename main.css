@@ -249,3 +249,16 @@ nav * {
        margin-top: -30px;
        display: none;
 }
+#externalLinks {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	display: flex;
+}
+#externalLinks img {
+	margin-right: 10px;
+	width: 25px;
+	height: 25px;
+	padding: 2.5px;
+	margin-top: 10px;
+}
