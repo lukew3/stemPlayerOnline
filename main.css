@@ -61,7 +61,7 @@ nav * {
 	margin: auto;
 }
 #content {
-	height: calc(85vh - 36px);
+	height: calc(85vh - 50px);
 	display: flex;
 }
 #player {
@@ -235,7 +235,7 @@ nav * {
 	height: 30px;
 	border-radius: 50%;
 	cursor: pointer;
-	margin: 3px;
+	margin: 6px;
 	border: 1px solid black;
 }
 #color4Icon {
