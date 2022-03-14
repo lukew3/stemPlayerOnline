@@ -7,7 +7,14 @@ let tracksReady = [false, false, false, false];
 for (var i=0; i<4; i++) {
         tracks[i] = new Audio(playlist[songIndex][i]);
         tracks[i].type = "audio/wav";
-        tracks[i].onended = () => {nowPlaying = false;};
+}
+tracks[0].onended = () => {
+	if (songIndex < playlist.length - 1) {
+		songIndex++;
+		loadSong();
+	} else {
+		nowPlaying = false;
+	}
 }
 const loadSong = () => {
         tracksReady = [false, false, false, false];
