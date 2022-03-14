@@ -1,3 +1,7 @@
+let storedColors = window.localStorage.colors ? JSON.parse(window.localStorage.colors) : [$('color4Input').value, $('color1Input').value];
+$('color4Input').value = storedColors[0];
+$('color1Input').value = storedColors[1];
+
 const colorHex2Dec = (color) => {
 	return [parseInt(color.substring(1,3), 16), parseInt(color.substring(3,5), 16),  parseInt(color.substring(5,7), 16)]
 }
@@ -10,8 +14,9 @@ const colorDec2Hex = (colorDec) => {
 }
 const generateGradient = () => {
 	let color4 = $('color4Input').value;
-	let color4Dec = colorHex2Dec(color4);
 	let color1 = $('color1Input').value;
+	window.localStorage.setItem("colors", JSON.stringify([color4, color1]));
+	let color4Dec = colorHex2Dec(color4);
 	let color1Dec = colorHex2Dec(color1);
 	let diff = [
 		color4Dec[0] - color1Dec[0],
