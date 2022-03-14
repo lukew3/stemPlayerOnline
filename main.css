@@ -173,6 +173,12 @@ nav * {
 .light4.lightBright {
 	box-shadow: 0px 0px 3px 3px var(--light-4);
 }
+.loopLight {
+	background-color: var(--loopColor) !important;
+}
+.loopLight.lightBright {
+	box-shadow: 0px 0px 3px 3px var(--loopColor);
+}
 .lightOff {
 	background-color: var(--light-off);
 	box-shadow: none;
