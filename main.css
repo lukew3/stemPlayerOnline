@@ -63,7 +63,6 @@ nav * {
 #content {
 	height: calc(85vh - 36px);
 	display: flex;
-
 }
 #player {
 	height: 95vw;

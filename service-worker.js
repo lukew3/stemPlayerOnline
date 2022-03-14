@@ -1,8 +1,7 @@
 // Service worker adapted from: https://developers.google.com/web/fundamentals/primers/service-workers
 var CACHE_NAME = 'spo-cache';
 var urlsToCache = [
-  '/',
-  '/main.css'
+	//'/',
 ];
 
 self.addEventListener('install', function(event) {
@@ -31,7 +30,7 @@ self.addEventListener('fetch', function(event) {
             if(!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
-
+/*
             // IMPORTANT: Clone the response. A response is a stream
             // and because we want the browser to consume the response
             // as well as the cache consuming the response, we need
@@ -42,7 +41,7 @@ self.addEventListener('fetch', function(event) {
               .then(function(cache) {
                 cache.put(event.request, responseToCache);
               });
-
+*/
             return response;
           }
         );
