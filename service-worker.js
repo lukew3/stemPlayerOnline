@@ -9,11 +9,20 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
   );
 });
+
+self.addEventListener('activate', (event) => {                                                          
+  event.waitUntil((async () => {                                                                        
+        if ('navigationPreload' in self.registration) {                                                 
+          await self.registration.navigationPreload.enable();                                           
+        }                                                                                               
+  })());                                                                                                
+                                                                                                        
+  self.clients.claim();                                                                                 
+});                                                                                                     
 
 self.addEventListener('fetch', function(event) {
   event.respondWith(
