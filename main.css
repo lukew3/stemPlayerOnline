@@ -40,6 +40,10 @@ nav * {
 #pageTitle {
 	font-size: 14pt;
 }
+#topBar {
+	display: flex;
+	justify-content: space-between;
+}
 #folderSelectGroup {
 	display: flex;
 	align-items: center;
@@ -229,13 +233,15 @@ nav * {
 }
 #colorIcons {
 	display: flex;
+	margin-top: 3px;
+	margin-right: 5px;
 }
 .colorIcon {
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
 	cursor: pointer;
-	margin: 6px;
+	margin: 8px;
 	border: 1px solid black;
 }
 #color4Icon {
