@@ -24,6 +24,7 @@ html, body {
 	background-color: var(--bg);
 	overflow-x: hidden;
 	overflow-y: hidden;
+	margin: 0;
 }
 * {
 	font-family: 'Roboto', sans-serif;
@@ -43,6 +44,7 @@ nav * {
 #topBar {
 	display: flex;
 	justify-content: space-between;
+	margin: 5px;
 }
 #folderSelectGroup {
 	display: flex;
@@ -250,11 +252,6 @@ nav * {
 #color1Icon {
 	background-color: var(--light-1);
 }
-#loading {
-       position: absolute;
-       margin-top: -30px;
-       display: none;
-}
 #externalLinks {
 	position: absolute;
 	bottom: 15px;
@@ -266,4 +263,20 @@ nav * {
 	width: 25px;
 	height: 25px;
 	padding: 5px;
+}
+@keyframes loadingAnimation {
+	0% { margin-left:-70%;}
+	100% { margin-left: 120%;}
+}
+#loading {
+	position: absolute;
+	width: 50%;
+	height: 2px;
+	background-color: white;
+	margin: 0;
+	margin-left: -70%;
+	animation-name: loadingAnimation;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	display: none;
 }
