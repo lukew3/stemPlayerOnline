@@ -7,16 +7,14 @@ let horizLoopTracker = 0;
 let horizLoopTimeout;
 const moveHorizDot = () => {
 	let nextLight = $(horizArray[horizLoopTracker]);
-	nextLight.style.backgroundColor = "var(--loopColor)";
-	nextLight.style.boxShadow = "0px 0px 3px 3px var(--loopColor)";
+	nextLight.classList.add("loopLight", "lightBright");
 	horizLoopTimeout = setTimeout(() => {
-		// TODO: should also only show animation when the audio is currently playing
 		if (inLoopMode && nowPlaying) {
 			let lastLight = $(horizArray[horizLoopTracker]);
 			if (horizLoopTracker !== speedDotIndex) {
-				lastLight.style.backgroundColor = null;
+				lastLight.classList.remove("loopLight");
 			} 
-			lastLight.style.boxShadow = null;
+			lastLight.classList.remove("lightBright");
 			if (horizLoopTracker < 7) {
 				horizLoopTracker++;
 			} else {
@@ -36,11 +34,9 @@ const vertArray = ['bottom_4', 'bottom_3', 'bottom_2', 'bottom_1', 'top_1', 'top
 const verticalLoop = () => {
 	if (loopDuration < 7) {
 		let nextLight = $(vertArray[vertLoopIndex]);
-		nextLight.style.backgroundColor = "var(--loopColor)";
-		nextLight.style.boxShadow = "0px 0px 3px 3px var(--loopColor)";
+		nextLight.classList.add("loopLight", "lightBright");
 		vertLoopTimeout = setTimeout(() => {
-			let lastLight = $(vertArray[vertLoopIndex]);
-			lastLight.style.boxShadow = null;
+			$(vertArray[vertLoopIndex]).classList.remove("lightBright");
 			if (vertLoopIndex < loopDuration) {
 				vertLoopIndex++;
 			} else {
@@ -69,14 +65,14 @@ const enterLoopMode = () => {
 	// Init loop mode
 	["top", "bottom"].forEach((dir) => {
 		for(let i=1; i<5; i++) {
-			$(`${dir}_${i}`).style.backgroundColor = "var(--loopColor)";
+			$(`${dir}_${i}`).classList.add("loopLight");
 		}
 	})
 	moveHorizDot();
 	loopDuration = 7;
 	vertLoopIndex = 0;
 	verticalLoop();
-	$(horizArray[speedDotIndex]).style.backgroundColor = "var(--loopColor)";
+	$(horizArray[speedDotIndex]).classList.add("loopLight");
 }
 const exitLoopMode = () => {
 	showStemLights();
@@ -85,8 +81,7 @@ const exitLoopMode = () => {
 	// Could just apply a class and remove it instead
 	["top", "bottom", "left", "right"].forEach((dir) => {
 		for(let i=1; i<5; i++) {
-			$(`${dir}_${i}`).style.backgroundColor = null;
-			$(`${dir}_${i}`).style.boxShadow = null;
+			$(`${dir}_${i}`).classList.remove("loopLight", "lightBright");
 		}
 	})
 	clearTimeout(horizLoopTimeout);
@@ -113,9 +108,9 @@ const setSpeed = (sliderName, lightIndex) => {
 		tracks.forEach((track) => {
 			track.playbackRate = pbRate; 
 		})
-		$(horizArray[speedDotIndex]).style.backgroundColor = null;
+		$(horizArray[speedDotIndex]).classList.remove("loopLight");
 		speedDotIndex = 3 + lightIndex;
-		$(horizArray[speedDotIndex]).style.backgroundColor = "var(--loopColor)";
+		$(horizArray[speedDotIndex]).classList.add("loopLight");
 	}
 }
 
@@ -129,27 +124,25 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 		let lightId = `${sliderName}_${lightIndex}`;
 		for(let i=0; i<vertArray.length; i++) {
 			if (maxFound) {
-				$(vertArray[i]).style.backgroundColor = null;
-				$(vertArray[i]).style.boxShadow = null;
+				$(vertArray[i]).classList.remove("loopLight", "lightBright");
 			} else if (vertArray[i] === lightId) {
 				maxFound = true;
-				$(vertArray[i]).style.backgroundColor = "var(--loopColor)";
+				$(vertArray[i]).classList.add("loopLight");
 				loopDuration = i;
 				if (vertLoopIndex > i) {
 					nextLight = $(vertArray[vertLoopIndex]);
-					nextLight.style.backgroundColor = null;
-					nextLight.style.boxShadow = null;
+					nextLight.classList.remove("loopLight", "lightBright");
 					vertLoopIndex = 0;
 					loopStart = tracks[0].currentTime;
 				}
 			} else {
-				$(vertArray[i]).style.backgroundColor = "var(--loopColor)";
+				$(vertArray[i]).classList.add("loopLight");
 			}
 		}
 		if (loopDuration == 7) {
 			nextLight = $(vertArray[vertLoopIndex]);
-			nextLight.style.backgroundColor = "var(--loopColor)";
-			nextLight.style.boxShadow = null;
+			nextLight.classList.add("loopLight");
+			nextLight.classList.remove("brightLight");
 		}
 		clearTimeout(vertLoopTimeout);
 		verticalLoop();
