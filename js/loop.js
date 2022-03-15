@@ -142,7 +142,7 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 		if (loopDuration == 7) {
 			nextLight = $(vertArray[vertLoopIndex]);
 			nextLight.classList.add("loopLight");
-			nextLight.classList.remove("brightLight");
+			nextLight.classList.remove("lightBright");
 		}
 		clearTimeout(vertLoopTimeout);
 		verticalLoop();
