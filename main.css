@@ -50,6 +50,7 @@ nav * {
 	display: flex;
 	align-items: center;
 	cursor: pointer;
+	margin-left: 10px;
 }
 #folderSelectField {
 	display: none;
@@ -260,8 +261,8 @@ nav * {
 }
 #externalLinks {
 	position: absolute;
-	bottom: 15px;
-	left: 20px;
+	bottom: 10px;
+	left: 15px;
 	display: flex;
 }
 #externalLinks img {
