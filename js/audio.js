@@ -5,7 +5,7 @@ let tracksReady = [false, false, false, false];
 
 // Load starting stems 
 for (var i=0; i<4; i++) {
-        tracks[i] = new Audio(playlist[songIndex][i]);
+        tracks[i] = new Audio(playlist[songIndex].tracks[i]);
         tracks[i].type = "audio/wav";
 }
 tracks[0].onended = () => {
@@ -18,7 +18,7 @@ tracks[0].onended = () => {
 }
 const loadSong = () => {
         tracksReady = [false, false, false, false];
-        let song = playlist[songIndex];
+        let song = playlist[songIndex].tracks;
         for (var i=0; i<4; i++) {
                 tracks[i].src = song[i];
         }

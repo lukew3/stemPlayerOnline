@@ -8,6 +8,22 @@ let levels = [4, 4, 4, 4];
 let sliderNames = ["right", "top", "left", "bottom"];
 let hideLightsTimeout;
 
+const loadPlaylistViewer = () => {
+	const pv = $("playlistViewer");
+	pv.innerHTML = "";
+	playlist.forEach((song, i) => {
+		let songDiv = document.createElement('div');
+		songDiv.classList.add("playlistViewerItem");
+		songDiv.innerHTML = i+1 + ") " + song.title;
+		songDiv.addEventListener("click", () => {
+			songIndex = i;
+			loadSong();
+		})
+		pv.append(songDiv);
+	})
+}
+loadPlaylistViewer();
+
 const levelToVolume = (level) => {
 	return (level-1)/3*maxVolume;
 }
