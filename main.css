@@ -289,6 +289,7 @@ nav * {
 }
 #playlistViewer {
 	position: absolute;
+	display: none;
 	bottom: 10px;
 	right: 15px;
 	overflow: auto;

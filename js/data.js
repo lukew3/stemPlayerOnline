@@ -1,6 +1,7 @@
 const playlist = [
 	{
 		title: "24",
+		bpm: 110,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1l0NpW2-YUZyYsjz1biYEFvIbQUEBX3QT",
 			"https://drive.google.com/uc?export=download&id=1kyiCYl8UYDm4VJnzg3-gdQdWWIF-FFOB",
@@ -10,6 +11,7 @@ const playlist = [
 	},
 	{
 		title: "Believe What I Say",
+		bpm: 100,
 		tracks:	[
 			"https://drive.google.com/uc?export=download&id=1iRb_QhgMn4IfgH5ts4X7SBuv90Gr3EDv",
 			"https://drive.google.com/uc?export=download&id=1iQPx-ahnx7SxvfQKBS5CdeRj3r5e78Cc",
@@ -19,6 +21,7 @@ const playlist = [
 	},
 	{
 		title: "Come To Life",
+		bpm: 127,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1lXl0Vo-S8E0SenpxuDyIYjMVLFZt6HB5",
 			"https://drive.google.com/uc?export=download&id=1lMR-NyjPxjJcxE4dcLAXXgRjkxuxxQHg",
@@ -28,6 +31,7 @@ const playlist = [
 	},
 	{
 		title: "Donda",
+		bpm: 106,
 		tracks:	[
 			"https://drive.google.com/uc?export=download&id=1rlOtRPMTlUMBcs7nuGyn-pd83cAcEtvI",
 			"https://drive.google.com/uc?export=download&id=1roYJ_a4EUMXrTLGRmSkC7i6SBMxqzZBe",
@@ -37,6 +41,7 @@ const playlist = [
 	},
 	{
 		title: "Donda Chant",
+		bpm: 103,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1pPquYD7GVYEaU9xYq-QvEcZgj4Db2InT",
 			"https://drive.google.com/uc?export=download&id=1pP-XLPFAtu6YpXyX4HmY0wgtoNNRWihi",
@@ -46,6 +51,7 @@ const playlist = [
 	},
 	{
 		title: "God Breathed",
+		bpm: 93,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1nxfTqbuQ0Zcx-N69BoZHEuQWNi06wJo6",
 			"https://drive.google.com/uc?export=download&id=1nvb0U8LRdFX_KGbVdSx64czQ5XjlUDlo",
@@ -55,6 +61,7 @@ const playlist = [
 	},
 	{
 		title: "Heaven and Hell",
+		bpm: 83,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1pI8esRhlZozIv7xXl0m3wA1quCwAZsBF",
 			"https://drive.google.com/uc?export=download&id=1pBcuJzpv0tID0l8S6KUYijchA6sEgOKE",
@@ -64,6 +71,7 @@ const playlist = [
 	},
 	{
 		title: "Hurricane",
+		bpm: 80,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1i2fpw9J8Brn-Qs5p0UBYAkW371Kts5PL",
 			"https://drive.google.com/uc?export=download&id=1hr0shWgouaoImysDTH6vmj2nDcBuL2RW",
@@ -73,6 +81,7 @@ const playlist = [
 	},
 	{
 		title: "Jail",
+		bpm: 110,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1qOwlIg-u7RiZle-__qw0VqzMeiYQt_Du",
 			"https://drive.google.com/uc?export=download&id=1q5TjC5julN4GTk5rWk7470dmmkeC3RvM",
@@ -82,6 +91,7 @@ const playlist = [
 	},
 	{
 		title: "Jail pt. 2",
+		bpm: 110,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1mkdZ9rVWoRUXWx8azC7UViVwgHzNOZov",
 			"https://drive.google.com/uc?export=download&id=1n8MS4wCPnQp_NRkFZGpEBODAotka6glM",
@@ -91,6 +101,7 @@ const playlist = [
 	},
 	{
 		title: "Jesus Lord",
+		bpm: 106,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1rdkVlS5Ry9UAkb_zvv0kzFUPvkdfN7Uz",
 			"https://drive.google.com/uc?export=download&id=1rYQOUEWy9uRFLbQ1W2iDv0WUwz5l3mW2",
@@ -100,6 +111,7 @@ const playlist = [
 	},
 	{
 		title: "Jesus Lord pt. 2",
+		bpm: 107,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1qjNHfaF-ltstzxQJPFJd7Ct5LOtp3e57",
 			"https://drive.google.com/uc?export=download&id=1qqolMSh0iili2SxmRKoLnPFlx_Nb6yWG",
@@ -109,6 +121,7 @@ const playlist = [
 	},
 	{
 		title: "Jonah",
+		bpm: 177,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1omIJQ1vdsQJ3sQxy3QD0yAQuH7p2Dhep",
 			"https://drive.google.com/uc?export=download&id=1oY6zaQy3CrvmkZtNsa-jxosdXSCUq7NO",
@@ -118,6 +131,7 @@ const playlist = [
 	},
 	{
 		title: "Junya",
+		bpm: 148,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1q09C2bBSzvA8mwm1ltaUbD-45EKGgLXE",
 			"https://drive.google.com/uc?export=download&id=1pw-0KC2ZXSS90XYxzenHJ6Js8LUo1T5O",
@@ -127,6 +141,7 @@ const playlist = [
 	},
 	{
 		title: "Junya pt. 2",
+		bpm: 148,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1rJPj6jnmra4_FBpXqk6Aa4BVsAzjx1VZ",
 			"https://drive.google.com/uc?export=download&id=1qsiTmvhtT5UvFQQyYMs7acnk5BMW7GZY",
@@ -136,8 +151,8 @@ const playlist = [
 	},
 	{
 		title: "Keep My Spirit Alive",
+		bpm: 166,
 		tracks: [
-			// KMSA
 			"https://drive.google.com/uc?export=download&id=1kwAhSThL146szXIFCWjHoT9Zawmdy-H9",
 			"https://drive.google.com/uc?export=download&id=1l0UfiLYOPEZ4Ga4tjpB93txeMiXOM3S2",
 			"https://drive.google.com/uc?export=download&id=1l1rfvQkuLbQR5Y4eL8d4DhGTfLPlXYkK",
@@ -146,6 +161,7 @@ const playlist = [
 	},
 	{
 		title: "Lord I Need You",
+		bpm: 83,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1pVIa0xWn8aWxsVxhc28rFDkicStUBU5S",
 			"https://drive.google.com/uc?export=download&id=1pnnFwCvGTw7LtDwFW8oGe7ZnsNKBtet_",
@@ -155,6 +171,7 @@ const playlist = [
 	},
 	{
 		title: "Life of the Party",
+		bpm: 79,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1j8lh_dDC3mE66B3nIEHpU3se7lJujQsB",
 			"https://drive.google.com/uc?export=download&id=1jD3rReo6i0oy5hDNFoG_24y5SNFMtTPf",
@@ -164,6 +181,7 @@ const playlist = [
 	},
 	{
 		title: "Moon",
+		bpm: 162, //66?
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1kY-Ap1fpRPXGO5Mhx1O0bOuGc53RajFe",
 			"https://drive.google.com/uc?export=download&id=1kHfjNMeJ4V6DEFFNH-rA8FAqVIkwTjrR",
@@ -173,6 +191,7 @@ const playlist = [
 	},
 	{
 		title: "New Again",
+		bpm: 91,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1oT3mistVJkYQREAS6inoqz1cUTqY4Z-B",
 			"https://drive.google.com/uc?export=download&id=1oR0AmaUAQKbV7jgSyVL6O3YgeTr_8lbg",
@@ -182,6 +201,7 @@ const playlist = [
 	},
 	{
 		title: "Never Abandon Your Family",
+		bpm: 90,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1nuRC25F8glgtTQwSEE3WAJcbXDOuquFd",
 			"https://drive.google.com/uc?export=download&id=1nX4N5g99xCSR49GPcH7BEIjVkE3n-9ko",
@@ -191,6 +211,7 @@ const playlist = [
 	},
 	{
 		title: "No Child Left Behind",
+		bpm: 135,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1nzZhgFaur0NcQ5T4VIy4wh-jpf0CMtlW",
 			"https://drive.google.com/uc?export=download&id=1oMLPgCR8r1Jih2YHuxaJqnEaAU5Q4gwD",
@@ -200,6 +221,7 @@ const playlist = [
 	},
 	{
 		title: "Okay Okay",
+		bpm: 108,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1jLiL24KNF3nr5zkdITCBBMUqwrv0hnbN",
 			"https://drive.google.com/uc?export=download&id=1ju-9ziC7bxaladQVaSGerTWi-uPGuG2a",
@@ -209,6 +231,7 @@ const playlist = [
 	},
 	{
 		title: "Okay Okay pt. 2",
+		bpm: 108,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1l6RrTianO_SpnI427iOO_y75ZgWGK2rc",
 			"https://drive.google.com/uc?export=download&id=1l9hAKMfBgrN_q9ev-ZJ_xQnQqgP2OCDq",
@@ -218,6 +241,7 @@ const playlist = [
 	},
 	{
 		title: "Off the Grid",
+		bpm: 138,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1s8WXXS4R5VtX2JnNBBZTckMXqJpGx9Jn",
 			"https://drive.google.com/uc?export=download&id=1sK62NVvesD0dDpMa-srLR0T9d7GA01Zr",
@@ -227,6 +251,7 @@ const playlist = [
 	},
 	{
 		title: "Praise God",
+		bpm: 118,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1s7jhezCHA_kL6m6r4fJYq0wT37IdhG6A",
 			"https://drive.google.com/uc?export=download&id=1s3-a-5RMxBfCfZy4XhYcG6OgfaMoM-DZ",
@@ -236,6 +261,7 @@ const playlist = [
 	},
 	{
 		title: "Pure Souls",
+		bpm: 97,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1rB0J_exbQI2SfuDZr8-Rhl7JCxp9vnWN",
 			"https://drive.google.com/uc?export=download&id=1rV8JhJnrT44LXV6H5iqRPiNTeIIjLVe_",
@@ -245,6 +271,7 @@ const playlist = [
 	},
 	{
 		title: "Remote Control",
+		bpm: 110,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1kgLiW--6Vq4aqcDSyDyjnS6bE52JSRQP",
 			"https://drive.google.com/uc?export=download&id=1k_DXDAfZUZ9B9Fxqi_X9_ok1V6xLjxH8",
@@ -254,6 +281,7 @@ const playlist = [
 	},
 	{
 		title: "Tell The Vision",
+		bpm: 144,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1mtwjHMfSgH0sFv0rR4vBtjG4jHhFlGX7",
 			"https://drive.google.com/uc?export=download&id=1moaOjfaGL3-rK7xZQf9mtR_zBKibE5DA",
@@ -263,6 +291,7 @@ const playlist = [
 	},
 	{
 		title: "Up From The Ashes",
+		bpm: 143,
 		tracks: [
 			"https://drive.google.com/uc?export=download&id=1lHStyeNsYtYebBbAhuHgs0P8w6cpG5yy",
 			"https://drive.google.com/uc?export=download&id=1lEvpyyv28YWoPf-HVsiS_43Ukpb6N0bm",
