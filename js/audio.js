@@ -23,6 +23,10 @@ const loadSong = () => {
                 tracks[i].src = song[i];
         }
         setTimeout(playAudio, 500);
+	if (bpm) {
+		bpm = playlist[songIndex].bpm || 120;
+		beatDuration = 60/bpm*1000;
+	}
 }
 
 const key = {
