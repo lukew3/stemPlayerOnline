@@ -1,4 +1,4 @@
-const playlist = [
+let playlist = [
 	{
 		title: "Donda Chant",
 		bpm: 103,
@@ -330,4 +330,16 @@ let oldPlaylist = [
 	]
 ]
 
-
+playlist = [
+	{},
+	{
+		title: "Hurricane",
+		bpm: 103,
+		tracks: [
+			'./1.flac',
+			'./2.flac',
+			'./3.flac',
+			'./4.flac',
+		]
+	}
+]

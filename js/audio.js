@@ -1,12 +1,19 @@
 let songIndex = 1;
 let nowPlaying = false;
-let tracks = [];
+let tracks = [$('audio1'), $('audio2'), $('audio3'), $('audio4')];
 let tracksReady = [false, false, false, false];
+
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
+let sources = [];
+tracks.forEach((track, i) => {
+	sources[i] = audioCtx.createMediaElementSource(track);
+})
 
 // Load starting stems 
 for (var i=0; i<4; i++) {
-        tracks[i] = new Audio(playlist[songIndex].tracks[i]);
-        tracks[i].type = "audio/wav";
+        tracks[i].src = playlist[songIndex].tracks[i];
 }
 tracks[0].onended = () => {
 	if (songIndex < playlist.length - 1) {
@@ -45,6 +52,8 @@ function playAudio() {
 	$("loading").style.display = "block";
         setTimeout(() => {
                 if (tracksReady.indexOf(false) === -1) {
+			// check if context is in suspended state (autoplay policy)
+			if (audioCtx.state === 'suspended') audioCtx.resume();
                         try {
 				tracks.forEach((track) => {track.play()});
 				nowPlaying = true;
@@ -71,3 +80,9 @@ const togglePlayback = () => {
         }
 }
 
+
+const gainNode = audioCtx.createGain();
+gainNode.gain.value = 1;
+sources.forEach((source) => {
+	source.connect(gainNode).connect(audioCtx.destination)
+})
