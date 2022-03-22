@@ -1,7 +1,6 @@
 let isolating = false;
 let controlPressed = false;
 let pointerdown = false;
-let maxVolume = 1;
 let wholeMaxVolume = 8; // Max volume in non-decimal
 let lightNum;
 let levels = [4, 4, 4, 4];
@@ -25,7 +24,7 @@ const loadPlaylistViewer = () => {
 loadPlaylistViewer();
 
 const levelToVolume = (level) => {
-	return (level-1)/3*maxVolume;
+	return (level-1)/3;
 }
 
 const setLightBrightness = (light, brightness) => {
@@ -100,4 +99,3 @@ $("folderSelectField").addEventListener("change", () => {
 	// set label to folder name
 	$("folderSelectLabel").innerHTML = files[0].webkitRelativePath.split("/")[0];
 });
-

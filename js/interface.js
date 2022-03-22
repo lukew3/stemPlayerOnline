@@ -37,7 +37,7 @@ document.addEventListener("pointermove", (e) => {
 })
 const handlePointerDown = (e) => {
         sliderBounds.forEach((bound, index) => {
-                if (e.clientX >= bound.left && 
+                if (e.clientX >= bound.left &&
                         e.clientX <= bound.right &&
                         e.clientY >= bound.top &&
                         e.clientY <= bound.bottom
@@ -58,7 +58,7 @@ const handlePointerDown = (e) => {
                 }
         })
 }
-const getLightClicked = (clickEvent, boundIndex) => {    
+const getLightClicked = (clickEvent, boundIndex) => {
         let segLen, i;
         let bound = sliderBounds[boundIndex];
         let y = clickEvent.clientY;
@@ -101,7 +101,6 @@ $("minusButton").addEventListener("click", () => {
 	if (!inLoopMode) {
 		if (wholeMaxVolume != 0) {
 			wholeMaxVolume--;
-			maxVolume = wholeMaxVolume/8;
 			updateVolumes();
 		}
 		displayVolume();
@@ -111,7 +110,6 @@ $("plusButton").addEventListener("click", () => {
 	if (!inLoopMode) {
 		if (wholeMaxVolume != 8) {
 			wholeMaxVolume++;
-			maxVolume = wholeMaxVolume/8;
 			updateVolumes();
 		}
 		displayVolume();
@@ -139,5 +137,3 @@ $("rightDotButton").addEventListener("click", () => {
 		loopStart += beatDuration/1000;
 	}
 });
-
-
