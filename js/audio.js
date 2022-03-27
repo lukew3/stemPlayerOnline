@@ -3,6 +3,7 @@ let nowPlaying = false;
 //let tracks = [$('audio1'), $('audio2'), $('audio3'), $('audio4')];
 let tracksReady = [false, false, false, false];
 let sources = [null, null, null, null];
+let sourceGains = [null, null, null, null];
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
@@ -23,6 +24,9 @@ const onEnded = () => {
 const loadBuffer = (response, i) => {
 	sources[i].disconnect();
 	delete sources[i];
+	delete sourceGains[i];
+	sourceGains[i] = audioCtx.createGain();
+	sourceGains[i].gain.value = 1;
 	sources[i] = audioCtx.createBufferSource();
 	audioCtx.decodeAudioData(response, (buffer) => {
 		if (!buffer) { console.log('Error decoding file data: ' + url);
@@ -30,7 +34,7 @@ const loadBuffer = (response, i) => {
 			sources[i].buffer = buffer;
 			tracksReady[i] = true;
 		}
-		sources[i].connect(gainNode).connect(audioCtx.destination)
+		sources[i].connect(sourceGains[i]).connect(gainNode).connect(audioCtx.destination)
 	});
 	sources[i].addEventListener('ended', onEnded);
 }
@@ -56,10 +60,10 @@ const loadSong = () => {
 }
 
 const key = {
-        "right": sources[0],
-        "top": sources[1],
-        "left": sources[2],
-        "bottom": sources[3]
+        "right": 0,
+        "top": 1,
+        "left": 2,
+        "bottom": 3
 }
 function playAudio() {
 	$("loading").style.display = "block";

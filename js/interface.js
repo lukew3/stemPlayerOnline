@@ -2,7 +2,7 @@
 
 const handleLightTap = (sliderName, lightIndex) => {
 	if (levels[sliderNames.indexOf(sliderName)] == parseInt(lightIndex)) return; //Dont update volume or lights if same light as active light is selected
-	key[sliderName].volume = levelToVolume(lightIndex);
+	sourceGains[key[sliderName]].gain.value = levelToVolume(lightIndex);
 	levels[sliderNames.indexOf(sliderName)] = parseInt(lightIndex);
 	Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 		setLightColor(light, lightIndex);

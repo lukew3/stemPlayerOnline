@@ -63,15 +63,15 @@ const setLightColor = (light, lightIndex) => {
 const isolateStem = (sliderName) => {
 	if (isolating) return;
 	isolating = true;
-	tracks.forEach((track) => {track.muted = true;});
+	sources.forEach((source, i) => {sourceGains[i].gain.value = 0;});
 	allLightsOff();
 
-	key[sliderName].muted = false;
+	sourceGains[key[sliderName]].gain.value = 1;
         Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 		setLightBrightness(light, 1);
 	});
 	const resetVolume = () => {
-		tracks.forEach((track, i) => {track.muted = false});
+		sources.forEach((source, i) => {sourceGains[i].gain.value = 1;});
 		sliderNames.forEach((sliderName, index) => {
         		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 				setLightColor(light, levels[index]);
