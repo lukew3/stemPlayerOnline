@@ -34,7 +34,7 @@ const loadBuffer = (response, i) => {
 			sources[i].buffer = buffer;
 			tracksReady[i] = true;
 		}
-		sources[i].connect(sourceGains[i]).connect(gainNode).connect(audioCtx.destination)
+		sources[i].connect(sourceGains[i]).connect(masterGain).connect(audioCtx.destination)
 	});
 	sources[i].addEventListener('ended', onEnded);
 }
@@ -103,9 +103,9 @@ const togglePlayback = () => {
 }
 
 
-const gainNode = audioCtx.createGain();
-gainNode.gain.value = 1;
+const masterGain = audioCtx.createGain();
+masterGain.gain.value = 1;
 sources.forEach((source) => {
-	source.connect(gainNode).connect(audioCtx.destination)
+	source.connect(masterGain).connect(audioCtx.destination)
 })
 loadSong();

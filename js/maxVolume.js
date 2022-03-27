@@ -1,6 +1,6 @@
 /* Max Volume Control */
 const updateVolumes = (prevWholeMaxVol) => {
-	gainNode.gain.value = wholeMaxVolume/8;
+	masterGain.gain.value = wholeMaxVolume/8;
 }
  
 const volumeLights = ["bottom_4", "bottom_3", "bottom_2", "bottom_1", "top_1", "top_2", "top_3", "top_4"];
