@@ -107,8 +107,8 @@ const setSpeed = (sliderName, lightIndex) => {
 		else if (lightIndex == 3) pbRate = 1.5;
 		else if (lightIndex == 4) pbRate = 2;
 		beatDuration = 60/bpm*1000/pbRate;
-		tracks.forEach((track) => {
-			track.playbackRate = pbRate; 
+		sources.forEach((source) => {
+			source.playbackRate.value = pbRate;
 		})
 		$(horizArray[speedDotIndex]).classList.remove("loopLight");
 		speedDotIndex = 3 + lightIndex;
@@ -118,10 +118,10 @@ const setSpeed = (sliderName, lightIndex) => {
 
 const loopHandleLightTap = (sliderName, lightIndex) => {
 	let nextLight;
-	if (loopDuration === 7) {
-		loopStart = tracks[0].currentTime;
-	}
 	if (["top","bottom"].includes(sliderName)) {
+		if (loopDuration === 7) {
+			loopStart = tracks[0].currentTime;
+		}
 		let maxFound = false;
 		let lightId = `${sliderName}_${lightIndex}`;
 		for(let i=0; i<vertArray.length; i++) {
