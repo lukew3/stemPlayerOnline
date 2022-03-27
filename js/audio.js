@@ -1,21 +1,17 @@
 let songIndex = 1;
 let nowPlaying = false;
-let tracks = [$('audio1'), $('audio2'), $('audio3'), $('audio4')];
+//let tracks = [$('audio1'), $('audio2'), $('audio3'), $('audio4')];
 let tracksReady = [false, false, false, false];
+let sources = [null, null, null, null];
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 
-let sources = [];
-tracks.forEach((track, i) => {
-	sources[i] = audioCtx.createMediaElementSource(track);
+sources.forEach((source, i) => {
+	sources[i] = audioCtx.createBufferSource();
 })
 
-// Load starting stems 
-for (var i=0; i<4; i++) {
-        tracks[i].src = playlist[songIndex].tracks[i];
-}
-tracks[0].onended = () => {
+const onEnded = () => {
 	if (songIndex < playlist.length - 1) {
 		songIndex++;
 		loadSong();
@@ -23,11 +19,34 @@ tracks[0].onended = () => {
 		nowPlaying = false;
 	}
 }
+
+const loadBuffer = (response, i) => {
+	sources[i].disconnect();
+	delete sources[i];
+	sources[i] = audioCtx.createBufferSource();
+	audioCtx.decodeAudioData(response, (buffer) => {
+		if (!buffer) { console.log('Error decoding file data: ' + url);
+		} else {
+			sources[i].buffer = buffer;
+			tracksReady[i] = true;
+		}
+		sources[i].connect(gainNode).connect(audioCtx.destination)
+	});
+	sources[i].addEventListener('ended', onEnded);
+}
+
 const loadSong = () => {
         tracksReady = [false, false, false, false];
         let song = playlist[songIndex].tracks;
         for (var i=0; i<4; i++) {
-                tracks[i].src = song[i];
+		let request = new XMLHttpRequest();
+		request.open("GET", song[i], true);
+		request.responseType = "arraybuffer";
+		if (i==0) request.onload = () => {loadBuffer(request.response, 0)}
+		else if (i==1) request.onload = () => {loadBuffer(request.response, 1)}
+		else if (i==2) request.onload = () => {loadBuffer(request.response, 2)}
+		else if (i==3) request.onload = () => {loadBuffer(request.response, 3)}
+		request.send();
         }
         setTimeout(playAudio, 500);
 	if (bpm) {
@@ -37,29 +56,27 @@ const loadSong = () => {
 }
 
 const key = {
-        "right": tracks[0],
-        "top": tracks[1],
-        "left": tracks[2],
-        "bottom": tracks[3]
+        "right": sources[0],
+        "top": sources[1],
+        "left": sources[2],
+        "bottom": sources[3]
 }
-
-tracks.forEach((track, i) => {
-        track.addEventListener("canplaythrough", (e) => {
-                tracksReady[i] = true;
-        })
-})
 function playAudio() {
 	$("loading").style.display = "block";
         setTimeout(() => {
                 if (tracksReady.indexOf(false) === -1) {
 			// check if context is in suspended state (autoplay policy)
-			if (audioCtx.state === 'suspended') audioCtx.resume();
-                        try {
-				tracks.forEach((track) => {track.play()});
-				nowPlaying = true;
-                        } catch (err) {
-				console.log('Failed to play...' + err);
-                        }
+			if (audioCtx.state === 'suspended') {
+				audioCtx.resume();
+				nowPlaying = true; 
+			} else {
+				try {
+					sources.forEach((source) => {source.start(0)});
+					nowPlaying = true;
+				} catch (err) {
+					console.log('Failed to play...' + err);
+				}
+			}
 			$("loading").style.display = "none";
                 } else {
                         playAudio();
@@ -68,7 +85,8 @@ function playAudio() {
 }
 
 const pauseAudio = () => {
-        tracks.forEach((track) => {track.pause();});
+        //sources.forEach((source) => {audioCtx.suspend();});
+	audioCtx.suspend();
         nowPlaying = false;
 }
   
@@ -86,3 +104,4 @@ gainNode.gain.value = 1;
 sources.forEach((source) => {
 	source.connect(gainNode).connect(audioCtx.destination)
 })
+loadSong();
