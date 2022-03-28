@@ -4,6 +4,7 @@ let nowPlaying = false;
 let tracksReady = [false, false, false, false];
 let sources = [null, null, null, null];
 let sourceGains = [null, null, null, null];
+let songStartTime = 0; // audioCtx.currentTime when the track started playing
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
@@ -75,11 +76,12 @@ function playAudio() {
 				nowPlaying = true; 
 			} else {
 				try {
-					sources.forEach((source) => {source.start(0)});
+					sources.forEach((source) => {source.start()});
 					nowPlaying = true;
 				} catch (err) {
 					console.log('Failed to play...' + err);
 				}
+				songStartTime = audioCtx.currentTime;
 			}
 			$("loading").style.display = "none";
                 } else {

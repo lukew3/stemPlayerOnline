@@ -13,7 +13,7 @@ const moveHorizDot = () => {
 			let lastLight = $(horizArray[horizLoopTracker]);
 			if (horizLoopTracker !== speedDotIndex) {
 				lastLight.classList.remove("loopLight");
-			} 
+			}
 			lastLight.classList.remove("lightBright");
 			if (horizLoopTracker < 7) {
 				horizLoopTracker++;
@@ -37,10 +37,12 @@ const verticalLoop = () => {
 		nextLight.classList.add("loopLight", "lightBright");
 		vertLoopTimeout = setTimeout(() => {
 			$(vertArray[vertLoopIndex]).classList.remove("lightBright");
+			//songStartTime += (loopDuration + 1) * beatDuration/1000;
 			if (vertLoopIndex < loopDuration) {
 				vertLoopIndex++;
 			} else {
 				vertLoopIndex = 0;
+				/*
 				tracksReady = [false, false, false, false];
 				tracks.forEach((track) => {
 					track.pause();
@@ -51,6 +53,7 @@ const verticalLoop = () => {
 					}
 				})
 				playAudio();
+				*/
 			}
 			verticalLoop();
 		}, beatDuration)
@@ -116,14 +119,25 @@ const setSpeed = (sliderName, lightIndex) => {
 	}
 }
 
+const setLoopStart = (lightNum) => {
+	// TODO: add optional parameter to set difference from current time
+	sources.forEach((source) => {
+		source.loopStart = audioCtx.currentTime - songStartTime;
+		source.loopEnd = source.loopStart + beatDuration/1000 * lightNum + 1;
+		source.loop = true;
+	})
+}
+
 const loopHandleLightTap = (sliderName, lightIndex) => {
 	let nextLight;
 	if (["top","bottom"].includes(sliderName)) {
+		let lightId = `${sliderName}_${lightIndex}`;
 		if (loopDuration === 7) {
-			loopStart = tracks[0].currentTime;
+			setLoopStart(vertArray.indexOf(lightId));
+			console.log(sources[0].loopStart);
+			console.log(sources[0].loopEnd);
 		}
 		let maxFound = false;
-		let lightId = `${sliderName}_${lightIndex}`;
 		for(let i=0; i<vertArray.length; i++) {
 			if (maxFound) {
 				$(vertArray[i]).classList.remove("loopLight", "lightBright");
@@ -135,13 +149,14 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 					nextLight = $(vertArray[vertLoopIndex]);
 					nextLight.classList.remove("loopLight", "lightBright");
 					vertLoopIndex = 0;
-					loopStart = tracks[0].currentTime;
+					setLoopStart(vertArray.indexOf(lightId));
 				}
 			} else {
 				$(vertArray[i]).classList.add("loopLight");
 			}
 		}
 		if (loopDuration == 7) {
+			sources.forEach((source) => {source.loop = false});
 			nextLight = $(vertArray[vertLoopIndex]);
 			nextLight.classList.add("loopLight");
 			nextLight.classList.remove("lightBright");
@@ -152,4 +167,3 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 		setSpeed(sliderName, lightIndex);
 	}
 }
-
