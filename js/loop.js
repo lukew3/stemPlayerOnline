@@ -4,11 +4,11 @@ let beatDuration = 60/bpm*1000;// Milliseconds per beat
 // Index of the location of the dot moving horizontally
 const horizArray = ['left_4', 'left_3', 'left_2', 'left_1', 'right_1', 'right_2', 'right_3', 'right_4'];
 let horizLoopTracker = 0;
-let horizLoopTimeout;
+let horizLoopTick;
 const moveHorizDot = () => {
 	let nextLight = $(horizArray[horizLoopTracker]);
 	nextLight.classList.add("loopLight", "lightBright");
-	horizLoopTimeout = setTimeout(() => {
+	horizLoopTick = setTimeout(() => {
 		if (inLoopMode && nowPlaying) {
 			let lastLight = $(horizArray[horizLoopTracker]);
 			if (horizLoopTracker !== speedDotIndex) {
@@ -27,33 +27,21 @@ const moveHorizDot = () => {
 
 let vertLoopIndex;
 let loopDuration = 7;
-let loopStart = 0; // Time in song where loop starts (should this be rounded to the nearest beat?)
+//let loopStart = 0; // Time in song where loop starts (should this be rounded to the nearest beat?), var not used, use source.loopStart
 let inLoop = false;
-let vertLoopTimeout;
+let vertLoopTick;
 const vertArray = ['bottom_4', 'bottom_3', 'bottom_2', 'bottom_1', 'top_1', 'top_2', 'top_3', 'top_4'];
 const verticalLoop = () => {
 	if (loopDuration < 7) {
 		let nextLight = $(vertArray[vertLoopIndex]);
 		nextLight.classList.add("loopLight", "lightBright");
-		vertLoopTimeout = setTimeout(() => {
+		vertLoopTick = setTimeout(() => {
 			$(vertArray[vertLoopIndex]).classList.remove("lightBright");
-			//songStartTime += (loopDuration + 1) * beatDuration/1000;
+			secondsElapsedFromStart += beatDuration/1000;
 			if (vertLoopIndex < loopDuration) {
 				vertLoopIndex++;
 			} else {
 				vertLoopIndex = 0;
-				/*
-				tracksReady = [false, false, false, false];
-				tracks.forEach((track) => {
-					track.pause();
-					try {
-						track.fastSeek(loopStart);
-					} catch {
-						track.currentTime = loopStart;
-					}
-				})
-				playAudio();
-				*/
 			}
 			verticalLoop();
 		}, beatDuration)
@@ -89,8 +77,8 @@ const exitLoopMode = () => {
 			$(`${dir}_${i}`).classList.remove("loopLight", "lightBright");
 		}
 	})
-	clearTimeout(horizLoopTimeout);
-	clearTimeout(vertLoopTimeout);
+	clearTimeout(horizLoopTick);
+	clearTimeout(vertLoopTick);
 }
 $("menuButton").addEventListener("click", () => {
 	if (!inLoopMode) {
@@ -122,8 +110,8 @@ const setSpeed = (sliderName, lightIndex) => {
 const setLoopStart = (lightNum) => {
 	// TODO: add optional parameter to set difference from current time
 	sources.forEach((source) => {
-		source.loopStart = audioCtx.currentTime - songStartTime;
-		source.loopEnd = source.loopStart + beatDuration/1000 * lightNum + 1;
+		source.loopStart = audioCtx.currentTime - secondsElapsedFromStart;
+		source.loopEnd = source.loopStart + beatDuration/1000 * (lightNum + 1);
 		source.loop = true;
 	})
 }
@@ -132,8 +120,12 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 	let nextLight;
 	if (["top","bottom"].includes(sliderName)) {
 		let lightId = `${sliderName}_${lightIndex}`;
+		let lightPosition = vertArray.indexOf(lightId);
 		if (loopDuration === 7) {
-			setLoopStart(vertArray.indexOf(lightId));
+			// enter loop if loopDuration is initially 7
+			setLoopStart(lightPosition);
+			console.log("AudioCtx time: " + audioCtx.currentTime);
+			console.log("Song Start Time: " + secondsElapsedFromStart);
 			console.log(sources[0].loopStart);
 			console.log(sources[0].loopEnd);
 		}
@@ -144,24 +136,26 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 			} else if (vertArray[i] === lightId) {
 				maxFound = true;
 				$(vertArray[i]).classList.add("loopLight");
-				loopDuration = i;
 				if (vertLoopIndex > i) {
 					nextLight = $(vertArray[vertLoopIndex]);
 					nextLight.classList.remove("loopLight", "lightBright");
 					vertLoopIndex = 0;
-					setLoopStart(vertArray.indexOf(lightId));
-				}
+					setLoopStart(lightPosition);
+				} /*else {
+					sources.forEach((source) => {
+						source.loopEnd = source.loopStart + beatDuration/1000 * (lightNum + 1);
+					})
+				}*/
 			} else {
 				$(vertArray[i]).classList.add("loopLight");
 			}
 		}
+		loopDuration = lightPosition;
 		if (loopDuration == 7) {
 			sources.forEach((source) => {source.loop = false});
-			nextLight = $(vertArray[vertLoopIndex]);
-			nextLight.classList.add("loopLight");
-			nextLight.classList.remove("lightBright");
+			$(vertArray[vertLoopIndex]).classList.remove("lightBright");
 		}
-		clearTimeout(vertLoopTimeout);
+		clearTimeout(vertLoopTick);
 		verticalLoop();
 	} else if (["left", "right"].includes(sliderName)) {
 		setSpeed(sliderName, lightIndex);
