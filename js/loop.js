@@ -101,6 +101,7 @@ const setSpeed = (sliderName, lightIndex) => {
 	}
 }
 
+/* TODO: set loop start on tick instead of on light click */
 const setLoopStart = (lightNum) => {
 	// TODO: add optional parameter to set difference from current time
 	sources.forEach((source) => {
