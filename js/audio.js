@@ -14,12 +14,14 @@ sources.forEach((source, i) => {
 })
 
 const onEnded = () => {
-	console.log("ended");
-	if (songIndex < playlist.length - 1) {
-		songIndex++;
-		loadSong();
-	} else {
-		nowPlaying = false;
+	if (tracksReady.indexOf(false) == -1) {
+		// If not already in the middle of loading a track
+		if (songIndex < playlist.length - 1) {
+			songIndex++;
+			loadSong();
+		} else {
+			nowPlaying = false;
+		}
 	}
 }
 
