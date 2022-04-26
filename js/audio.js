@@ -14,6 +14,7 @@ sources.forEach((source, i) => {
 })
 
 const onEnded = () => {
+	console.log("ended");
 	if (songIndex < playlist.length - 1) {
 		songIndex++;
 		loadSong();
@@ -108,6 +109,6 @@ const togglePlayback = () => {
 const masterGain = audioCtx.createGain();
 masterGain.gain.value = 1;
 sources.forEach((source) => {
-	source.connect(masterGain).connect(audioCtx.destination)
+	source.connect(masterGain).connect(audioCtx.destination);
 })
 loadSong();

@@ -6,7 +6,7 @@ const horizArray = ['left_4', 'left_3', 'left_2', 'left_1', 'right_1', 'right_2'
 let horizLoopTracker = 0;
 let loopTick;
 let vertLoopIndex;
-let loopDuration = 7;
+let loopDuration = 8;
 //let loopStart = 0; // Time in song where loop starts (should this be rounded to the nearest beat?), var not used, use source.loopStart
 let inLoop = false;
 const vertArray = ['bottom_4', 'bottom_3', 'bottom_2', 'bottom_1', 'top_1', 'top_2', 'top_3', 'top_4'];
@@ -29,12 +29,12 @@ const handleTick = () => {
 			}
 		}
 		// Vertical
-		if (loopDuration < 7) {
+		if (loopDuration < 8) {
 			let nextLight = $(vertArray[vertLoopIndex]);
-			let prevVertIndex = vertLoopIndex == 0 ? loopDuration : vertLoopIndex - 1;
+			let prevVertIndex = vertLoopIndex == 0 ? loopDuration - 1 : vertLoopIndex - 1;
 			$(vertArray[prevVertIndex]).classList.remove("lightBright");
 			secondsElapsedFromStart += beatDuration/1000;
-			if (vertLoopIndex < loopDuration) {
+			if (vertLoopIndex < loopDuration - 1) {
 				vertLoopIndex++;
 			} else {
 				vertLoopIndex = 0;
@@ -58,7 +58,7 @@ const enterLoopMode = () => {
 		}
 	})
 	handleTick();
-	loopDuration = 7;
+	loopDuration = 8;
 	vertLoopIndex = 0;
 	$(horizArray[speedDotIndex]).classList.add("loopLight");
 }
@@ -116,8 +116,8 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 	if (["top","bottom"].includes(sliderName)) {
 		let lightId = `${sliderName}_${lightIndex}`;
 		let lightPosition = vertArray.indexOf(lightId);
-		if (loopDuration === 7) {
-			// enter loop if loopDuration is initially 7
+		if (loopDuration === 8) {
+			// enter loop if loopDuration is initially 8
 			setLoopStart(lightPosition);
 		}
 		let maxFound = false;
@@ -137,8 +137,8 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 				$(vertArray[i]).classList.add("loopLight");
 			}
 		}
-		loopDuration = lightPosition;
-		if (loopDuration == 7) {
+		loopDuration = lightPosition + 1;
+		if (loopDuration == 8) {
 			sources.forEach((source) => {source.loop = false});
 			vertArray.forEach((light) => {
 				// Not the most efficient way of removing the brightened light
