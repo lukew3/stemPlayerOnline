@@ -27,6 +27,7 @@ const onEnded = () => {
 }
 
 const loadBuffer = (response, i) => {
+	try { sources[i].stop(0); } catch (err) { console.log(err); };
 	sources[i].disconnect();
 	delete sources[i];
 	delete sourceGains[i];
