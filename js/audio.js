@@ -44,11 +44,15 @@ const loadBuffer = (response, i) => {
 	sources[i].addEventListener('ended', onEnded);
 }
 
+let requests = [];
 const loadSong = () => {
+	requests.forEach((request) => { request.abort(); });
+	requests = [];
         tracksReady = [false, false, false, false];
         let song = playlist[songIndex].tracks;
         for (var i=0; i<4; i++) {
 		let request = new XMLHttpRequest();
+		requests.push(request);
 		request.open("GET", song[i], true);
 		request.responseType = "arraybuffer";
 		if (i==0) request.onload = () => {loadBuffer(request.response, 0)}
