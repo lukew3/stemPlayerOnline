@@ -121,6 +121,7 @@ $("leftDotButton").addEventListener("click", () => {
 		if (songIndex != 0) {
 			songIndex--;
 			loadSong();
+			playAudio();
 		}
 	} else if (loopStart*1000 >= beatDuration) {
 		loopStart -= beatDuration/1000;
@@ -132,6 +133,7 @@ $("rightDotButton").addEventListener("click", () => {
 		if (songIndex + 1 != playlist.length) {
 			songIndex++;
 			loadSong();
+			playAudio();
 		}
 	} else {
 		loopStart += beatDuration/1000;

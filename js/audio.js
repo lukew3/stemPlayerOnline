@@ -19,6 +19,7 @@ const onEnded = () => {
 		if (songIndex < playlist.length - 1) {
 			songIndex++;
 			loadSong();
+		        setTimeout(playAudio, 100);
 		} else {
 			nowPlaying = false;
 		}
@@ -56,7 +57,6 @@ const loadSong = () => {
 		else if (i==3) request.onload = () => {loadBuffer(request.response, 3)}
 		request.send();
         }
-        setTimeout(playAudio, 500);
 	if (bpm) {
 		bpm = playlist[songIndex].bpm || 120;
 		beatDuration = 60/bpm*1000;
