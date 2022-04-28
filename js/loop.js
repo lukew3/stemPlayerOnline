@@ -10,11 +10,37 @@ let loopDuration = 8;
 //let loopStart = 0; // Time in song where loop starts (should this be rounded to the nearest beat?), var not used, use source.loopStart
 let inLoop = false;
 const vertArray = ['bottom_4', 'bottom_3', 'bottom_2', 'bottom_1', 'top_1', 'top_2', 'top_3', 'top_4'];
+let nextLoopDuration = 0;
 
 const handleTick = () => {
 	let nextLight = $(horizArray[horizLoopTracker]);
 	nextLight.classList.add("loopLight", "lightBright");
 	loopTick = setTimeout(() => {
+		// Set loop
+		if (nextLoopDuration) { //Does in loopmode and nowplaying need to be checked
+			console.log(nextLoopDuration, loopDuration, vertLoopIndex);
+			if (nextLoopDuration == 8) {
+				sources.forEach((source) => {
+					source.loop = false;
+				});
+			} else if (loopDuration == 8 || (nextLoopDuration < loopDuration && vertLoopIndex+1>=nextLoopDuration)) {
+				// TODO: add optional parameter to set difference from current time
+				console.log("hit loop controller 2");
+				sources.forEach((source) => {
+					source.loopStart = audioCtx.currentTime - secondsElapsedFromStart;
+					source.loopEnd = source.loopStart + beatDuration/1000 * (nextLoopDuration);
+					source.loop = true;
+				});
+				vertLoopIndex = 0;
+			} else {
+				sources.forEach((source) => {
+					source.loopEnd = source.loopStart + beatDuration/1000 * (nextLoopDuration);
+					source.loop = true;
+				});
+			}
+			loopDuration = nextLoopDuration;
+			nextLoopDuration = 0;
+		}
 		// Horizontal
 		if (inLoopMode && nowPlaying) {
 			let lastLight = $(horizArray[horizLoopTracker]);
@@ -86,11 +112,7 @@ let speedDotIndex = 5;
 const setSpeed = (sliderName, lightIndex) => {
 	lightIndex = parseInt(lightIndex);
 	if (sliderName == "right") {
-		let pbRate = 1;
-		if (lightIndex == 1) pbRate = 0.5;
-		else if (lightIndex == 2) pbRate = 1;
-		else if (lightIndex == 3) pbRate = 1.5;
-		else if (lightIndex == 4) pbRate = 2;
+		let pbRate = lightIndex * 0.5;
 		beatDuration = 60/bpm*1000/pbRate;
 		sources.forEach((source) => {
 			source.playbackRate.value = pbRate;
@@ -101,51 +123,17 @@ const setSpeed = (sliderName, lightIndex) => {
 	}
 }
 
-/* TODO: set loop start on tick instead of on light click */
-const setLoopStart = (lightNum) => {
-	// TODO: add optional parameter to set difference from current time
-	sources.forEach((source) => {
-		source.loopStart = audioCtx.currentTime - secondsElapsedFromStart;
-		source.loopEnd = source.loopStart + beatDuration/1000 * (lightNum + 1);
-		source.loop = true;
-	})
-}
-
 const loopHandleLightTap = (sliderName, lightIndex) => {
 	let nextLight;
 	if (["top","bottom"].includes(sliderName)) {
 		let lightId = `${sliderName}_${lightIndex}`;
 		let lightPosition = vertArray.indexOf(lightId);
-		if (loopDuration === 8) {
-			// enter loop if loopDuration is initially 8
-			setLoopStart(lightPosition);
-		}
-		let maxFound = false;
-		for(let i=0; i<vertArray.length; i++) {
-			if (maxFound) {
-				$(vertArray[i]).classList.remove("loopLight", "lightBright");
-			} else if (vertArray[i] === lightId) {
-				maxFound = true;
-				$(vertArray[i]).classList.add("loopLight");
-				if (vertLoopIndex > i) {
-					nextLight = $(vertArray[vertLoopIndex]);
-					nextLight.classList.remove("loopLight", "lightBright");
-					vertLoopIndex = 0;
-					setLoopStart(lightPosition);
-				}
-			} else {
-				$(vertArray[i]).classList.add("loopLight");
-			}
-		}
-		loopDuration = lightPosition + 1;
-		if (loopDuration == 8) {
-			sources.forEach((source) => {source.loop = false});
-			vertArray.forEach((light) => {
-				// Not the most efficient way of removing the brightened light
-				$(light).classList.remove("lightBright");
-			})
-			vertLoopIndex = 0;
-		}
+		nextLoopDuration = lightPosition+1;
+		for (let i=0; i<=lightPosition; i++) $(vertArray[i]).classList.add("loopLight");
+		for (let i=lightPosition+1; i<8; i++) $(vertArray[i]).classList.remove("loopLight", "lightBright");
+		let brightId = (vertLoopIndex==0) ? 7 : vertLoopIndex-1;
+		if (nextLoopDuration == 8) $(vertArray[brightId]).classList.remove("lightBright");
+		if (vertLoopIndex > lightPosition) vertLoopIndex = 0;
 	} else if (["left", "right"].includes(sliderName)) {
 		setSpeed(sliderName, lightIndex);
 	}

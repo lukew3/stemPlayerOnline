@@ -99,7 +99,6 @@ function playAudio() {
 }
 
 const pauseAudio = () => {
-        //sources.forEach((source) => {audioCtx.suspend();});
 	audioCtx.suspend();
         nowPlaying = false;
 }
