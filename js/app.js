@@ -7,6 +7,10 @@ let levels = [4, 4, 4, 4];
 let sliderNames = ["right", "top", "left", "bottom"];
 let hideLightsTimeout;
 
+if (navigator.userAgent.indexOf("Safari") !== -1) {
+	$("alertBanner").style.display = "block";
+}
+
 const loadPlaylistViewer = () => {
 	const pv = $("playlistViewer");
 	pv.innerHTML = "";

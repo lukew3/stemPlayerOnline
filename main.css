@@ -44,8 +44,13 @@ nav * {
 	margin-left: 10px;
 	text-decoration: none;
 }
-#pageTitle {
-	font-size: 14pt;
+#alertBanner {
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	background-color: #484848;
+	display: none;
 }
 #topBar {
 	display: flex;
