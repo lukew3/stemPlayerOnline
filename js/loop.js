@@ -117,7 +117,9 @@ const setSpeed = (sliderName, lightIndex) => {
 		sources.forEach((source) => {
 			source.playbackRate.value = pbRate;
 		})
-		$(horizArray[speedDotIndex]).classList.remove("loopLight");
+		if (speedDotIndex !== horizLoopTracker) {
+			$(horizArray[speedDotIndex]).classList.remove("loopLight");
+		}
 		speedDotIndex = 3 + lightIndex;
 		$(horizArray[speedDotIndex]).classList.add("loopLight");
 	}
