@@ -23,7 +23,7 @@ const handleTick = () => {
 				sources.forEach((source) => {
 					source.loop = false;
 				});
-			} else if (loopDuration == 8 || (nextLoopDuration < loopDuration && vertLoopIndex+1>=nextLoopDuration)) {
+			} else if (loopDuration == 8) {
 				// TODO: add optional parameter to set difference from current time
 				console.log("hit loop controller 2");
 				sources.forEach((source) => {
@@ -133,8 +133,13 @@ const loopHandleLightTap = (sliderName, lightIndex) => {
 		nextLoopDuration = lightPosition+1;
 		for (let i=0; i<=lightPosition; i++) $(vertArray[i]).classList.add("loopLight");
 		for (let i=lightPosition+1; i<8; i++) $(vertArray[i]).classList.remove("loopLight", "lightBright");
-		let brightId = (vertLoopIndex==0) ? 7 : vertLoopIndex-1;
-		if (nextLoopDuration == 8) $(vertArray[brightId]).classList.remove("lightBright");
+		//let brightId = (vertLoopIndex==0) ? 7 : vertLoopIndex-1;
+		//if (nextLoopDuration == 8) $(vertArray[brightId]).classList.remove("lightBright");
+		if (vertLoopIndex==0 || lightPosition == 7 || lightPosition < vertLoopIndex) {
+			vertArray.forEach((vertLightId) => {
+				$(vertLightId).classList.remove("lightBright");
+			})
+		}
 		if (vertLoopIndex > lightPosition) vertLoopIndex = 0;
 	} else if (["left", "right"].includes(sliderName)) {
 		setSpeed(sliderName, lightIndex);
