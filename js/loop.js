@@ -18,14 +18,12 @@ const handleTick = () => {
 	loopTick = setTimeout(() => {
 		// Set loop
 		if (nextLoopDuration) { //Does in loopmode and nowplaying need to be checked
-			console.log(nextLoopDuration, loopDuration, vertLoopIndex);
 			if (nextLoopDuration == 8) {
 				sources.forEach((source) => {
 					source.loop = false;
 				});
 			} else if (loopDuration == 8) {
 				// TODO: add optional parameter to set difference from current time
-				console.log("hit loop controller 2");
 				sources.forEach((source) => {
 					source.loopStart = audioCtx.currentTime - trackStartTime;
 					source.loopEnd = source.loopStart + beatDuration/1000 * (nextLoopDuration);
