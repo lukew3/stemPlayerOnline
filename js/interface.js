@@ -76,22 +76,28 @@ const getLightClicked = (clickEvent, boundIndex) => {
         return "1"; // catch error
 }
 let centerButtonPressed = false;
+$("centerButton").addEventListener("click", () => {
+	if (!audioCtx) {
+		initAudioCtx();
+	}
+	if (!inLoopMode) {
+		togglePlayback();
+	} else {
+		if (loopDuration == 7 && speedDotIndex == 5) {
+			exitLoopMode();
+		} else {
+			loopHandleLightTap("top", "4");
+			setSpeed("right", "2"); // Should speed be getting reset here?
+		}
+	}
+})
+
 $("centerButton").addEventListener("pointerdown", () => {
         $("centerButton").style.backgroundColor = "#82664b";
         centerButtonPressed = true;
 });
 $("centerButton").addEventListener("pointerup", () => {
         if (centerButtonPressed) {
-		if (!inLoopMode) {
-			togglePlayback();
-		} else {
-			if (loopDuration == 7 && speedDotIndex == 5) {
-				exitLoopMode();
-			} else {
-				loopHandleLightTap("top", "4");
-				setSpeed("right", "2"); // Should speed be getting reset here?
-			}
-		}
                 $("centerButton").style.backgroundColor = "var(--player)";
                 centerButtonPressed = false;
         }

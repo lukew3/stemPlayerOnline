@@ -7,11 +7,18 @@ let sourceGains = [null, null, null, null];
 let secondsElapsedFromStart = 0; // audioCtx.currentTime when the track started playing
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioCtx = new AudioContext();
+let audioCtx, masterGain;
 
-sources.forEach((source, i) => {
-	sources[i] = audioCtx.createBufferSource();
-})
+const initAudioCtx = () => {
+	audioCtx = new AudioContext();
+	masterGain = audioCtx.createGain();
+	masterGain.gain.value = 1;
+	sources.forEach((source, i) => {
+		sources[i] = audioCtx.createBufferSource(); // can we just use source instead of sources[i] ?
+		sources[i].connect(masterGain).connect(audioCtx.destination);
+	})
+	loadSong();
+}
 
 const onEnded = () => {
 	if (tracksReady.indexOf(false) == -1) {
@@ -27,7 +34,7 @@ const onEnded = () => {
 }
 
 const loadBuffer = (response, i) => {
-	try { sources[i].stop(0); } catch (err) { console.log(err); };
+	try { sources[i].stop(0); } catch {};
 	sources[i].disconnect();
 	delete sources[i];
 	delete sourceGains[i];
@@ -110,11 +117,3 @@ const togglePlayback = () => {
                 playAudio();
         }
 }
-
-
-const masterGain = audioCtx.createGain();
-masterGain.gain.value = 1;
-sources.forEach((source) => {
-	source.connect(masterGain).connect(audioCtx.destination);
-})
-loadSong();
