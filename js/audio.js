@@ -4,7 +4,7 @@ let nowPlaying = false;
 let tracksReady = [false, false, false, false];
 let sources = [null, null, null, null];
 let sourceGains = [null, null, null, null];
-let secondsElapsedFromStart = 0; // audioCtx.currentTime when the track started playing
+let trackStartTime = 0; // audioCtx.currentTime when the track started playing
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 let audioCtx, masterGain;
@@ -96,7 +96,7 @@ function playAudio() {
 				} catch (err) {
 					console.log('Failed to play...' + err);
 				}
-				secondsElapsedFromStart = audioCtx.currentTime;
+				trackStartTime = audioCtx.currentTime;
 			}
 			$("loading").style.display = "none";
                 } else {

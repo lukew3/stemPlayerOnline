@@ -27,7 +27,7 @@ const handleTick = () => {
 				// TODO: add optional parameter to set difference from current time
 				console.log("hit loop controller 2");
 				sources.forEach((source) => {
-					source.loopStart = audioCtx.currentTime - secondsElapsedFromStart;
+					source.loopStart = audioCtx.currentTime - trackStartTime;
 					source.loopEnd = source.loopStart + beatDuration/1000 * (nextLoopDuration);
 					source.loop = true;
 				});
@@ -59,11 +59,11 @@ const handleTick = () => {
 			let nextLight = $(vertArray[vertLoopIndex]);
 			let prevVertIndex = vertLoopIndex == 0 ? loopDuration - 1 : vertLoopIndex - 1;
 			$(vertArray[prevVertIndex]).classList.remove("lightBright");
-			secondsElapsedFromStart += beatDuration/1000;
 			if (vertLoopIndex < loopDuration - 1) {
 				vertLoopIndex++;
 			} else {
 				vertLoopIndex = 0;
+				trackStartTime += loopDuration * beatDuration/1000;
 			}
 			nextLight.classList.add("loopLight", "lightBright");
 		}
