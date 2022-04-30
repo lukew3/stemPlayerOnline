@@ -17,3 +17,12 @@ Keyboard shortcuts have been included to help better the experience of using the
 
 * `Spacebar` - Toggles playback, pausing and playing the entire track
 * `<Arrowkey>` - Each arrow key controls the volume of it's respective slider. Pressing the arrow key will increase the volume and holding control while pressing the arrow key will decrease the volume.
+
+## Developer Setup
+1. Clone the repo
+2. Start the app by running a local http server with 
+```
+python -m http.server
+```
+3. Navigate to the url http://localhost:8000 or the url set by the python server
+4. You can use the player by uploading your own tracks by using the folder button in the top left. 
