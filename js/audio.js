@@ -33,7 +33,7 @@ const onEnded = () => {
 	}
 }
 
-const loadBuffer = (response, i) => {
+const loadBuffer = async (response, i) => {
 	try { sources[i].stop(0); } catch {};
 	sources[i].disconnect();
 	delete sources[i];
@@ -41,14 +41,14 @@ const loadBuffer = (response, i) => {
 	sourceGains[i] = audioCtx.createGain();
 	sourceGains[i].gain.value = 1;
 	sources[i] = audioCtx.createBufferSource();
-	audioCtx.decodeAudioData(response, (buffer) => {
-		if (!buffer) { console.log('Error decoding file data: ' + url);
-		} else {
-			sources[i].buffer = buffer;
-			tracksReady[i] = true;
-		}
-		sources[i].connect(sourceGains[i]).connect(masterGain).connect(audioCtx.destination)
-	});
+	let buffer = await audioCtx.decodeAudioData(response);
+	if (!buffer) { console.log('Error decoding file data: ' + url);
+	} else {
+		sources[i] = audioCtx.createBufferSource();
+		sources[i].buffer = buffer;
+		tracksReady[i] = true;
+	}
+	sources[i].connect(sourceGains[i]).connect(masterGain).connect(audioCtx.destination)
 	sources[i].addEventListener('ended', onEnded);
 }
 
