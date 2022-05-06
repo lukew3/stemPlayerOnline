@@ -25,6 +25,7 @@ const loadPlaylistViewer = () => {
 		songDiv.addEventListener("click", () => {
 			songIndex = i;
 			loadSong();
+			playAudio();
 		})
 		pv.append(songDiv);
 	})

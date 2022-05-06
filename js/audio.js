@@ -63,6 +63,7 @@ const loadSong = () => {
 		requests.push(request);
 		request.open("GET", song[i], true);
 		request.responseType = "arraybuffer";
+		request.onprogress = (prog) => {console.log(prog.loaded)};
 		if (i==0) request.onload = () => {loadBuffer(request.response, 0)}
 		else if (i==1) request.onload = () => {loadBuffer(request.response, 1)}
 		else if (i==2) request.onload = () => {loadBuffer(request.response, 2)}
