@@ -4,6 +4,7 @@ let nowPlaying = false;
 let tracksReady = [false, false, false, false];
 let sources = [null, null, null, null];
 let sourceGains = [null, null, null, null];
+let progressPercents = [0, 0, 0, 0];
 let trackStartTime = 0; // audioCtx.currentTime when the track started playing
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -63,11 +64,13 @@ const loadSong = () => {
 		requests.push(request);
 		request.open("GET", song[i], true);
 		request.responseType = "arraybuffer";
-		request.onprogress = (prog) => {console.log(prog.loaded)};
-		if (i==0) request.onload = () => {loadBuffer(request.response, 0)}
-		else if (i==1) request.onload = () => {loadBuffer(request.response, 1)}
-		else if (i==2) request.onload = () => {loadBuffer(request.response, 2)}
-		else if (i==3) request.onload = () => {loadBuffer(request.response, 3)}
+		(function (contextCopy) {
+			request.onprogress = (prog) => {
+				progressPercents[contextCopy] = (prog.loaded / prog.total);
+				$('loading').style.width = 100 * progressPercents.reduce((sum, next) => {return sum + next}, 0) / 4 + "%";
+			}
+			request.onload = () => {loadBuffer(request.response, contextCopy)};
+		}(i));
 		request.send();
         }
 	if (bpm) {
@@ -83,6 +86,7 @@ const key = {
         "bottom": 3
 }
 function playAudio() {
+	$("loading").style.width = "0%";
 	$("loading").style.display = "block";
         setTimeout(() => {
                 if (tracksReady.indexOf(false) === -1) {
@@ -100,6 +104,7 @@ function playAudio() {
 				trackStartTime = audioCtx.currentTime;
 			}
 			$("loading").style.display = "none";
+			progressPercents = [0, 0, 0, 0];
                 } else {
                         playAudio();
                 }
