@@ -36,9 +36,8 @@
 	<div id="alertBanner">iOS users, ensure that your ringer is not muted</div>
 	<div id="topBar">
 		<div id="folderSelectGroup">
-			<input id="folderSelectField" type="file" webkitdirectory multiple >
 			<img id="folderSelectIcon" src="img/folder.svg" alt="Folder Select"/>
-			<p id="folderSelectLabel">Select folder with stems</p>
+			<p id="folderSelectLabel">Select local stems</p>
 		</div>
 		<div id="colorIcons">
 			<input type="color" id="color4Input" class="colorInput" value="#4349e3">
@@ -113,6 +112,29 @@
 	<div id="externalLinks">
 		<a href="https://github.com/lukew3/stemPlayerOnline"><img src="img/githubIcon.svg" alt="Github"/></a>
 		<a href="https://discord.gg/jfnFhggJGZ"><img src="img/discordIcon.svg" alt="Discord"/></a>
+	</div>
+	<div id="selectLocalStems">
+		<div id="exitSelectLocal">X</div>
+		<h4>Select stems downloaded on your device</h4>
+		<h5>From folder (doesn't work on mobile)</h5>
+		<input id="folderSelectField" type="file" webkitdirectory multiple >
+		<h5>Or by each file</h5>
+		<div>
+			<label>1)</label>
+			<input id="stemFileSelect1" class="stemFileSelect" type="file" >
+		</div>
+		<div>
+			<label>2)</label>
+			<input id="stemFileSelect2" class="stemFileSelect" type="file" >
+		</div>
+		<div>
+			<label>3)</label>
+			<input id="stemFileSelect3" class="stemFileSelect" type="file" >
+		</div>
+		<div>
+			<label>4)</label>
+			<input id="stemFileSelect4" class="stemFileSelect" type="file" >
+		</div>
 	</div>
 	<script>const $ = (id) => { return document.getElementById(id) };</script>
 	<script src="js/lightColors.js"></script>

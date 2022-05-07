@@ -93,25 +93,3 @@ const isolateStem = (sliderName) => {
 	document.addEventListener('pointerup', resetVolume)
 }
 
-/* Folder Select */
-$("folderSelectGroup").addEventListener("click", () => {
-	$("folderSelectField").click();
-});
-
-$("folderSelectField").addEventListener("change", () => {
-	// load the first 4 mp3 files in the directory as stems
-	// todo: ensure that 4 audio files are used as stems
-	let files = $("folderSelectField").files;
-	let trackName = files[0].webkitRelativePath.split("/")[0];
-	nowPlaying = false;
-	playlist = [{title: trackName, bpm: 180, tracks: []}];
-	// this will automatically place tracks in the right position if they are numbered
-	for (let i=0; i<4; i++) {
-		playlist[0].tracks.push(URL.createObjectURL(files[i]));
-	}
-	songIndex = 0;
-	loadSong();
-	playAudio();
-	// set label to folder name
-	$("folderSelectLabel").innerHTML = trackName;
-});

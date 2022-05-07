@@ -64,7 +64,7 @@ nav * {
 	margin-left: 10px;
 }
 #folderSelectField {
-	display: none;
+	/*display: none;*/
 }
 #folderSelectIcon {
 	height: 25px;
@@ -305,5 +305,27 @@ nav * {
 	padding: 6px;
 	background-color: #222;
 	border-bottom: 1px solid #333;
+	cursor: pointer;
+}
+#selectLocalStems {
+	position: absolute;
+	background-color: #735f57;
+	width: calc(95% - 40px);
+	max-width: 500px;
+	height: calc(90% - 80px);
+	margin: auto;
+	left: 50%;
+	transform: translate(-50%, 0);
+	top: 30px;
+	padding: 20px;
+	border-radius: 10px;
+	border: 1px solid grey;
+	display: none;
+}
+#exitSelectLocal {
+	float: right;
+	padding: 10px;
+	margin-top: -10px;
+	margin-right: -10px;
 	cursor: pointer;
 }
