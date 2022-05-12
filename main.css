@@ -324,10 +324,23 @@ nav * {
 	border: 1px solid grey;
 	display: none;
 }
+#selectLocalStems div {
+	margin: 3px;
+}
 #exitSelectLocal {
 	float: right;
 	padding: 10px;
 	margin-top: -10px;
 	margin-right: -10px;
 	cursor: pointer;
+}
+.stemFileSelectButton {
+	display: inline-block;
+	background-color: #854118;
+	padding: 3px;
+	border-radius: 3px;
+	cursor: pointer;
+}
+.stemFileSelect {
+	display: none;
 }
