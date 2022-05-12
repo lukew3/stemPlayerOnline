@@ -290,7 +290,6 @@ nav * {
 	height: 2px;
 	background-color: white;
 	margin: 0;
-	animation-duration: 1s;
 	display: none;
 }
 #playlistViewer {
