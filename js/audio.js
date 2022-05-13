@@ -95,6 +95,8 @@ function playAudio() {
 				audioCtx.resume();
 				nowPlaying = true;
 			} else {
+				audioCtx.suspend();
+				audioCtx.resume();
 				try {
 					sources.forEach((source) => {source.start()});
 					nowPlaying = true;
