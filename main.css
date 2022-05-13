@@ -300,13 +300,15 @@ nav * {
 	height: 120px;
 	width: 250px;
 	border-radius: 3px;
-	display: none;
 }
 .playlistViewerItem {
 	padding: 6px;
 	background-color: #222;
 	border-bottom: 1px solid #333;
 	cursor: pointer;
+}
+.pvActive {
+	background-color: #525252;
 }
 #selectLocalStems {
 	position: absolute;

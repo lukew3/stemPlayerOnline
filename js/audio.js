@@ -77,6 +77,11 @@ const loadSong = () => {
 		bpm = playlist[songIndex].bpm || 120;
 		beatDuration = 60/bpm*1000;
 	}
+	// Update active item in playlistViewer
+	Array.from($("playlistViewer").children).forEach((element, i) => {
+		if (i === songIndex) element.classList.add("pvActive");
+		else element.classList.remove("pvActive");
+	})
 }
 
 const key = {
