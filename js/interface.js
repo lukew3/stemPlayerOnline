@@ -164,6 +164,7 @@ $("folderSelectGroup").addEventListener("click", () => {
 });
 
 $("folderSelectField").addEventListener("change", () => {
+	try {pauseAudio();} catch {}
 	// load the first 4 mp3 files in the directory as stems
 	// todo: ensure that 4 audio files are used as stems
 	let files = $("folderSelectField").files;
