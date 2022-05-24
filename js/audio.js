@@ -33,6 +33,7 @@ const onEnded = () => {
 		}
 	}
 }
+let analysers = [null, null, null, null]
 
 const loadBuffer = async (response, i) => {
 	try { sources[i].stop(0); } catch {};
@@ -49,7 +50,10 @@ const loadBuffer = async (response, i) => {
 		sources[i].buffer = buffer;
 		tracksReady[i] = true;
 	}
-	sources[i].connect(sourceGains[i]).connect(masterGain).connect(audioCtx.destination)
+	delete analysers[i];
+	analysers[i] = audioCtx.createAnalyser();
+	sources[i].connect(analysers[i]);
+	sources[i].connect(sourceGains[i]).connect(masterGain).connect(audioCtx.destination);
 	sources[i].addEventListener('ended', onEnded);
 }
 
