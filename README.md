@@ -1,3 +1,5 @@
+![Frame 2](https://user-images.githubusercontent.com/47042841/182762011-817883f9-6f74-45f8-acc6-961867960ce5.png)
+
 # Stem Player Online
 An online stem player. Inspired by but not affiliated with YEEZY TECH X KANO Stem Player.
 
