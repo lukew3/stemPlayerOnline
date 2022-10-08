@@ -99,11 +99,7 @@ const exitLoopMode = () => {
 	clearTimeout(loopTick);
 }
 $("menuButton").addEventListener("click", () => {
-	if (!inLoopMode) {
-		enterLoopMode();
-	} else {
-		exitLoopMode();
-	}
+	inLoopMode ? exitLoopMode() : enterLoopMode();
 })
 
 let speedDotIndex = 5;
