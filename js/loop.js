@@ -98,13 +98,6 @@ const exitLoopMode = () => {
 	})
 	clearTimeout(loopTick);
 }
-$("menuButton").addEventListener("click", () => {
-	if (!inLoopMode) {
-		enterLoopMode();
-	} else {
-		exitLoopMode();
-	}
-})
 
 let speedDotIndex = 5;
 const setSpeed = (sliderName, lightIndex) => {

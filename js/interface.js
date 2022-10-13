@@ -226,3 +226,11 @@ $("color4Input").addEventListener("change", () => {
 $("color1Input").addEventListener("change", () => {
 	lights.generateGradient();
 })
+
+$("menuButton").addEventListener("click", () => {
+	if (!inLoopMode) {
+		enterLoopMode();
+	} else {
+		exitLoopMode();
+	}
+})
