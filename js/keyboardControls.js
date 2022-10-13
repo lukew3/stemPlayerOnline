@@ -1,6 +1,6 @@
 document.addEventListener("keydown", (e) => {
         if (e.key == " ") {
-                togglePlayback();
+                audio.togglePlayback();
         } else if (e.key == "Control") {
                 controlPressed = true;
         } else if (e.key.substring(0,5) == "Arrow") {
