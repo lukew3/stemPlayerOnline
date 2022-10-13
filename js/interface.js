@@ -215,3 +215,17 @@ $("stemFileSelect4").addEventListener("change", (e) => {
 	songIndex = 0;
 	loadSong();
 });
+
+/* Light color input listeners */
+$("color4Icon").addEventListener("click", () => {
+	$("color4Input").click();
+})
+$("color1Icon").addEventListener("click", () => {
+	$("color1Input").click();
+})
+$("color4Input").addEventListener("change", () => {
+	lights.generateGradient();
+})
+$("color1Input").addEventListener("change", () => {
+	lights.generateGradient();
+})
