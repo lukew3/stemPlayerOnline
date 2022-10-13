@@ -69,7 +69,6 @@ const handleTick = () => {
 }
 
 const enterLoopMode = () => {
-	lights.allLightsOff();
 	inLoopMode = true;
 	// Init loop mode
 	lights.initLoopLights();
