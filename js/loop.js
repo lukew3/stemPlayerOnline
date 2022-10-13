@@ -40,7 +40,7 @@ const handleTick = () => {
 			nextLoopDuration = 0;
 		}
 		// Horizontal
-		if (inLoopMode && nowPlaying) {
+		if (inLoopMode && audio.nowPlaying) {
 			let lastLight = $(horizArray[horizLoopTracker]);
 			if (horizLoopTracker !== speedDotIndex) {
 				lastLight.classList.remove("loopLight");
@@ -112,9 +112,7 @@ const setSpeed = (sliderName, lightIndex) => {
 	if (sliderName == "right") {
 		let pbRate = lightIndex * 0.5;
 		beatDuration = 60/bpm*1000/pbRate;
-		sources.forEach((source) => {
-			source.playbackRate.value = pbRate;
-		})
+		audio.wads.forEach((wad) => {wad.setRate(pbRate)});
 		if (speedDotIndex !== horizLoopTracker) {
 			$(horizArray[speedDotIndex]).classList.remove("loopLight");
 		}
