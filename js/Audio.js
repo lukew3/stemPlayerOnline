@@ -33,7 +33,7 @@ class Audio {
     }
     
     loadSong = () => {
-        this.wads.forEach((wad) => { wad.stop(); });
+        Wad.stopAll();
         let nextTracks = playlist[this.songIndex].tracks;
         nextTracks.forEach((track, i) => {
             this.wads[i] = new Wad({source: track});
@@ -47,11 +47,7 @@ class Audio {
     playAudio() {
         $("loading").style.width = "0%";
         $("loading").style.display = "block";
-        if (this.paused) {
-            this.wads.forEach((wad) => { wad.unpause(); });
-        } else {
-            this.wads.forEach((wad) => { wad.play(); });
-        }
+        this.wads.forEach((wad) => { this.paused ? wad.unpause() : wad.play() });
         this.nowPlaying = true;
         this.paused = false;
     }
