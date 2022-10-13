@@ -15,22 +15,6 @@ if (navigator.vendor &&
         $("alertBanner").style.display = "block";
 }
 
-const loadPlaylistViewer = () => {
-	const pv = $("playlistViewer");
-	pv.innerHTML = "";
-	playlist.forEach((song, i) => {
-		let songDiv = document.createElement('div');
-		songDiv.classList.add("playlistViewerItem");
-		songDiv.innerHTML = i+1 + ") " + song.title;
-		songDiv.addEventListener("click", () => {
-			songIndex = i;
-			loadSong();
-			playAudio();
-		})
-		pv.append(songDiv);
-	})
-}
-loadPlaylistViewer();
 
 const levelToVolume = (level) => {
 	return (level-1)/3;
