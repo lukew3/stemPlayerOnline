@@ -71,9 +71,6 @@ const handleTick = () => {
 const enterLoopMode = () => {
 	lights.allLightsOff();
 	inLoopMode = true;
-	// Move bpm and beatDuration to audio object?
-	audio.bpm = playlist[audio.songIndex].bpm || 120;
-	audio.beatDuration = 60/audio.bpm*1000;// Milliseconds per beat
 	// Init loop mode
 	lights.initLoopLights();
 	handleTick();
