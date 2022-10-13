@@ -1,5 +1,5 @@
 let inLoopMode = false;
-let bpm = playlist[songIndex].bpm || 120;
+let bpm = playlist[audio.songIndex].bpm || 120;
 let beatDuration = 60/bpm*1000;// Milliseconds per beat
 // Index of the location of the dot moving horizontally
 const horizArray = ['left_4', 'left_3', 'left_2', 'left_1', 'right_1', 'right_2', 'right_3', 'right_4'];
@@ -73,7 +73,7 @@ const handleTick = () => {
 const enterLoopMode = () => {
 	lights.allLightsOff();
 	inLoopMode = true;
-	bpm = playlist[songIndex].bpm || 120;
+	bpm = playlist[audio.songIndex].bpm || 120;
 	beatDuration = 60/bpm*1000;// Milliseconds per beat
 	// Init loop mode
 	["top", "bottom"].forEach((dir) => {

@@ -77,11 +77,12 @@ const getLightClicked = (clickEvent, boundIndex) => {
 }
 let centerButtonPressed = false;
 $("centerButton").addEventListener("click", () => {
-	if (!audioCtx) {
-		initAudioCtx();
+	// Should init audioCtx just be called and check if it's already initialized in initAudioCtx? Could be called tryInitAudioCtx maybe
+	if (!audio.audioCtx) {
+		audio.initAudioCtx();
 	}
 	if (!inLoopMode) {
-		togglePlayback();
+		audio.togglePlayback();
 	} else {
 		if (loopDuration == 7 && speedDotIndex == 5) {
 			exitLoopMode();
@@ -116,7 +117,7 @@ $("plusButton").addEventListener("click", () => {
 	if (!inLoopMode) {
 		if (wholeMaxVolume != 8) {
 			wholeMaxVolume++;
-			
+			masterGain.gain.value = wholeMaxVolume/8;
 		}
 		lights.displayVolume();
 	}
