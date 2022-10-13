@@ -102,20 +102,14 @@ $("centerButton").addEventListener("pointerup", () => {
 
 $("minusButton").addEventListener("click", () => {
 	if (!inLoopMode) {
-		if (wholeMaxVolume != 0) {
-			wholeMaxVolume--;
-			audio.polywad.setVolume(wholeMaxVolume/8);
-		}
-		lights.displayVolume();
+		audio.decrementPolyVolume();
+		lights.displayVolume(audio.wholeMaxVolume);
 	}
 });
 $("plusButton").addEventListener("click", () => {
 	if (!inLoopMode) {
-		if (wholeMaxVolume != 8) {
-			wholeMaxVolume++;
-			audio.polywad.setVolume(wholeMaxVolume/8);
-		}
-		lights.displayVolume();
+		audio.incrementPolyVolume();
+		lights.displayVolume(audio.wholeMaxVolume);
 	}
 });
 

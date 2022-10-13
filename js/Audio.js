@@ -1,9 +1,9 @@
 class Audio {
     constructor() {
-        this.lights = [];
         this.songIndex = 1; // Rename songIndex to playlistIndex or songIndexInPlaylist or similar?
         this.nowPlaying = false;
         this.paused = false;
+        this.wholeMaxVolume = 8;
 
         this.bpm = 120;
         this.beatDuration = 60/this.bpm*1000; // Milliseconds per beat
@@ -34,6 +34,20 @@ class Audio {
                 this.nowPlaying = false;
             }
         }
+    }
+
+    incrementPolyVolume = () => {
+        if (this.wholeMaxVolume != 8) {
+			this.wholeMaxVolume++;
+			this.polywad.setVolume(this.wholeMaxVolume/8);
+		}
+    }
+
+    decrementPolyVolume = () => {
+        if (this.wholeMaxVolume != 0) {
+			this.wholeMaxVolume--;
+			this.polywad.setVolume(this.wholeMaxVolume/8);
+		}
     }
     
     loadSong = () => {

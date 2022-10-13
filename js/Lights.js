@@ -14,7 +14,7 @@ class Lights {
         this.generateGradient();
     }
 
-    displayVolume = () => {
+    displayVolume = (wholeMaxVolume) => {
         this.allLightsOff();
         for (let i=7; i>=wholeMaxVolume; i--) {
             $(this.volumeLights[i]).style.backgroundColor = null;
