@@ -5,7 +5,6 @@ let wholeMaxVolume = 8; // Max volume in non-decimal
 let lightNum;
 let levels = [4, 4, 4, 4];
 let sliderNames = ["right", "top", "left", "bottom"];
-let hideLightsTimeout;
 
 if (navigator.vendor && 
     navigator.vendor.indexOf('Apple') > -1 &&
@@ -20,54 +19,29 @@ const levelToVolume = (level) => {
 	return (level-1)/3;
 }
 
-const setLightBrightness = (light, brightness) => {
-	if (brightness == 0) {
-		light.classList.add("lightOff");
-		light.classList.remove("lightBright");
-	} else if (brightness == 1) {
-		light.classList.remove("lightOff");
-		light.classList.remove("lightBright");
-	} else if (brightness == 2) {
-		light.classList.remove("lightOff");
-		light.classList.add("lightBright");
-	}
-}
-
-const allLightsOff = () => {
-        Array.from(document.getElementsByClassName('light')).forEach((light) => {
-		setLightBrightness(light, 0);
-	});
-}
-
 const showStemLights = () => {
 	sliderNames.forEach((sliderName, index) => {
 		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-			setLightColor(light, levels[index]);
+			lights.detectAndSetLightOn(light, levels[index]);
 		});
 	});
-}
-
-const setLightColor = (light, lightIndex) => {
-	(light.id.split("_")[1] > lightIndex) ?
-		setLightBrightness(light, 0) :
-		setLightBrightness(light, 1);
 }
 
 const isolateStem = (sliderName) => {
 	if (isolating) return;
 	isolating = true;
 	sources.forEach((source, i) => {sourceGains[i].gain.value = 0;});
-	allLightsOff();
+	lights.allLightsOff();
 
 	sourceGains[key[sliderName]].gain.value = 1;
         Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-		setLightBrightness(light, 1);
+		lights.setLightBrightness(light, 1);
 	});
 	const resetVolume = () => {
 		sources.forEach((source, i) => {sourceGains[i].gain.value = 1;});
 		sliderNames.forEach((sliderName, index) => {
-        		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-				setLightColor(light, levels[index]);
+        	Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
+				lights.detectAndSetLightOn(light, levels[index]);
 			});
 		});
 		isolating = false;

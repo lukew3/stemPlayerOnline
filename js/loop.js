@@ -71,7 +71,7 @@ const handleTick = () => {
 }
 
 const enterLoopMode = () => {
-	allLightsOff();
+	lights.allLightsOff();
 	inLoopMode = true;
 	bpm = playlist[songIndex].bpm || 120;
 	beatDuration = 60/bpm*1000;// Milliseconds per beat

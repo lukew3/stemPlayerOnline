@@ -5,7 +5,7 @@ const handleLightTap = (sliderName, lightIndex) => {
 	sourceGains[key[sliderName]].gain.value = levelToVolume(lightIndex);
 	levels[sliderNames.indexOf(sliderName)] = parseInt(lightIndex);
 	Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-		setLightColor(light, lightIndex);
+		lights.detectAndSetLightOn(light, lightIndex);
 	});
 }
 
@@ -107,18 +107,18 @@ $("minusButton").addEventListener("click", () => {
 	if (!inLoopMode) {
 		if (wholeMaxVolume != 0) {
 			wholeMaxVolume--;
-			updateVolumes();
+			masterGain.gain.value = wholeMaxVolume/8;
 		}
-		displayVolume();
+		lights.displayVolume();
 	}
 });
 $("plusButton").addEventListener("click", () => {
 	if (!inLoopMode) {
 		if (wholeMaxVolume != 8) {
 			wholeMaxVolume++;
-			updateVolumes();
+			
 		}
-		displayVolume();
+		lights.displayVolume();
 	}
 });
 

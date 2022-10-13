@@ -2,12 +2,58 @@ class Lights {
     constructor() {
         this.lights = [];
 
+        // Should volumeLights be set and used here?
+        this.volumeLights = ["bottom_4", "bottom_3", "bottom_2", "bottom_1", "top_1", "top_2", "top_3", "top_4"];
+        this.hideVolumeLightsTimeout;
+
         // Load lights from localStorage or load colors from current client colors
         this.colors = window.localStorage.colors ? JSON.parse(window.localStorage.colors) : [$('color4Input').value, $('color1Input').value];
         // Set color inputs to values from this.colors
         $('color4Input').value = this.colors[0];
         $('color1Input').value = this.colors[1];
         this.generateGradient();
+    }
+
+    displayVolume = () => {
+        this.allLightsOff();
+        for (let i=7; i>=wholeMaxVolume; i--) {
+            $(this.volumeLights[i]).style.backgroundColor = null;
+        }
+        for (let i=0; i<wholeMaxVolume; i++) {
+            $(this.volumeLights[i]).style.backgroundColor = "var(--maxVolColor)";
+        }
+        clearTimeout(this.hideVolumeLightsTimeout);
+        this.hideVolumeLightsTimeout = setTimeout(() => {
+            for (let i=0; i<8; i++) {
+                $(this.volumeLights[i]).style.backgroundColor = null;
+            }
+            if (!inLoopMode) showStemLights();
+        }, 800);
+    }
+
+    setLightBrightness = (light, brightness) => {
+        if (brightness == 0) {
+            light.classList.add("lightOff");
+            light.classList.remove("lightBright");
+        } else if (brightness == 1) {
+            light.classList.remove("lightOff");
+            light.classList.remove("lightBright");
+        } else if (brightness == 2) {
+            light.classList.remove("lightOff");
+            light.classList.add("lightBright");
+        }
+    }
+    
+    allLightsOff = () => {
+            Array.from(document.getElementsByClassName('light')).forEach((light) => {
+            this.setLightBrightness(light, 0);
+        });
+    }
+
+    detectAndSetLightOn = (light, lightIndex) => {
+    	(light.id.split("_")[1] > lightIndex) ?
+    		this.setLightBrightness(light, 0) :
+    		this.setLightBrightness(light, 1);
     }
 
     // Change name of generateGradient to updateColors or similar?
