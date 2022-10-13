@@ -71,29 +71,20 @@ const handleTick = () => {
 const enterLoopMode = () => {
 	lights.allLightsOff();
 	inLoopMode = true;
+	// Move bpm and beatDuration to audio object?
 	audio.bpm = playlist[audio.songIndex].bpm || 120;
 	audio.beatDuration = 60/audio.bpm*1000;// Milliseconds per beat
 	// Init loop mode
-	["top", "bottom"].forEach((dir) => {
-		for(let i=1; i<5; i++) {
-			$(`${dir}_${i}`).classList.add("loopLight");
-		}
-	})
+	lights.initLoopLights();
 	handleTick();
 	loopDuration = 8;
 	vertLoopIndex = 0;
 	$(horizArray[speedDotIndex]).classList.add("loopLight");
 }
 const exitLoopMode = () => {
+	lights.removeLoopLights();
 	showStemLights();
 	inLoopMode = false;
-	// Clear manually set background colors
-	// Could just apply a class and remove it instead
-	["top", "bottom", "left", "right"].forEach((dir) => {
-		for(let i=1; i<5; i++) {
-			$(`${dir}_${i}`).classList.remove("loopLight", "lightBright");
-		}
-	})
 	clearTimeout(loopTick);
 }
 

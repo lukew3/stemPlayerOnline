@@ -31,6 +31,24 @@ class Lights {
         }, 800);
     }
 
+    initLoopLights = () => {
+        ["top", "bottom"].forEach((dir) => {
+            for(let i=1; i<5; i++) {
+                $(`${dir}_${i}`).classList.add("loopLight");
+            }
+        })
+    }
+
+    removeLoopLights = () => {
+        // Clear manually set background colors
+	    // Could just apply a class and remove it instead
+        ["top", "bottom", "left", "right"].forEach((dir) => {
+            for(let i=1; i<5; i++) {
+                $(`${dir}_${i}`).classList.remove("loopLight", "lightBright");
+            }
+        })
+    }
+
     setLightBrightness = (light, brightness) => {
         if (brightness == 0) {
             light.classList.add("lightOff");
