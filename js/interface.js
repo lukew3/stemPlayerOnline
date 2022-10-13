@@ -126,8 +126,8 @@ $("leftDotButton").addEventListener("click", () => {
 			audio.loadSong();
 			audio.playAudio();
 		}
-	} else if (loopStart*1000 >= beatDuration) {
-		loopStart -= beatDuration/1000;
+	} else if (loopStart*1000 >= audio.beatDuration) {
+		loopStart -= audio.beatDuration/1000;
 	}
 });
 
@@ -139,7 +139,7 @@ $("rightDotButton").addEventListener("click", () => {
 			audio.playAudio();
 		}
 	} else {
-		loopStart += beatDuration/1000;
+		loopStart += audio.beatDuration/1000;
 	}
 });
 /*

@@ -1,6 +1,4 @@
 let inLoopMode = false;
-let bpm = playlist[audio.songIndex].bpm || 120;
-let beatDuration = 60/bpm*1000;// Milliseconds per beat
 // Index of the location of the dot moving horizontally
 const horizArray = ['left_4', 'left_3', 'left_2', 'left_1', 'right_1', 'right_2', 'right_3', 'right_4'];
 let horizLoopTracker = 0;
@@ -26,13 +24,13 @@ const handleTick = () => {
 				// TODO: add optional parameter to set difference from current time
 				sources.forEach((source) => {
 					source.loopStart = audioCtx.currentTime - trackStartTime;
-					source.loopEnd = source.loopStart + beatDuration/1000 * (nextLoopDuration);
+					source.loopEnd = source.loopStart + audio.beatDuration/1000 * (nextLoopDuration);
 					source.loop = true;
 				});
 				vertLoopIndex = 0;
 			} else {
 				sources.forEach((source) => {
-					source.loopEnd = source.loopStart + beatDuration/1000 * (nextLoopDuration);
+					source.loopEnd = source.loopStart + audio.beatDuration/1000 * (nextLoopDuration);
 					source.loop = true;
 				});
 			}
@@ -61,20 +59,20 @@ const handleTick = () => {
 				vertLoopIndex++;
 			} else {
 				vertLoopIndex = 0;
-				trackStartTime += loopDuration * beatDuration/1000;
+				trackStartTime += loopDuration * audio.beatDuration/1000;
 			}
 			nextLight.classList.add("loopLight", "lightBright");
 		}
 		// Send next tick
 		handleTick();
-	}, beatDuration)
+	}, audio.beatDuration)
 }
 
 const enterLoopMode = () => {
 	lights.allLightsOff();
 	inLoopMode = true;
-	bpm = playlist[audio.songIndex].bpm || 120;
-	beatDuration = 60/bpm*1000;// Milliseconds per beat
+	audio.bpm = playlist[audio.songIndex].bpm || 120;
+	audio.beatDuration = 60/audio.bpm*1000;// Milliseconds per beat
 	// Init loop mode
 	["top", "bottom"].forEach((dir) => {
 		for(let i=1; i<5; i++) {
@@ -104,7 +102,7 @@ const setSpeed = (sliderName, lightIndex) => {
 	lightIndex = parseInt(lightIndex);
 	if (sliderName == "right") {
 		let pbRate = lightIndex * 0.5;
-		beatDuration = 60/bpm*1000/pbRate;
+		audio.beatDuration = 60/audio.bpm*1000/pbRate;
 		audio.wads.forEach((wad) => {wad.setRate(pbRate)});
 		if (speedDotIndex !== horizLoopTracker) {
 			$(horizArray[speedDotIndex]).classList.remove("loopLight");

@@ -5,6 +5,9 @@ class Audio {
         this.nowPlaying = false;
         this.paused = false;
 
+        this.bpm = 120;
+        this.beatDuration = 60/this.bpm*1000; // Milliseconds per beat
+
         let tracks = playlist[this.songIndex].tracks
         this.wads = [
             new Wad({source: tracks[0]}),
@@ -41,9 +44,9 @@ class Audio {
             this.wads[i] = new Wad({source: track});
             this.polywad.add(this.wads[i]);
         })
-        if (bpm) {
-            bpm = playlist[this.songIndex].bpm || 120;
-            beatDuration = 60/bpm*1000;
+        if (this.bpm) {
+            this.bpm = playlist[this.songIndex].bpm || 120;
+            this.beatDuration = 60/this.bpm*1000;
         }
     }
 
