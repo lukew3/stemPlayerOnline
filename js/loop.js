@@ -11,8 +11,8 @@ const vertArray = ['bottom_4', 'bottom_3', 'bottom_2', 'bottom_1', 'top_1', 'top
 let nextLoopDuration = 0;
 
 const handleTick = () => {
-	let nextLight = $(horizArray[horizLoopTracker]);
-	nextLight.classList.add("loopLight", "lightBright");
+	let nextHorizLight = $(horizArray[horizLoopTracker]);
+	nextHorizLight.classList.add("loopLight", "lightBright");
 	loopTick = setTimeout(() => {
 		// Set loop
 		if (nextLoopDuration) { //Does in loopmode and nowplaying need to be checked
@@ -52,7 +52,7 @@ const handleTick = () => {
 		}
 		// Vertical
 		if (loopDuration < 8) {
-			let nextLight = $(vertArray[vertLoopIndex]);
+			let nextVertLight = $(vertArray[vertLoopIndex]);
 			let prevVertIndex = vertLoopIndex == 0 ? loopDuration - 1 : vertLoopIndex - 1;
 			$(vertArray[prevVertIndex]).classList.remove("lightBright");
 			if (vertLoopIndex < loopDuration - 1) {
@@ -61,7 +61,7 @@ const handleTick = () => {
 				vertLoopIndex = 0;
 				trackStartTime += loopDuration * audio.beatDuration/1000;
 			}
-			nextLight.classList.add("loopLight", "lightBright");
+			nextVertLight.classList.add("loopLight", "lightBright");
 		}
 		// Send next tick
 		handleTick();
