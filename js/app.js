@@ -5,6 +5,12 @@ let wholeMaxVolume = 8; // Max volume in non-decimal
 let lightNum;
 let levels = [4, 4, 4, 4];
 let sliderNames = ["right", "top", "left", "bottom"];
+const nameToI = {
+	"right": 0,
+	"top": 1,
+	"left": 2,
+	"bottom": 3
+}
 
 if (navigator.vendor && 
     navigator.vendor.indexOf('Apple') > -1 &&
@@ -30,15 +36,15 @@ const showStemLights = () => {
 const isolateStem = (sliderName) => {
 	if (isolating) return;
 	isolating = true;
-	sources.forEach((source, i) => {sourceGains[i].gain.value = 0;});
+	audio.wads.forEach((wad) => { wad.setVolume(0);});
 	lights.allLightsOff();
 
-	sourceGains[key[sliderName]].gain.value = 1;
-        Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
+	audio.wads[nameToI[sliderName]].setVolume(1);
+    Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 		lights.setLightBrightness(light, 1);
 	});
 	const resetVolume = () => {
-		sources.forEach((source, i) => {sourceGains[i].gain.value = 1;});
+		audio.wads.forEach((wad, i) => { wad.setVolume(levelToVolume(levels[i]));});
 		sliderNames.forEach((sliderName, index) => {
         	Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 				lights.detectAndSetLightOn(light, levels[index]);

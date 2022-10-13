@@ -2,7 +2,7 @@
 
 const handleLightTap = (sliderName, lightIndex) => {
 	if (levels[sliderNames.indexOf(sliderName)] == parseInt(lightIndex)) return; //Dont update volume or lights if same light as active light is selected
-	sourceGains[key[sliderName]].gain.value = levelToVolume(lightIndex);
+	audio.wads[nameToI[sliderName]].setVolume(levelToVolume(lightIndex));
 	levels[sliderNames.indexOf(sliderName)] = parseInt(lightIndex);
 	Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
 		lights.detectAndSetLightOn(light, lightIndex);
@@ -104,7 +104,7 @@ $("minusButton").addEventListener("click", () => {
 	if (!inLoopMode) {
 		if (wholeMaxVolume != 0) {
 			wholeMaxVolume--;
-			masterGain.gain.value = wholeMaxVolume/8;
+			audio.polywad.setVolume(wholeMaxVolume/8);
 		}
 		lights.displayVolume();
 	}
@@ -113,7 +113,7 @@ $("plusButton").addEventListener("click", () => {
 	if (!inLoopMode) {
 		if (wholeMaxVolume != 8) {
 			wholeMaxVolume++;
-			masterGain.gain.value = wholeMaxVolume/8;
+			audio.polywad.setVolume(wholeMaxVolume/8);
 		}
 		lights.displayVolume();
 	}

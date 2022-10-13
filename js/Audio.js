@@ -17,7 +17,6 @@ class Audio {
 
         this.trackStartTime = 0; // audioCtx.currentTime when the track started playing
 
-        //this.masterGain;
     }
 
     #onEnded = () => {
