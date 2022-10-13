@@ -12,6 +12,8 @@ class Audio {
             new Wad({source: tracks[2]}),
             new Wad({source: tracks[3]})
         ];
+        this.polywad = new Wad.Poly();
+        this.wads.forEach((wad) => { this.polywad.add(wad) });
 
         this.trackStartTime = 0; // audioCtx.currentTime when the track started playing
 
@@ -34,9 +36,11 @@ class Audio {
     
     loadSong = () => {
         Wad.stopAll();
+        this.wads.forEach((wad) => { this.polywad.remove(wad) });
         let nextTracks = playlist[this.songIndex].tracks;
         nextTracks.forEach((track, i) => {
             this.wads[i] = new Wad({source: track});
+            this.polywad.add(this.wads[i]);
         })
         if (bpm) {
             bpm = playlist[this.songIndex].bpm || 120;
@@ -47,7 +51,11 @@ class Audio {
     playAudio() {
         $("loading").style.width = "0%";
         $("loading").style.display = "block";
-        this.wads.forEach((wad) => { this.paused ? wad.unpause() : wad.play() });
+        if (this.paused) {
+            this.wads.forEach((wad) => { this.paused ? wad.unpause() : wad.play() });
+        } else {
+            this.polywad.play();
+        }
         this.nowPlaying = true;
         this.paused = false;
     }
