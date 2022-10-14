@@ -305,8 +305,8 @@ nav * {
 	justify-content: center;
 }
 #selectStemsInner {
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-rows: 2em 1fr 4fr 2fr;
 	height: 100%;
 }
 #selectStemsHeader {
@@ -315,6 +315,7 @@ nav * {
 }
 #selectStemsTitle {
 	font-weight: bold;
+	align-self: end;
 }
 #selectStems * {
 	color: black;
@@ -356,11 +357,11 @@ nav * {
 	height: 45px;
 	line-height: 45px;
 	align-self: center;
+	justify-self: center;
 	text-align: center;
 	background-color: #539d5d;
 	border-radius: 10px;
 	cursor: pointer;
 	border: none;
-	margin-top: 50px;
 	font-size: 16px;
 }
