@@ -43,8 +43,8 @@ const handlePointerDown = (e) => {
             e.clientY <= bound.bottom
         ) {
             lightNum = getLightClicked(e, index);
-			if (inLoopMode) {
-				loopHandleLightTap(sliderNames[index], lightNum)
+			if (loop.inLoopMode) {
+				loop.loopHandleLightTap(sliderNames[index], lightNum)
 			} else {
 				handleLightTap(sliderNames[index], lightNum);
 				// listen for hold if light 4 is touched
@@ -77,14 +77,14 @@ const getLightClicked = (clickEvent, boundIndex) => {
 }
 let centerButtonPressed = false;
 $("centerButton").addEventListener("click", () => {
-	if (!inLoopMode) {
+	if (!loop.inLoopMode) {
 		audio.togglePlayback();
 	} else {
-		if (loopDuration == 7 && speedDotIndex == 5) {
-			exitLoopMode();
+		if (loop.loopDuration == 7 && loop.speedDotIndex == 5) {
+			loop.exitLoopMode();
 		} else {
-			loopHandleLightTap("top", "4");
-			setSpeed("right", "2"); // Should speed be getting reset here?
+			loop.loopHandleLightTap("top", "4");
+			loop.setSpeed("right", "2"); // Should speed be getting reset here?
 		}
 	}
 })
@@ -222,9 +222,9 @@ $("color1Input").addEventListener("change", () => {
 })
 
 $("menuButton").addEventListener("click", () => {
-	if (!inLoopMode) {
-		enterLoopMode();
+	if (!loop.inLoopMode) {
+		loop.enterLoopMode();
 	} else {
-		exitLoopMode();
+		loop.exitLoopMode();
 	}
 })
