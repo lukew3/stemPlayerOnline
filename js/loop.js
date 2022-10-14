@@ -6,7 +6,8 @@ let loopTick;
 let vertLoopIndex;
 let loopDuration = 8;
 //let loopStart = 0; // Time in song where loop starts (should this be rounded to the nearest beat?), var not used, use source.loopStart
-let inLoop = false;
+let looping = false;
+let offset = 0;
 const vertArray = ['bottom_4', 'bottom_3', 'bottom_2', 'bottom_1', 'top_1', 'top_2', 'top_3', 'top_4'];
 let nextLoopDuration = 0;
 
@@ -16,23 +17,10 @@ const handleTick = () => {
 	loopTick = setTimeout(() => {
 		// Set loop
 		if (nextLoopDuration) { //Does in loopmode and nowplaying need to be checked
-			if (nextLoopDuration == 8) {
-				sources.forEach((source) => {
-					source.loop = false;
-				});
-			} else if (loopDuration == 8) {
+			if (loopDuration == 8) { // If loopDuration was 8, but now is not, set loop
 				// TODO: add optional parameter to set difference from current time
-				sources.forEach((source) => {
-					source.loopStart = audioCtx.currentTime - trackStartTime;
-					source.loopEnd = source.loopStart + audio.beatDuration/1000 * (nextLoopDuration);
-					source.loop = true;
-				});
+				offset = Wad.audioContext.currentTime - audio.wads[0].lastPlayedTime;
 				vertLoopIndex = 0;
-			} else {
-				sources.forEach((source) => {
-					source.loopEnd = source.loopStart + audio.beatDuration/1000 * (nextLoopDuration);
-					source.loop = true;
-				});
 			}
 			loopDuration = nextLoopDuration;
 			nextLoopDuration = 0;
@@ -52,6 +40,12 @@ const handleTick = () => {
 		}
 		// Vertical
 		if (loopDuration < 8) {
+			if (vertLoopIndex == 0) {
+				audio.wads.forEach((wad) => {
+					wad.stop();
+					wad.play({offset: offset});
+				});
+			}
 			let nextVertLight = $(vertArray[vertLoopIndex]);
 			let prevVertIndex = vertLoopIndex == 0 ? loopDuration - 1 : vertLoopIndex - 1;
 			$(vertArray[prevVertIndex]).classList.remove("lightBright");
@@ -59,7 +53,6 @@ const handleTick = () => {
 				vertLoopIndex++;
 			} else {
 				vertLoopIndex = 0;
-				trackStartTime += loopDuration * audio.beatDuration/1000;
 			}
 			nextVertLight.classList.add("loopLight", "lightBright");
 		}
