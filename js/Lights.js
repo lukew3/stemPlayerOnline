@@ -27,7 +27,7 @@ class Lights {
             for (let i=0; i<8; i++) {
                 $(this.volumeLights[i]).style.backgroundColor = null;
             }
-            if (!inLoopMode) showStemLights();
+            if (!loop.inLoopMode) showStemLights(); // referencing object made after itself
         }, 800);
     }
 

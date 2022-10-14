@@ -101,39 +101,39 @@ $("centerButton").addEventListener("pointerup", () => {
 });
 
 $("minusButton").addEventListener("click", () => {
-	if (!inLoopMode) {
+	if (!loop.inLoopMode) {
 		audio.decrementPolyVolume();
 		lights.displayVolume(audio.wholeMaxVolume);
 	}
 });
 $("plusButton").addEventListener("click", () => {
-	if (!inLoopMode) {
+	if (!loop.inLoopMode) {
 		audio.incrementPolyVolume();
 		lights.displayVolume(audio.wholeMaxVolume);
 	}
 });
 
 $("leftDotButton").addEventListener("click", () => {
-	if (!inLoopMode) {
+	if (!loop.inLoopMode) {
 		if (audio.songIndex != 0) {
 			audio.songIndex--;
 			audio.loadSong();
 			audio.playAudio();
 		}
-	} else if (loopStart*1000 >= audio.beatDuration) {
-		loopStart -= audio.beatDuration/1000;
+	} else if (loop.offset*1000 >= audio.beatDuration) {
+		loop.offset -= audio.beatDuration/1000;
 	}
 });
 
 $("rightDotButton").addEventListener("click", () => {
-	if (!inLoopMode) {
+	if (!loop.inLoopMode) {
 		if (audio.songIndex + 1 != playlist.length) {
 			audio.songIndex++;
 			audio.loadSong();
 			audio.playAudio();
 		}
 	} else {
-		loopStart += audio.beatDuration/1000;
+		loop.offset += audio.beatDuration/1000;
 	}
 });
 /*
