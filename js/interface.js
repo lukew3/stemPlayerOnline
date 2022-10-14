@@ -144,13 +144,14 @@ document.addEventListener("click", (e) => {
 	}
 })
 */
-$("exitSelectLocal").addEventListener("click", () => {
-	$("selectLocalStems").style.display = "none";
-})
 
-/* Folder Select */
+/* Stem Select */
+$("selectStemsLaunch").addEventListener("click", () => {
+	$("selectStems").style.display = "none";
+});
+
 $("folderSelectGroup").addEventListener("click", () => {
-	$("selectLocalStems").style.display = "block";
+	$("selectStems").style.display = "flex";
 	//$("folderSelectField").click();
 });
 

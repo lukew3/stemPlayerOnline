@@ -292,3 +292,75 @@ nav * {
 	margin: 0;
 	display: none;
 }
+
+/* Select Stems */
+#selectStems {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #8a7159;
+	display: flex;
+	justify-content: center;
+}
+#selectStemsInner {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+#selectStemsHeader {
+	width: 100%;
+	text-align: center;
+}
+#selectStemsTitle {
+	font-weight: bold;
+}
+#selectStems * {
+	color: black;
+}
+.selectStemsSource p {
+	display: flex;
+	align-items: center;
+}
+.stemsSourceArrow {
+	margin-right: 5px;
+}
+.selectStemsCollapsible {
+	max-height: 420px;
+	overflow: scroll;
+}
+.selectStemsItem {
+	display: flex;
+}
+.selectStemsItemCover {
+	width: 3em;
+	height: 3em;
+	margin: 5px;
+	background-color: black;
+}
+.selectStemsItemRight  {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.selectStemsItemRight p {
+	margin: 0;
+}
+.selectStemsItemRight p:first-child {
+	font-weight: bold;
+}
+
+#selectStemsLaunch {
+	width: 150px;
+	height: 45px;
+	line-height: 45px;
+	align-self: center;
+	text-align: center;
+	background-color: #539d5d;
+	border-radius: 10px;
+	cursor: pointer;
+	border: none;
+	margin-top: 50px;
+	font-size: 16px;
+}

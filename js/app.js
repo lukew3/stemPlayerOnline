@@ -19,6 +19,25 @@ if (navigator.vendor &&
         $("alertBanner").style.display = "block";
 }
 
+// Populate selectStems with options
+playlist.forEach((stem) => {
+	let item = document.createElement("div");
+	let cover = document.createElement("div");
+	cover.className = "selectStemsItemCover";
+	item.appendChild(cover);
+	let right = document.createElement("div");
+	right.className = "selectStemsItemRight";
+	let title = document.createElement("p");
+	title.innerHTML = stem.title;
+	right.appendChild(title);
+	let artist = document.createElement("p");
+	artist.innerHTML = "Kanye West";
+	right.appendChild(artist);
+	item.appendChild(right);
+	item.className = "selectStemsItem";
+	$("selectStemsSPO").appendChild(item);
+});
+
 
 const levelToVolume = (level) => {
 	return (level-1)/3;
