@@ -333,6 +333,11 @@ nav * {
 }
 .selectStemsItem {
 	display: flex;
+	border: 1px solid transparent;
+}
+.selectStemsItem.selected{
+	border: 1px solid #614c4c;
+	background-color: #c0a994;
 }
 .selectStemsItemCover {
 	width: 3em;

@@ -20,7 +20,7 @@ if (navigator.vendor &&
 }
 
 // Populate selectStems with options
-playlist.forEach((stem) => {
+playlist.forEach((stem, i) => {
 	let item = document.createElement("div");
 	let cover = document.createElement("div");
 	cover.className = "selectStemsItemCover";
@@ -35,6 +35,14 @@ playlist.forEach((stem) => {
 	right.appendChild(artist);
 	item.appendChild(right);
 	item.className = "selectStemsItem";
+	if (i === 1) item.classList.add("selected");
+	item.addEventListener("click", (e) => {
+		audio.songIndex = i;
+		document.querySelectorAll(".selectStemsItem.selected").forEach((e) => {
+			e.classList.remove('selected');
+		})
+		item.classList.add('selected');
+	});
 	$("selectStemsSPO").appendChild(item);
 });
 

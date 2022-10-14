@@ -148,6 +148,7 @@ document.addEventListener("click", (e) => {
 /* Stem Select */
 $("selectStemsLaunch").addEventListener("click", () => {
 	$("selectStems").style.display = "none";
+	audio.loadSong();
 });
 
 $("folderSelectGroup").addEventListener("click", () => {
