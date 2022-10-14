@@ -8,7 +8,7 @@ class Loop {
 		this.vertLoopIndex = 0;
 		this.horizLoopIndex = 0;
 
-		this.loopTick; // Timeout
+		this.loopTickTimeout; // Timeout
 		this.loopDuration = 8;
 		this.nextLoopDuration = 0;
 		this.looping = false;
@@ -19,7 +19,7 @@ class Loop {
 	handleTick = () => {
 		let nextHorizLight = $(this.horizArray[this.horizLoopIndex]);
 		nextHorizLight.classList.add("loopLight", "lightBright");
-		this.loopTick = setTimeout(() => {
+		this.loopTickTimeout = setTimeout(() => {
 			// Set loop
 			if (this.nextLoopDuration) { //Does in loopmode and nowplaying need to be checked
 				if (this.loopDuration == 8) { // If loopDuration was 8, but now is not, set loop
@@ -79,7 +79,7 @@ class Loop {
 		lights.removeLoopLights();
 		showStemLights();
 		this.inLoopMode = false;
-		clearTimeout(this.loopTick);
+		clearTimeout(this.loopTickTimeout);
 	}
 
 	setSpeed = (sliderName, lightIndex) => {

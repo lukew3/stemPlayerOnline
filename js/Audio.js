@@ -17,9 +17,6 @@ class Audio {
         ];
         this.polywad = new Wad.Poly();
         this.wads.forEach((wad) => { this.polywad.add(wad) });
-
-        this.trackStartTime = 0; // audioCtx.currentTime when the track started playing
-
     }
 
     #onEnded = () => {
