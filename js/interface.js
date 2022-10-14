@@ -36,6 +36,7 @@ document.addEventListener("pointermove", (e) => {
     if (pointerdown) handlePointerDown(e);
 })
 const handlePointerDown = (e) => {
+	if (selectingStems) return;
     sliderBounds.forEach((bound, index) => {
         if (e.clientX >= bound.left &&
             e.clientX <= bound.right &&
@@ -148,11 +149,13 @@ document.addEventListener("click", (e) => {
 /* Stem Select */
 $("selectStemsLaunch").addEventListener("click", () => {
 	$("selectStems").style.display = "none";
+	selectingStems = false;
 	audio.loadSong();
 });
 
 $("folderSelectGroup").addEventListener("click", () => {
 	$("selectStems").style.display = "flex";
+	selectingStems = true;
 	//$("folderSelectField").click();
 });
 
