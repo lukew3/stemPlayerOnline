@@ -37,7 +37,7 @@
 	<div id="topBar">
 		<div id="folderSelectGroup">
 			<img id="folderSelectIcon" src="img/folder.svg" alt="Folder Select"/>
-			<p id="folderSelectLabel">Select local stems</p>
+			<p id="folderSelectLabel">Select stems</p>
 		</div>
 		<div id="colorIcons">
 			<input type="color" id="color4Input" class="colorInput" value="#4349e3">
@@ -125,7 +125,30 @@
 						<p>FROM LOCAL FILES</p>
 					</div>
 					<div id="selectStemsLocal" class="selectStemsCollapsible collapsed">
-						
+						<input id="folderSelectField" type="file" webkitdirectory multiple >
+						<button id="folderSelectButton">Select Folder</button>
+						<p id="folderSelectSubtext">* Folder selection on desktop only</p>
+						<p id="trackSelectSubtext">Tracks</p>
+						<div class="singleStemFileSelectGroup">
+							<label>1)</label>
+							<div id="stemFileSelectBtn1" class="stemFileSelectButton">tap to select...</div>
+							<input id="stemFileSelect1" class="stemFileSelect" type="file" >
+						</div>
+						<div class="singleStemFileSelectGroup">
+							<label>2)</label>
+							<div id="stemFileSelectBtn2" class="stemFileSelectButton">tap to select...</div>
+							<input id="stemFileSelect2" class="stemFileSelect" type="file" >
+						</div>
+						<div class="singleStemFileSelectGroup">
+							<label>3)</label>
+							<div id="stemFileSelectBtn3" class="stemFileSelectButton">tap to select...</div>
+							<input id="stemFileSelect3" class="stemFileSelect" type="file" >
+						</div>
+						<div class="singleStemFileSelectGroup">
+							<label>4)</label>
+							<div id="stemFileSelectBtn4" class="stemFileSelectButton">tap to select...</div>
+							<input id="stemFileSelect4" class="stemFileSelect" type="file" >
+						</div>
 					</div>
 				</div>
 			</div>

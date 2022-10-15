@@ -172,6 +172,10 @@ $("folderSelectGroup").addEventListener("click", () => {
 	//$("folderSelectField").click();
 });
 
+$("folderSelectButton").addEventListener("click", () => {
+	$("folderSelectField").click();
+});
+
 $("folderSelectField").addEventListener("change", () => {
 	try {pauseAudio();} catch {}
 	// load the first 4 mp3 files in the directory as stems
@@ -182,12 +186,10 @@ $("folderSelectField").addEventListener("change", () => {
 	playlist = [{title: trackName, bpm: 180, tracks: []}];
 	// this will automatically place tracks in the right position if they are numbered
 	for (let i=0; i<4; i++) {
-		$(`stem${i+1}Label`).innerHTML = files[i].name;
+		$(`stemFileSelectBtn${i+1}`).innerHTML = files[i].name;
 		playlist[0].tracks.push(URL.createObjectURL(files[i]));
 	}
 	audio.songIndex = 0;
-	audio.loadSong();
-	audio.playAudio();
 	// set label to folder name
 	$("folderSelectLabel").innerHTML = trackName;
 });
@@ -195,7 +197,7 @@ $("folderSelectField").addEventListener("change", () => {
 $("stemFileSelectBtn1").addEventListener("click", () => {$("stemFileSelect1").click()});
 $("stemFileSelect1").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem1Label").innerHTML = file.name;
+	$("stemFileSelectBtn1").innerHTML = file.name;
 	playlist[0].tracks[0] = URL.createObjectURL(file);
 	audio.songIndex = 0;
 	audio.loadSong();
@@ -203,7 +205,7 @@ $("stemFileSelect1").addEventListener("change", (e) => {
 $("stemFileSelectBtn2").addEventListener("click", () => {$("stemFileSelect2").click()});
 $("stemFileSelect2").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem2Label").innerHTML = file.name;
+	$("stemFileSelectBtn2").innerHTML = file.name;
 	playlist[0].tracks[1] = URL.createObjectURL(file);
 	songIndex = 0;
 	audio.loadSong();
@@ -211,7 +213,7 @@ $("stemFileSelect2").addEventListener("change", (e) => {
 $("stemFileSelectBtn3").addEventListener("click", () => {$("stemFileSelect3").click()});
 $("stemFileSelect3").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem3Label").innerHTML = file.name;
+	$("stemFileSelectBtn3").innerHTML = file.name;
 	playlist[0].tracks[2] = URL.createObjectURL(file);
 	songIndex = 0;
 	loadSong();
@@ -219,7 +221,7 @@ $("stemFileSelect3").addEventListener("change", (e) => {
 $("stemFileSelectBtn4").addEventListener("click", () => {$("stemFileSelect4").click()});
 $("stemFileSelect4").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem4Label").innerHTML = file.name;
+	$("stemFileSelectBtn4").innerHTML = file.name;
 	playlist[0].tracks[3] = URL.createObjectURL(file);
 	songIndex = 0;
 	audio.loadSong();
