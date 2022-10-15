@@ -37,7 +37,7 @@
 	<div id="topBar">
 		<div id="folderSelectGroup">
 			<img id="folderSelectIcon" src="img/folder.svg" alt="Folder Select"/>
-			<p id="folderSelectLabel">Select local stems</p>
+			<p id="folderSelectLabel">Select stems</p>
 		</div>
 		<div id="colorIcons">
 			<input type="color" id="color4Input" class="colorInput" value="#4349e3">
@@ -100,13 +100,6 @@
 					</div>
 				</div>
 			</div>
-			<div id="playlistViewer">
-				<div class="playlistViewerItem pvActive">Hurricane</div>
-				<div class="playlistViewerItem">Jail</div>
-				<div class="playlistViewerItem">Jail pt 2</div>
-				<div class="playlistViewerItem">Jesus Lord</div>
-				<div class="playlistViewerItem">Jesus Lord pt 2</div>
-			</div>
 		</div>
 	</div>
 	<div id="externalLinks">
@@ -114,44 +107,61 @@
 		<a href="https://discord.gg/jfnFhggJGZ"><img src="img/discordIcon.svg" alt="Discord"/></a>
 	</div>
 	<div style="position: absolute; bottom: 60px; left: 20px;"><a href="https://stemplayeronline.com">Go to classic version</a></div>
-	<div id="selectLocalStems">
-		<div id="exitSelectLocal">X</div>
-		<h4>Select stems downloaded on your device</h4>
-		<h5>From folder (doesn't work on mobile)</h5>
-		<input id="folderSelectField" type="file" webkitdirectory multiple >
-		<h5>Or by each file</h5>
-		<div>
-			<label>1)</label>
-			<label id="stem1Label">Empty</label>
-			<div id="stemFileSelectBtn1" class="stemFileSelectButton">Browse</div>
-			<input id="stemFileSelect1" class="stemFileSelect" type="file" >
-		</div>
-		<div>
-			<label>2)</label>
-			<label id="stem2Label">Empty</label>
-			<div id="stemFileSelectBtn2" class="stemFileSelectButton">Browse</div>
-			<input id="stemFileSelect2" class="stemFileSelect" type="file" >
-		</div>
-		<div>
-			<label>3)</label>
-			<label id="stem3Label">Empty</label>
-			<div id="stemFileSelectBtn3" class="stemFileSelectButton">Browse</div>
-			<input id="stemFileSelect3" class="stemFileSelect" type="file" >
-		</div>
-		<div>
-			<label>4)</label>
-			<label id="stem4Label">Empty</label>
-			<div id="stemFileSelectBtn4" class="stemFileSelectButton">Browse</div>
-			<input id="stemFileSelect4" class="stemFileSelect" type="file" >
+	<div id="selectStems">
+		<div id="selectStemsInner">
+			<p id="selectStemsHeader">STEM PLAYER ONLINE</p>
+			<h2 id="selectStemsTitle">SELECT STEMS</h2>
+			<div>
+				<div id="selectStemsFromSPO" class="selectStemsSource">
+					<div id="selectStemsSPOHeader" class="selectStemsSourceHeader">
+						<img id="selectStemsSPOArrow" src="/img/collapseArrow.svg" class="stemsSourceArrow"/>
+						<p>FROM STEMPLAYERONLINE.COM</p>
+					</div>
+					<div id="selectStemsSPO" class="selectStemsCollapsible"></div>
+				</div>
+				<div id="selectStemsFromLocal" class="selectStemsSource">
+					<div id="selectStemsLocalHeader" class="selectStemsSourceHeader">
+						<img id="selectStemsLocalArrow" src="/img/collapseArrow.svg" class="stemsSourceArrow collapsed"/>
+						<p>FROM LOCAL FILES</p>
+					</div>
+					<div id="selectStemsLocal" class="selectStemsCollapsible collapsed">
+						<input id="folderSelectField" type="file" webkitdirectory multiple >
+						<button id="folderSelectButton">Select Folder</button>
+						<p id="folderSelectSubtext">* Folder selection on desktop only</p>
+						<p id="trackSelectSubtext">Tracks</p>
+						<div class="singleStemFileSelectGroup">
+							<label>1)</label>
+							<div id="stemFileSelectBtn1" class="stemFileSelectButton">tap to select...</div>
+							<input id="stemFileSelect1" class="stemFileSelect" type="file" >
+						</div>
+						<div class="singleStemFileSelectGroup">
+							<label>2)</label>
+							<div id="stemFileSelectBtn2" class="stemFileSelectButton">tap to select...</div>
+							<input id="stemFileSelect2" class="stemFileSelect" type="file" >
+						</div>
+						<div class="singleStemFileSelectGroup">
+							<label>3)</label>
+							<div id="stemFileSelectBtn3" class="stemFileSelectButton">tap to select...</div>
+							<input id="stemFileSelect3" class="stemFileSelect" type="file" >
+						</div>
+						<div class="singleStemFileSelectGroup">
+							<label>4)</label>
+							<div id="stemFileSelectBtn4" class="stemFileSelectButton">tap to select...</div>
+							<input id="stemFileSelect4" class="stemFileSelect" type="file" >
+						</div>
+					</div>
+				</div>
+			</div>
+			<button id="selectStemsLaunch">LAUNCH</button>
 		</div>
 	</div>
 	<script>const $ = (id) => { return document.getElementById(id) };</script>
-	<script src="js/lightColors.js"></script>
+	<script src="js/Lights.js"></script>
 	<script src="js/data.js"></script>
-	<script src="js/audio.js"></script>
+	<script src="https://unpkg.com/web-audio-daw"></script>
+	<script src="js/Audio.js"></script>
+	<script src="js/Loop.js"></script>
 	<script src="js/app.js"></script>
-	<script src="js/loop.js"></script>
-	<script src="js/maxVolume.js"></script>
 	<script src="js/interface.js"></script>
 	<script src="js/keyboardControls.js"></script>
 </body>

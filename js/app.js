@@ -1,11 +1,16 @@
 let isolating = false;
 let controlPressed = false;
 let pointerdown = false;
-let wholeMaxVolume = 8; // Max volume in non-decimal
+let selectingStems = true;
 let lightNum;
 let levels = [4, 4, 4, 4];
 let sliderNames = ["right", "top", "left", "bottom"];
-let hideLightsTimeout;
+const nameToI = {
+	"right": 0,
+	"top": 1,
+	"left": 2,
+	"bottom": 3
+}
 
 if (navigator.vendor && 
     navigator.vendor.indexOf('Apple') > -1 &&
@@ -15,75 +20,61 @@ if (navigator.vendor &&
         $("alertBanner").style.display = "block";
 }
 
-const loadPlaylistViewer = () => {
-	const pv = $("playlistViewer");
-	pv.innerHTML = "";
-	playlist.forEach((song, i) => {
-		let songDiv = document.createElement('div');
-		songDiv.classList.add("playlistViewerItem");
-		songDiv.innerHTML = i+1 + ") " + song.title;
-		songDiv.addEventListener("click", () => {
-			songIndex = i;
-			loadSong();
-			playAudio();
+// Populate selectStems with options
+playlist.forEach((stem, i) => {
+	let item = document.createElement("div");
+	let cover = document.createElement("div");
+	cover.className = "selectStemsItemCover";
+	item.appendChild(cover);
+	let right = document.createElement("div");
+	right.className = "selectStemsItemRight";
+	let title = document.createElement("p");
+	title.innerHTML = stem.title;
+	right.appendChild(title);
+	let artist = document.createElement("p");
+	artist.innerHTML = "Kanye West";
+	right.appendChild(artist);
+	item.appendChild(right);
+	item.className = "selectStemsItem";
+	if (i === 1) item.classList.add("selected");
+	item.addEventListener("click", (e) => {
+		audio.songIndex = i;
+		document.querySelectorAll(".selectStemsItem.selected").forEach((e) => {
+			e.classList.remove('selected');
 		})
-		pv.append(songDiv);
-	})
-}
-loadPlaylistViewer();
+		item.classList.add('selected');
+	});
+	$("selectStemsSPO").appendChild(item);
+});
+
 
 const levelToVolume = (level) => {
 	return (level-1)/3;
 }
 
-const setLightBrightness = (light, brightness) => {
-	if (brightness == 0) {
-		light.classList.add("lightOff");
-		light.classList.remove("lightBright");
-	} else if (brightness == 1) {
-		light.classList.remove("lightOff");
-		light.classList.remove("lightBright");
-	} else if (brightness == 2) {
-		light.classList.remove("lightOff");
-		light.classList.add("lightBright");
-	}
-}
-
-const allLightsOff = () => {
-        Array.from(document.getElementsByClassName('light')).forEach((light) => {
-		setLightBrightness(light, 0);
-	});
-}
-
 const showStemLights = () => {
 	sliderNames.forEach((sliderName, index) => {
 		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-			setLightColor(light, levels[index]);
+			lights.detectAndSetLightOn(light, levels[index]);
 		});
 	});
-}
-
-const setLightColor = (light, lightIndex) => {
-	(light.id.split("_")[1] > lightIndex) ?
-		setLightBrightness(light, 0) :
-		setLightBrightness(light, 1);
 }
 
 const isolateStem = (sliderName) => {
 	if (isolating) return;
 	isolating = true;
-	sources.forEach((source, i) => {sourceGains[i].gain.value = 0;});
-	allLightsOff();
+	audio.wads.forEach((wad) => { wad.setVolume(0);});
+	lights.allLightsOff();
 
-	sourceGains[key[sliderName]].gain.value = 1;
-        Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-		setLightBrightness(light, 1);
+	audio.wads[nameToI[sliderName]].setVolume(1);
+    Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
+		lights.setLightBrightness(light, 1);
 	});
 	const resetVolume = () => {
-		sources.forEach((source, i) => {sourceGains[i].gain.value = 1;});
+		audio.wads.forEach((wad, i) => { wad.setVolume(levelToVolume(levels[i]));});
 		sliderNames.forEach((sliderName, index) => {
-        		Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-				setLightColor(light, levels[index]);
+        	Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
+				lights.detectAndSetLightOn(light, levels[index]);
 			});
 		});
 		isolating = false;

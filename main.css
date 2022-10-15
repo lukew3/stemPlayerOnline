@@ -292,56 +292,141 @@ nav * {
 	margin: 0;
 	display: none;
 }
-#playlistViewer {
+
+/* Select Stems */
+#selectStems {
 	position: absolute;
-	bottom: 10px;
-	right: 15px;
-	overflow: auto;
-	height: 120px;
-	width: 250px;
-	border-radius: 3px;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #8a7159;
+	display: flex;
+	justify-content: center;
 }
-.playlistViewerItem {
-	padding: 6px;
-	background-color: #222;
-	border-bottom: 1px solid #333;
+#selectStemsInner {
+	display: grid;
+	grid-template-rows: 2em 1fr 4fr 2fr;
+	height: 100%;
+}
+#selectStemsHeader {
+	width: 100%;
+	text-align: center;
+}
+#selectStemsTitle {
+	font-weight: bold;
+	align-self: end;
+}
+#selectStems * {
+	color: black;
+}
+.selectStemsSource p {
+	display: flex;
+	align-items: center;
+}
+.selectStemsSourceHeader {
+	display: flex;
 	cursor: pointer;
 }
-.pvActive {
-	background-color: #525252;
+.selectStemsSourceHeader p {
+	margin: 5px 0;
 }
-#selectLocalStems {
-	position: absolute;
-	background-color: #735f57;
-	width: calc(95% - 40px);
-	max-width: 500px;
-	height: calc(90% - 80px);
-	margin: auto;
-	left: 50%;
-	transform: translate(-50%, 0);
-	top: 30px;
-	padding: 20px;
-	border-radius: 10px;
-	border: 1px solid grey;
+.stemsSourceArrow {
+	margin-right: 5px;
+}
+.stemsSourceArrow.collapsed {
+	rotate: -90deg;
+}
+.selectStemsCollapsible {
+	max-height: 420px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	display: flex;
+	flex-direction: column;
+}
+.selectStemsCollapsible.collapsed {
+	max-height: 0;
+}
+.selectStemsItem {
+	display: flex;
+	border: 1px solid transparent;
+	cursor: pointer;
+}
+.selectStemsItem.selected{
+	border: 1px solid #614c4c;
+	background-color: #c0a994;
+}
+.selectStemsItemCover {
+	width: 3em;
+	height: 3em;
+	margin: 5px;
+	background-color: black;
+}
+.selectStemsItemRight  {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.selectStemsItemRight p {
+	margin: 0;
+}
+.selectStemsItemRight p:first-child {
+	font-weight: bold;
+}
+
+#folderSelectField {
 	display: none;
 }
-#selectLocalStems div {
-	margin: 3px;
-}
-#exitSelectLocal {
-	float: right;
-	padding: 10px;
-	margin-top: -10px;
-	margin-right: -10px;
+#folderSelectButton {
+	border: none;
+	border-radius: 8px;
+	background-color: #b4a692;
+	width: 50%;
+	font-size: 0.9em;
+	height: 35px;
+	align-self: center;
 	cursor: pointer;
+	margin-top: 30px;
 }
-.stemFileSelectButton {
-	display: inline-block;
-	background-color: #854118;
-	padding: 3px;
-	border-radius: 3px;
-	cursor: pointer;
+#folderSelectSubtext {
+	font-size: 0.8em;
+	margin-top: 5px;
+	align-self: center;
+}
+#trackSelectSubtext {
+	font-size: 1em;
+	margin-top: 10px;
+	margin-bottom: 12px;
+	align-self: center;
+}
+.singleStemFileSelectGroup {
+	display: flex;
+	align-items: center;
+	margin: 5px 0;
 }
 .stemFileSelect {
 	display: none;
+}
+.stemFileSelectButton {
+	background-color: #b4a692;
+	width: 100%;
+	padding: 3px 5px;
+	font-size: 0.9em;
+	border-radius: 3px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+#selectStemsLaunch {
+	width: 150px;
+	height: 45px;
+	line-height: 45px;
+	align-self: center;
+	justify-self: center;
+	text-align: center;
+	background-color: #539d5d;
+	border-radius: 10px;
+	cursor: pointer;
+	border: none;
+	font-size: 16px;
 }

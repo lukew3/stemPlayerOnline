@@ -2,49 +2,50 @@
 
 const handleLightTap = (sliderName, lightIndex) => {
 	if (levels[sliderNames.indexOf(sliderName)] == parseInt(lightIndex)) return; //Dont update volume or lights if same light as active light is selected
-	sourceGains[key[sliderName]].gain.value = levelToVolume(lightIndex);
+	audio.wads[nameToI[sliderName]].setVolume(levelToVolume(lightIndex));
 	levels[sliderNames.indexOf(sliderName)] = parseInt(lightIndex);
 	Array.from(document.getElementsByClassName(sliderName + 'Light')).forEach((light) => {
-		setLightColor(light, lightIndex);
+		lights.detectAndSetLightOn(light, lightIndex);
 	});
 }
 
 /* Detect slider click */
 document.addEventListener('pointerdown', (e) => {
-        pointerdown = true;
-        handlePointerDown(e);
+    pointerdown = true;
+    handlePointerDown(e);
 })
 document.addEventListener('pointerup', (e) => {
-        pointerdown = false;
+    pointerdown = false;
 })
 
 let sliderBounds = [];
 const getSliders = () => {
-        sliderBounds = [
-                $("rightSlider").getBoundingClientRect(),
-                $("topSlider").getBoundingClientRect(),
-                $("leftSlider").getBoundingClientRect(),
-                $("bottomSlider").getBoundingClientRect()
-        ];
+    sliderBounds = [
+        $("rightSlider").getBoundingClientRect(),
+        $("topSlider").getBoundingClientRect(),
+        $("leftSlider").getBoundingClientRect(),
+        $("bottomSlider").getBoundingClientRect()
+    ];
 }
 getSliders();
 window.addEventListener('resize', (e) => {
-        getSliders();
+    getSliders();
 })
 
 document.addEventListener("pointermove", (e) => {
-        if (pointerdown) handlePointerDown(e);
+    if (pointerdown) handlePointerDown(e);
 })
 const handlePointerDown = (e) => {
-        sliderBounds.forEach((bound, index) => {
-                if (e.clientX >= bound.left &&
-                        e.clientX <= bound.right &&
-                        e.clientY >= bound.top &&
-                        e.clientY <= bound.bottom
-                ) {
-                        lightNum = getLightClicked(e, index);
-			if (inLoopMode) {
-				loopHandleLightTap(sliderNames[index], lightNum)
+	if (selectingStems) return;
+    sliderBounds.forEach((bound, index) => {
+        if (e.clientX >= bound.left &&
+            e.clientX <= bound.right &&
+            e.clientY >= bound.top &&
+            e.clientY <= bound.bottom
+        ) {
+            lightNum = getLightClicked(e, index);
+			if (loop.inLoopMode) {
+				loop.loopHandleLightTap(sliderNames[index], lightNum)
 			} else {
 				handleLightTap(sliderNames[index], lightNum);
 				// listen for hold if light 4 is touched
@@ -55,94 +56,85 @@ const handlePointerDown = (e) => {
 					}
 				}, 200)
  			}
-                }
-        })
+        }
+    })
 }
 const getLightClicked = (clickEvent, boundIndex) => {
-        let segLen, i;
-        let bound = sliderBounds[boundIndex];
-        let y = clickEvent.clientY;
-        let x = clickEvent.clientX;
-        const inBounds = [
-                () => { return x <= bound.left + i * segLen},
-                () => { return y >= bound.bottom - i * segLen},
-                () => { return x >= bound.right - i * segLen},
-                () => { return y <= bound.top + i * segLen}
-        ]
-        if ([1, 3].includes(boundIndex)) segLen = bound.height/4;
-        else if ([2, 0].includes(boundIndex)) segLen = bound.width/4;
-        for (i=1; i<=4; i++)
-                if (inBounds[boundIndex]()) return i.toString();
-        return "1"; // catch error
+    let segLen, i;
+    let bound = sliderBounds[boundIndex];
+    let y = clickEvent.clientY;
+    let x = clickEvent.clientX;
+    const inBounds = [
+        () => { return x <= bound.left + i * segLen},
+        () => { return y >= bound.bottom - i * segLen},
+        () => { return x >= bound.right - i * segLen},
+        () => { return y <= bound.top + i * segLen}
+    ]
+    if ([1, 3].includes(boundIndex)) segLen = bound.height/4;
+    else if ([2, 0].includes(boundIndex)) segLen = bound.width/4;
+    for (i=1; i<=4; i++)
+            if (inBounds[boundIndex]()) return i.toString();
+    return "1"; // catch error
 }
 let centerButtonPressed = false;
 $("centerButton").addEventListener("click", () => {
-	if (!audioCtx) {
-		initAudioCtx();
-	}
-	if (!inLoopMode) {
-		togglePlayback();
+	if (!loop.inLoopMode) {
+		audio.togglePlayback();
 	} else {
-		if (loopDuration == 7 && speedDotIndex == 5) {
-			exitLoopMode();
+		if (loop.loopDuration == 7 && loop.speedDotIndex == 5) {
+			loop.exitLoopMode();
 		} else {
-			loopHandleLightTap("top", "4");
-			setSpeed("right", "2"); // Should speed be getting reset here?
+			loop.loopHandleLightTap("top", "4");
+			loop.setSpeed("right", "2"); // Should speed be getting reset here?
 		}
 	}
 })
 
 $("centerButton").addEventListener("pointerdown", () => {
-        $("centerButton").style.backgroundColor = "#82664b";
-        centerButtonPressed = true;
+    $("centerButton").style.backgroundColor = "#82664b";
+    centerButtonPressed = true;
 });
 $("centerButton").addEventListener("pointerup", () => {
-        if (centerButtonPressed) {
-                $("centerButton").style.backgroundColor = "var(--player)";
-                centerButtonPressed = false;
-        }
+    if (centerButtonPressed) {
+        $("centerButton").style.backgroundColor = "var(--player)";
+        centerButtonPressed = false;
+    }
 });
 
 $("minusButton").addEventListener("click", () => {
-	if (!inLoopMode) {
-		if (wholeMaxVolume != 0) {
-			wholeMaxVolume--;
-			updateVolumes();
-		}
-		displayVolume();
+	if (!loop.inLoopMode) {
+		audio.decrementPolyVolume();
+		lights.displayVolume(audio.wholeMaxVolume);
 	}
 });
 $("plusButton").addEventListener("click", () => {
-	if (!inLoopMode) {
-		if (wholeMaxVolume != 8) {
-			wholeMaxVolume++;
-			updateVolumes();
-		}
-		displayVolume();
+	if (!loop.inLoopMode) {
+		audio.incrementPolyVolume();
+		lights.displayVolume(audio.wholeMaxVolume);
 	}
 });
 
 $("leftDotButton").addEventListener("click", () => {
-	if (!inLoopMode) {
-		if (songIndex != 0) {
-			songIndex--;
-			loadSong();
-			playAudio();
+	if (!loop.inLoopMode) {
+		if (audio.songIndex != 0) {
+			audio.songIndex--;
+			audio.loadSong();
+			audio.playAudio();
 		}
-	} else if (loopStart*1000 >= beatDuration) {
-		loopStart -= beatDuration/1000;
+	} else if (loop.offset*1000 >= audio.beatDuration) {
+		loop.offset -= audio.beatDuration/1000;
 	}
 });
 
 $("rightDotButton").addEventListener("click", () => {
-	if (!inLoopMode) {
-		if (songIndex + 1 != playlist.length) {
-			songIndex++;
-			loadSong();
-			playAudio();
+	if (!loop.inLoopMode) {
+		if (audio.songIndex + 1 != playlist.length) {
+			audio.songIndex++;
+			audio.loadSong();
+			audio.playAudio();
 		}
 	} else {
-		loopStart += beatDuration/1000;
+		loop.offset += audio.beatDuration/1000;
 	}
 });
 /*
@@ -153,14 +145,35 @@ document.addEventListener("click", (e) => {
 	}
 })
 */
-$("exitSelectLocal").addEventListener("click", () => {
-	$("selectLocalStems").style.display = "none";
-})
 
-/* Folder Select */
+/* Stem Select */
+$("selectStemsLaunch").addEventListener("click", () => {
+	$("selectStems").style.display = "none";
+	selectingStems = false;
+	audio.loadSong();
+});
+
+$("selectStemsSPOHeader").addEventListener("click", () => {
+	$("selectStemsSPO").classList.remove('collapsed');
+	$("selectStemsSPOArrow").classList.remove('collapsed');
+	$("selectStemsLocal").classList.add('collapsed');
+	$("selectStemsLocalArrow").classList.add('collapsed');
+});
+$("selectStemsLocalHeader").addEventListener("click", () => {
+	$("selectStemsLocal").classList.remove('collapsed');
+	$("selectStemsLocalArrow").classList.remove('collapsed');
+	$("selectStemsSPO").classList.add('collapsed');
+	$("selectStemsSPOArrow").classList.add('collapsed');
+});
+
 $("folderSelectGroup").addEventListener("click", () => {
-	$("selectLocalStems").style.display = "block";
+	$("selectStems").style.display = "flex";
+	selectingStems = true;
 	//$("folderSelectField").click();
+});
+
+$("folderSelectButton").addEventListener("click", () => {
+	$("folderSelectField").click();
 });
 
 $("folderSelectField").addEventListener("change", () => {
@@ -169,16 +182,14 @@ $("folderSelectField").addEventListener("change", () => {
 	// todo: ensure that 4 audio files are used as stems
 	let files = $("folderSelectField").files;
 	let trackName = files[0].webkitRelativePath.split("/")[0];
-	nowPlaying = false;
+	audio.nowPlaying = false;
 	playlist = [{title: trackName, bpm: 180, tracks: []}];
 	// this will automatically place tracks in the right position if they are numbered
 	for (let i=0; i<4; i++) {
-		$(`stem${i+1}Label`).innerHTML = files[i].name;
+		$(`stemFileSelectBtn${i+1}`).innerHTML = files[i].name;
 		playlist[0].tracks.push(URL.createObjectURL(files[i]));
 	}
-	songIndex = 0;
-	loadSong();
-	playAudio();
+	audio.songIndex = 0;
 	// set label to folder name
 	$("folderSelectLabel").innerHTML = trackName;
 });
@@ -186,23 +197,23 @@ $("folderSelectField").addEventListener("change", () => {
 $("stemFileSelectBtn1").addEventListener("click", () => {$("stemFileSelect1").click()});
 $("stemFileSelect1").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem1Label").innerHTML = file.name;
+	$("stemFileSelectBtn1").innerHTML = file.name;
 	playlist[0].tracks[0] = URL.createObjectURL(file);
-	songIndex = 0;
-	loadSong();
+	audio.songIndex = 0;
+	audio.loadSong();
 });
 $("stemFileSelectBtn2").addEventListener("click", () => {$("stemFileSelect2").click()});
 $("stemFileSelect2").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem2Label").innerHTML = file.name;
+	$("stemFileSelectBtn2").innerHTML = file.name;
 	playlist[0].tracks[1] = URL.createObjectURL(file);
 	songIndex = 0;
-	loadSong();
+	audio.loadSong();
 });
 $("stemFileSelectBtn3").addEventListener("click", () => {$("stemFileSelect3").click()});
 $("stemFileSelect3").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem3Label").innerHTML = file.name;
+	$("stemFileSelectBtn3").innerHTML = file.name;
 	playlist[0].tracks[2] = URL.createObjectURL(file);
 	songIndex = 0;
 	loadSong();
@@ -210,8 +221,30 @@ $("stemFileSelect3").addEventListener("change", (e) => {
 $("stemFileSelectBtn4").addEventListener("click", () => {$("stemFileSelect4").click()});
 $("stemFileSelect4").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem4Label").innerHTML = file.name;
+	$("stemFileSelectBtn4").innerHTML = file.name;
 	playlist[0].tracks[3] = URL.createObjectURL(file);
 	songIndex = 0;
-	loadSong();
+	audio.loadSong();
 });
+
+/* Light color input listeners */
+$("color4Icon").addEventListener("click", () => {
+	$("color4Input").click();
+})
+$("color1Icon").addEventListener("click", () => {
+	$("color1Input").click();
+})
+$("color4Input").addEventListener("change", () => {
+	lights.generateGradient();
+})
+$("color1Input").addEventListener("change", () => {
+	lights.generateGradient();
+})
+
+$("menuButton").addEventListener("click", () => {
+	if (!loop.inLoopMode) {
+		loop.enterLoopMode();
+	} else {
+		loop.exitLoopMode();
+	}
+})
