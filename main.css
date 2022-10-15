@@ -327,13 +327,21 @@ nav * {
 .stemsSourceArrow {
 	margin-right: 5px;
 }
+.stemsSourceArrow.collapsed {
+	rotate: -90deg;
+}
 .selectStemsCollapsible {
 	max-height: 420px;
-	overflow: scroll;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.selectStemsCollapsible.collapsed {
+	max-height: 0;
 }
 .selectStemsItem {
 	display: flex;
 	border: 1px solid transparent;
+	cursor: pointer;
 }
 .selectStemsItem.selected{
 	border: 1px solid #614c4c;
