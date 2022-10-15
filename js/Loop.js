@@ -47,6 +47,7 @@ class Loop {
 				if (this.vertLoopIndex == 0) {
 					audio.wads.forEach((wad) => {
 						wad.stop();
+						audio.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
 						wad.play({offset: this.offset});
 					});
 				}
@@ -85,9 +86,9 @@ class Loop {
 	setSpeed = (sliderName, lightIndex) => {
 		lightIndex = parseInt(lightIndex);
 		if (sliderName == "right") {
-			let pbRate = lightIndex * 0.5;
-			audio.beatDuration = 60/audio.bpm*1000/pbRate;
-			audio.wads.forEach((wad) => {wad.setRate(pbRate)});
+			audio.playbackRate = lightIndex * 0.5;
+			audio.beatDuration = 60/audio.bpm*1000/audio.playbackRate;
+			audio.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
 			if (this.speedDotIndex !== this.horizLoopIndex) {
 				$(this.horizArray[this.speedDotIndex]).classList.remove("loopLight");
 			}

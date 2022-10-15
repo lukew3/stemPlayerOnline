@@ -4,7 +4,8 @@ class Audio {
         this.nowPlaying = false;
         this.paused = false;
         this.wholeMaxVolume = 8;
-
+        
+        this.playbackRate = 1;
         this.bpm = 120;
         this.beatDuration = 60/this.bpm*1000; // Milliseconds per beat
 
