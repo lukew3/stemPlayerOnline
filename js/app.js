@@ -1,6 +1,7 @@
 let isolating = false;
 let controlPressed = false;
 let pointerdown = false;
+let selectingStems = true;
 let lightNum;
 let levels = [4, 4, 4, 4];
 let sliderNames = ["right", "top", "left", "bottom"];
@@ -18,6 +19,33 @@ if (navigator.vendor &&
     navigator.userAgent.indexOf('FxiOS') == -1) {
         $("alertBanner").style.display = "block";
 }
+
+// Populate selectStems with options
+playlist.forEach((stem, i) => {
+	let item = document.createElement("div");
+	let cover = document.createElement("div");
+	cover.className = "selectStemsItemCover";
+	item.appendChild(cover);
+	let right = document.createElement("div");
+	right.className = "selectStemsItemRight";
+	let title = document.createElement("p");
+	title.innerHTML = stem.title;
+	right.appendChild(title);
+	let artist = document.createElement("p");
+	artist.innerHTML = "Kanye West";
+	right.appendChild(artist);
+	item.appendChild(right);
+	item.className = "selectStemsItem";
+	if (i === 1) item.classList.add("selected");
+	item.addEventListener("click", (e) => {
+		audio.songIndex = i;
+		document.querySelectorAll(".selectStemsItem.selected").forEach((e) => {
+			e.classList.remove('selected');
+		})
+		item.classList.add('selected');
+	});
+	$("selectStemsSPO").appendChild(item);
+});
 
 
 const levelToVolume = (level) => {

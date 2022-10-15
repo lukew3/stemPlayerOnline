@@ -36,6 +36,7 @@ document.addEventListener("pointermove", (e) => {
     if (pointerdown) handlePointerDown(e);
 })
 const handlePointerDown = (e) => {
+	if (selectingStems) return;
     sliderBounds.forEach((bound, index) => {
         if (e.clientX >= bound.left &&
             e.clientX <= bound.right &&
@@ -144,14 +145,35 @@ document.addEventListener("click", (e) => {
 	}
 })
 */
-$("exitSelectLocal").addEventListener("click", () => {
-	$("selectLocalStems").style.display = "none";
-})
 
-/* Folder Select */
+/* Stem Select */
+$("selectStemsLaunch").addEventListener("click", () => {
+	$("selectStems").style.display = "none";
+	selectingStems = false;
+	audio.loadSong();
+});
+
+$("selectStemsSPOHeader").addEventListener("click", () => {
+	$("selectStemsSPO").classList.remove('collapsed');
+	$("selectStemsSPOArrow").classList.remove('collapsed');
+	$("selectStemsLocal").classList.add('collapsed');
+	$("selectStemsLocalArrow").classList.add('collapsed');
+});
+$("selectStemsLocalHeader").addEventListener("click", () => {
+	$("selectStemsLocal").classList.remove('collapsed');
+	$("selectStemsLocalArrow").classList.remove('collapsed');
+	$("selectStemsSPO").classList.add('collapsed');
+	$("selectStemsSPOArrow").classList.add('collapsed');
+});
+
 $("folderSelectGroup").addEventListener("click", () => {
-	$("selectLocalStems").style.display = "block";
+	$("selectStems").style.display = "flex";
+	selectingStems = true;
 	//$("folderSelectField").click();
+});
+
+$("folderSelectButton").addEventListener("click", () => {
+	$("folderSelectField").click();
 });
 
 $("folderSelectField").addEventListener("change", () => {
@@ -164,12 +186,10 @@ $("folderSelectField").addEventListener("change", () => {
 	playlist = [{title: trackName, bpm: 180, tracks: []}];
 	// this will automatically place tracks in the right position if they are numbered
 	for (let i=0; i<4; i++) {
-		$(`stem${i+1}Label`).innerHTML = files[i].name;
+		$(`stemFileSelectBtn${i+1}`).innerHTML = files[i].name;
 		playlist[0].tracks.push(URL.createObjectURL(files[i]));
 	}
 	audio.songIndex = 0;
-	audio.loadSong();
-	audio.playAudio();
 	// set label to folder name
 	$("folderSelectLabel").innerHTML = trackName;
 });
@@ -177,7 +197,7 @@ $("folderSelectField").addEventListener("change", () => {
 $("stemFileSelectBtn1").addEventListener("click", () => {$("stemFileSelect1").click()});
 $("stemFileSelect1").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem1Label").innerHTML = file.name;
+	$("stemFileSelectBtn1").innerHTML = file.name;
 	playlist[0].tracks[0] = URL.createObjectURL(file);
 	audio.songIndex = 0;
 	audio.loadSong();
@@ -185,7 +205,7 @@ $("stemFileSelect1").addEventListener("change", (e) => {
 $("stemFileSelectBtn2").addEventListener("click", () => {$("stemFileSelect2").click()});
 $("stemFileSelect2").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem2Label").innerHTML = file.name;
+	$("stemFileSelectBtn2").innerHTML = file.name;
 	playlist[0].tracks[1] = URL.createObjectURL(file);
 	songIndex = 0;
 	audio.loadSong();
@@ -193,7 +213,7 @@ $("stemFileSelect2").addEventListener("change", (e) => {
 $("stemFileSelectBtn3").addEventListener("click", () => {$("stemFileSelect3").click()});
 $("stemFileSelect3").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem3Label").innerHTML = file.name;
+	$("stemFileSelectBtn3").innerHTML = file.name;
 	playlist[0].tracks[2] = URL.createObjectURL(file);
 	songIndex = 0;
 	loadSong();
@@ -201,7 +221,7 @@ $("stemFileSelect3").addEventListener("change", (e) => {
 $("stemFileSelectBtn4").addEventListener("click", () => {$("stemFileSelect4").click()});
 $("stemFileSelect4").addEventListener("change", (e) => {
 	let file = e.target.files[0];
-	$("stem4Label").innerHTML = file.name;
+	$("stemFileSelectBtn4").innerHTML = file.name;
 	playlist[0].tracks[3] = URL.createObjectURL(file);
 	songIndex = 0;
 	audio.loadSong();
