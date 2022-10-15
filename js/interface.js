@@ -153,6 +153,19 @@ $("selectStemsLaunch").addEventListener("click", () => {
 	audio.loadSong();
 });
 
+$("selectStemsSPOHeader").addEventListener("click", () => {
+	$("selectStemsSPO").classList.remove('collapsed');
+	$("selectStemsSPOArrow").classList.remove('collapsed');
+	$("selectStemsLocal").classList.add('collapsed');
+	$("selectStemsLocalArrow").classList.add('collapsed');
+});
+$("selectStemsLocalHeader").addEventListener("click", () => {
+	$("selectStemsLocal").classList.remove('collapsed');
+	$("selectStemsLocalArrow").classList.remove('collapsed');
+	$("selectStemsSPO").classList.add('collapsed');
+	$("selectStemsSPOArrow").classList.add('collapsed');
+});
+
 $("folderSelectGroup").addEventListener("click", () => {
 	$("selectStems").style.display = "flex";
 	selectingStems = true;
