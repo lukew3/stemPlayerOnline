@@ -33,9 +33,6 @@ class Loop {
 			// Horizontal
 			if (this.inLoopMode && audio.nowPlaying) {
 				let lastLight = $(this.horizArray[this.horizLoopIndex]);
-				if (this.horizLoopIndex !== this.speedDotIndex) {
-					lastLight.classList.add("lightOff"); // ?
-				}
 				// Turn off horizLoop light if not speedDot
 				if (this.horizLoopIndex != this.speedDotIndex) lastLight.classList.add("lightOff");
 				lastLight.classList.remove("lightBright");
