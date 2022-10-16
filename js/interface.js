@@ -83,7 +83,7 @@ $("centerButton").addEventListener("click", () => {
 	if (!loop.inLoopMode) {
 		audio.togglePlayback();
 	} else {
-		if (loop.loopDuration == 7 && loop.speedDotIndex == 5) {
+		if (loop.loopDuration == 8 && loop.speedDotIndex == 5) {
 			loop.exitLoopMode();
 		} else {
 			loop.loopHandleLightTap("top", "4");
