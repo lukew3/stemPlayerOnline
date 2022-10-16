@@ -64,6 +64,7 @@ class Audio {
                 this.playAfterLoaded = false;
                 this.playAudio();
             }
+            // Hide loading bar after a short delay
             setTimeout(() => {
                 $("loadingLabel").innerHTML = '';
                 $("loading").value = 0;
