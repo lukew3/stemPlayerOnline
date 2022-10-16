@@ -149,6 +149,7 @@ document.addEventListener("click", (e) => {
 /* Stem Select */
 $("selectStemsResumeCurrent").addEventListener("click", () => {
 	$("selectStems").style.display = "none";
+	selectingStems = false;
 });
 $("selectStemsLaunch").addEventListener("click", () => {
 	$("selectStems").style.display = "none";
