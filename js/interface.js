@@ -152,6 +152,7 @@ $("selectStemsLaunch").addEventListener("click", () => {
 	selectingStems = false;
 	audio.nowPlaying = false;
 	audio.loadSong();
+	audio.playAudio();
 });
 
 $("selectStemsSPOHeader").addEventListener("click", () => {
