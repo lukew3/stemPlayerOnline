@@ -1,8 +1,4 @@
 let isolating = false;
-let controlPressed = false;
-let pointerdown = false;
-let selectingStems = true;
-let lightNum;
 let levels = [4, 4, 4, 4];
 let sliderNames = ["right", "top", "left", "bottom"];
 const nameToI = {

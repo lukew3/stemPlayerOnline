@@ -1,4 +1,6 @@
 // include getsliders, handleLighttap, etc
+let pointerdown = false;
+let selectingStems = true;
 
 const handleLightTap = (sliderName, lightIndex) => {
 	if (levels[sliderNames.indexOf(sliderName)] == parseInt(lightIndex)) return; //Dont update volume or lights if same light as active light is selected
@@ -43,7 +45,7 @@ const handlePointerDown = (e) => {
             e.clientY >= bound.top &&
             e.clientY <= bound.bottom
         ) {
-            lightNum = getLightClicked(e, index);
+            let lightNum = getLightClicked(e, index);
 			if (loop.inLoopMode) {
 				loop.loopHandleLightTap(sliderNames[index], lightNum)
 			} else {

@@ -1,3 +1,5 @@
+let controlPressed = false;
+
 document.addEventListener("keydown", (e) => {
         if (e.key == " ") {
                 audio.togglePlayback();
