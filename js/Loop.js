@@ -19,6 +19,7 @@ class Loop {
 	handleTick = () => {
 		let nextHorizLight = $(this.horizArray[this.horizLoopIndex]);
 		nextHorizLight.classList.add("loopLight", "lightBright");
+		nextHorizLight.classList.remove("lightOff");
 		this.loopTickTimeout = setTimeout(() => {
 			// Set loop
 			if (this.nextLoopDuration) { //Does in loopmode and nowplaying need to be checked
@@ -34,8 +35,10 @@ class Loop {
 				let lastLight = $(this.horizArray[this.horizLoopIndex]);
 				if (this.horizLoopIndex !== this.speedDotIndex) {
 					lastLight.classList.remove("loopLight");
+					lastLight.classList.add("lightOff");
 				}
 				lastLight.classList.remove("lightBright");
+				lastLight.classList.add("lightOff");
 				if (this.horizLoopIndex < 7) {
 					this.horizLoopIndex++;
 				} else {
@@ -55,6 +58,7 @@ class Loop {
 				let prevVertIndex = this.vertLoopIndex == 0 ? this.loopDuration - 1 : this.vertLoopIndex - 1;
 				$(this.vertArray[prevVertIndex]).classList.remove("lightBright");
 				nextVertLight.classList.add("loopLight", "lightBright");
+				nextVertLight.classList.remove("lightOff");
 				if (this.vertLoopIndex < this.loopDuration - 1) {
 					this.vertLoopIndex++;
 				} else {
@@ -74,6 +78,7 @@ class Loop {
 		this.loopDuration = 8;
 		this.vertLoopIndex = 0;
 		$(this.horizArray[this.speedDotIndex]).classList.add("loopLight");
+		$(this.horizArray[this.speedDotIndex]).classList.remove("lightOff");
 	}
 
 	exitLoopMode = () => {
@@ -91,9 +96,11 @@ class Loop {
 			audio.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
 			if (this.speedDotIndex !== this.horizLoopIndex) {
 				$(this.horizArray[this.speedDotIndex]).classList.remove("loopLight");
+				$(this.horizArray[this.speedDotIndex]).classList.add("lightOff");
 			}
 			this.speedDotIndex = 3 + lightIndex;
 			$(this.horizArray[this.speedDotIndex]).classList.add("loopLight");
+			$(this.horizArray[this.speedDotIndex]).classList.remove("lightOff");
 		}
 	}
 
@@ -109,6 +116,7 @@ class Loop {
 			if (this.vertLoopIndex === 0 || lightPosition === 7 || lightPosition < this.vertLoopIndex) {
 				this.vertArray.forEach((vertLightId) => {
 					$(vertLightId).classList.remove("lightBright");
+					$(vertLightId).classList.add("lightOff");
 				})
 			}
 			if (this.vertLoopIndex > lightPosition) this.vertLoopIndex = 0;

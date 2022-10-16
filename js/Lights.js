@@ -47,6 +47,7 @@ class Lights {
         ["top", "bottom"].forEach((dir) => {
             for(let i=1; i<5; i++) {
                 $(`${dir}_${i}`).classList.add("loopLight");
+                $(`${dir}_${i}`).classList.remove("lightOff");
             }
         })
     }
@@ -56,7 +57,7 @@ class Lights {
 	    // Could just apply a class and remove it instead
         ["top", "bottom", "left", "right"].forEach((dir) => {
             for(let i=1; i<5; i++) {
-                $(`${dir}_${i}`).classList.remove("loopLight", "lightBright");
+                $(`${dir}_${i}`).classList.remove("loopLight", "lightBright", "lightOff");
             }
         })
     }
