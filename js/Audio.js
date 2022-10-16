@@ -4,6 +4,10 @@ class Audio {
         this.nowPlaying = false;
         this.paused = false;
         this.wholeMaxVolume = 8;
+
+        this.loadProgress = 0; // Out of 400
+        this.checkLoadTimeout;
+        this.playAfterLoaded = false;
         
         this.playbackRate = 1;
         this.bpm = 120;
@@ -47,6 +51,25 @@ class Audio {
 			this.polywad.setVolume(this.wholeMaxVolume/8);
 		}
     }
+
+    checkLoadProgress = () => {
+        this.loadProgress = 0;
+        this.wads.forEach((wad) => {this.loadProgress += wad.playable*100});
+        $("loading").value = this.loadProgress;
+        $("loadingLabel").innerHTML = this.loadProgress/4 + "%";
+        if (this.loadProgress < 400) {
+            this.checkLoadTimeout = setTimeout(this.checkLoadProgress, 100);
+        } else {
+            if (this.playAfterLoaded) {
+                this.playAfterLoaded = false;
+                this.playAudio();
+            }
+            setTimeout(() => {
+                $("loadingLabel").innerHTML = '';
+                $("loading").value = 0;
+            }, 500);
+        }
+    }
     
     loadSong = () => {
         Wad.stopAll();
@@ -60,13 +83,17 @@ class Audio {
             this.bpm = playlist[this.songIndex].bpm || 120;
             this.beatDuration = 60/this.bpm*1000;
         }
+        this.checkLoadProgress();
     }
 
     playAudio() {
-        $("loading").style.width = "0%";
-        $("loading").style.display = "block";
+        if (this.loadProgress != 400) {
+            this.playAfterLoaded = true;
+            return;
+        }
         if (this.paused) {
             this.wads.forEach((wad) => { this.paused ? wad.unpause() : wad.play() });
+            this.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
         } else {
             this.polywad.play();
         }
