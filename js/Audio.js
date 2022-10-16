@@ -55,8 +55,14 @@ class Audio {
         this.loadProgress = 0;
         this.wads.forEach((wad) => {this.loadProgress += wad.playable*100});
         $("loading").value = this.loadProgress;
+        $("loadingLabel").innerHTML = this.loadProgress/4 + "%";
         if (this.loadProgress < 400) {
             this.checkLoadTimeout = setTimeout(this.checkLoadProgress, 100);
+        } else {
+            setTimeout(() => {
+                $("loadingLabel").innerHTML = '';
+                $("loading").value = 0;
+            }, 750);
         }
     }
     
@@ -72,11 +78,12 @@ class Audio {
             this.bpm = playlist[this.songIndex].bpm || 120;
             this.beatDuration = 60/this.bpm*1000;
         }
+        this.checkLoadProgress();
     }
 
     playAudio() {
         if (this.loadProgress != 400) {
-            alert("try again after progress bar is full");
+            alert("Try again after progress bar is full");
             return;
         }
         if (this.paused) {
