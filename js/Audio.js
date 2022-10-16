@@ -93,6 +93,7 @@ class Audio {
         }
         if (this.paused) {
             this.wads.forEach((wad) => { this.paused ? wad.unpause() : wad.play() });
+            this.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
         } else {
             this.polywad.play();
         }
