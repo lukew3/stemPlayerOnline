@@ -38,8 +38,9 @@ class Audio {
         this.wads.forEach((wad, i) => {
             this.stemPolywads[i].add(wad);
         });
-        this.polywad = new Wad.Poly();
-        this.stemPolywads.forEach((stemPolywad) => { this.polywad.add(stemPolywad) });
+        // Previously used a single polywad for all stems, but this caused the audioMeter to not work
+        // this.polywad = new Wad.Poly(stemPolywadConfig);
+        // this.stemPolywads.forEach((stemPolywad) => { this.polywad.add(stemPolywad) });
     }
 
     #onEnded = () => {
@@ -59,14 +60,15 @@ class Audio {
     incrementPolyVolume = () => {
         if (this.wholeMaxVolume != 8) {
 			this.wholeMaxVolume++;
-			this.polywad.setVolume(this.wholeMaxVolume/8);
+            this.stemPolywads.forEach((stemPolywad) => { stemPolywad.setVolume(this.wholeMaxVolume/8) });
+			// this.polywad.setVolume(this.wholeMaxVolume/8);
 		}
     }
 
     decrementPolyVolume = () => {
         if (this.wholeMaxVolume != 0) {
 			this.wholeMaxVolume--;
-			this.polywad.setVolume(this.wholeMaxVolume/8);
+            this.stemPolywads.forEach((stemPolywad) => { stemPolywad.setVolume(this.wholeMaxVolume/8) });
 		}
     }
 
@@ -114,7 +116,7 @@ class Audio {
             this.wads.forEach((wad) => { this.paused ? wad.unpause() : wad.play() });
             this.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
         } else {
-            this.polywad.play();
+            this.stemPolywads.forEach((stemPolywad) => {stemPolywad.play()});
         }
         this.nowPlaying = true;
         this.paused = false;
