@@ -150,6 +150,7 @@ document.addEventListener("click", (e) => {
 $("selectStemsLaunch").addEventListener("click", () => {
 	$("selectStems").style.display = "none";
 	selectingStems = false;
+	audio.nowPlaying = false;
 	audio.loadSong();
 });
 
