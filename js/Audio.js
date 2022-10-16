@@ -1,3 +1,11 @@
+const stemPolywadConfig = {
+    audioMeter: {
+        clipLevel: .98, // the level (0 to 1) that you would consider "clipping".
+        averaging: .95, // how "smoothed" you would like the meter to be over time. Should be between 0 and less than 1.
+        clipLag: 750, // how long you would like the "clipping" indicator to show after clipping has occured, in milliseconds.
+    },
+}
+
 class Audio {
     constructor() {
         this.songIndex = 1; // Rename songIndex to playlistIndex or songIndexInPlaylist or similar?
@@ -20,8 +28,20 @@ class Audio {
             new Wad({source: tracks[2]}),
             new Wad({source: tracks[3]})
         ];
-        this.polywad = new Wad.Poly();
-        this.wads.forEach((wad) => { this.polywad.add(wad) });
+        // stemPolywads necessary for analyzing audioMeter
+        this.stemPolywads = [
+            new Wad.Poly(stemPolywadConfig),
+            new Wad.Poly(stemPolywadConfig),
+            new Wad.Poly(stemPolywadConfig),
+            new Wad.Poly(stemPolywadConfig)
+        ]
+        this.wads.forEach((wad, i) => {
+            this.stemPolywads[i].add(wad);
+        });
+        // Previously used a single polywad for all stems, but this caused the audioMeter to not work
+        // this.polywad = new Wad.Poly(stemPolywadConfig);
+        // this.stemPolywads.forEach((stemPolywad) => { this.polywad.add(stemPolywad) });
+        this.sampleVolumes();
     }
 
     #onEnded = () => {
@@ -41,14 +61,15 @@ class Audio {
     incrementPolyVolume = () => {
         if (this.wholeMaxVolume != 8) {
 			this.wholeMaxVolume++;
-			this.polywad.setVolume(this.wholeMaxVolume/8);
+            this.stemPolywads.forEach((stemPolywad) => { stemPolywad.setVolume(this.wholeMaxVolume/8) });
+			// this.polywad.setVolume(this.wholeMaxVolume/8);
 		}
     }
 
     decrementPolyVolume = () => {
         if (this.wholeMaxVolume != 0) {
 			this.wholeMaxVolume--;
-			this.polywad.setVolume(this.wholeMaxVolume/8);
+            this.stemPolywads.forEach((stemPolywad) => { stemPolywad.setVolume(this.wholeMaxVolume/8) });
 		}
     }
 
@@ -74,17 +95,30 @@ class Audio {
     
     loadSong = () => {
         Wad.stopAll();
-        this.wads.forEach((wad) => { this.polywad.remove(wad) });
+        this.wads.forEach((wad, i) => { this.stemPolywads[i].remove(wad) });
         let nextTracks = playlist[this.songIndex].tracks;
         nextTracks.forEach((track, i) => {
             this.wads[i] = new Wad({source: track});
-            this.polywad.add(this.wads[i]);
+            this.stemPolywads[i].add(this.wads[i]);
         })
         if (this.bpm) {
             this.bpm = playlist[this.songIndex].bpm || 120;
             this.beatDuration = 60/this.bpm*1000;
         }
         this.checkLoadProgress();
+    }
+
+    sampleVolumes = () => {
+        setTimeout(() => {
+            if (!loop.inLoopMode) { // loop is loaded after audio; shouldn't be calling loop from audio
+                audio.stemPolywads.forEach((polywad, i) => {
+                    if (polywad.audioMeter.volume > 0.01) {
+                        lights.flashSlider(sliderNames[i]);
+                    }
+                });
+            }
+            this.sampleVolumes();
+        }, 100);
     }
 
     playAudio() {
@@ -96,7 +130,7 @@ class Audio {
             this.wads.forEach((wad) => { this.paused ? wad.unpause() : wad.play() });
             this.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
         } else {
-            this.polywad.play();
+            this.stemPolywads.forEach((stemPolywad) => {stemPolywad.play()});
         }
         this.nowPlaying = true;
         this.paused = false;

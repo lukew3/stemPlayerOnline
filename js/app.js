@@ -79,4 +79,3 @@ const isolateStem = (sliderName) => {
 	}
 	document.addEventListener('pointerup', resetVolume)
 }
-

@@ -14,6 +14,17 @@ class Lights {
         this.generateGradient();
     }
 
+    flashSlider = (sliderName) => {
+        for (let i=1; i<5; i++) {
+            $(`${sliderName}_${i}`).classList.add("lightBright");
+        }
+        setTimeout(() => {
+            for (let i=1; i<5; i++) {
+                $(`${sliderName}_${i}`).classList.remove("lightBright");
+            }
+        }, 1000);
+    }
+
     displayVolume = (wholeMaxVolume) => {
         this.allLightsOff();
         for (let i=7; i>=wholeMaxVolume; i--) {
@@ -33,9 +44,16 @@ class Lights {
 
     initLoopLights = () => {
         this.allLightsOff();
-        ["top", "bottom"].forEach((dir) => {
+        // Add loopLight class to all lights
+        ["top", "bottom", "left", "right"].forEach((dir) => {
             for(let i=1; i<5; i++) {
                 $(`${dir}_${i}`).classList.add("loopLight");
+            }
+        });
+        // Turn on all vertical lights
+        ["top", "bottom"].forEach((dir) => {
+            for(let i=1; i<5; i++) {
+                $(`${dir}_${i}`).classList.remove("lightOff");
             }
         })
     }
@@ -45,7 +63,7 @@ class Lights {
 	    // Could just apply a class and remove it instead
         ["top", "bottom", "left", "right"].forEach((dir) => {
             for(let i=1; i<5; i++) {
-                $(`${dir}_${i}`).classList.remove("loopLight", "lightBright");
+                $(`${dir}_${i}`).classList.remove("loopLight", "lightBright", "lightOff");
             }
         })
     }
