@@ -1,3 +1,11 @@
+const stemPolywadConfig = {
+    audioMeter: {
+        clipLevel: .98, // the level (0 to 1) that you would consider "clipping".
+        averaging: .95, // how "smoothed" you would like the meter to be over time. Should be between 0 and less than 1.
+        clipLag: 750, // how long you would like the "clipping" indicator to show after clipping has occured, in milliseconds.
+    },
+}
+
 class Audio {
     constructor() {
         this.songIndex = 1; // Rename songIndex to playlistIndex or songIndexInPlaylist or similar?
@@ -20,8 +28,18 @@ class Audio {
             new Wad({source: tracks[2]}),
             new Wad({source: tracks[3]})
         ];
+        // stemPolywads necessary for analyzing audioMeter
+        this.stemPolywads = [
+            new Wad.Poly(stemPolywadConfig),
+            new Wad.Poly(stemPolywadConfig),
+            new Wad.Poly(stemPolywadConfig),
+            new Wad.Poly(stemPolywadConfig)
+        ]
+        this.wads.forEach((wad, i) => {
+            this.stemPolywads[i].add(wad);
+        });
         this.polywad = new Wad.Poly();
-        this.wads.forEach((wad) => { this.polywad.add(wad) });
+        this.stemPolywads.forEach((stemPolywad) => { this.polywad.add(stemPolywad) });
     }
 
     #onEnded = () => {
@@ -74,11 +92,11 @@ class Audio {
     
     loadSong = () => {
         Wad.stopAll();
-        this.wads.forEach((wad) => { this.polywad.remove(wad) });
+        this.wads.forEach((wad, i) => { this.stemPolywads[i].remove(wad) });
         let nextTracks = playlist[this.songIndex].tracks;
         nextTracks.forEach((track, i) => {
             this.wads[i] = new Wad({source: track});
-            this.polywad.add(this.wads[i]);
+            this.stemPolywads[i].add(this.wads[i]);
         })
         if (this.bpm) {
             this.bpm = playlist[this.songIndex].bpm || 120;
