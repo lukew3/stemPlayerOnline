@@ -7,6 +7,7 @@ class Audio {
 
         this.loadProgress = 0; // Out of 400
         this.checkLoadTimeout;
+        this.playAfterLoaded = false;
         
         this.playbackRate = 1;
         this.bpm = 120;
@@ -59,10 +60,14 @@ class Audio {
         if (this.loadProgress < 400) {
             this.checkLoadTimeout = setTimeout(this.checkLoadProgress, 100);
         } else {
+            if (this.playAfterLoaded) {
+                this.playAfterLoaded = false;
+                this.playAudio();
+            }
             setTimeout(() => {
                 $("loadingLabel").innerHTML = '';
                 $("loading").value = 0;
-            }, 750);
+            }, 500);
         }
     }
     
@@ -83,7 +88,7 @@ class Audio {
 
     playAudio() {
         if (this.loadProgress != 400) {
-            alert("Try again after progress bar is full");
+            this.playAfterLoaded = true;
             return;
         }
         if (this.paused) {
