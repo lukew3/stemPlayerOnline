@@ -384,7 +384,7 @@ nav * {
 	margin: 0;
 }
 .selectStemsItemRight p:first-child {
-	font-weight: bold;
+	font-weight: 500;
 }
 
 #folderSelectField {
