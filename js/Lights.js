@@ -14,6 +14,17 @@ class Lights {
         this.generateGradient();
     }
 
+    flashSlider = (sliderName) => {
+        for (let i=1; i<5; i++) {
+            $(`${sliderName}_${i}`).classList.add("lightBright");
+        }
+        setTimeout(() => {
+            for (let i=1; i<5; i++) {
+                $(`${sliderName}_${i}`).classList.remove("lightBright");
+            }
+        }, 1000);
+    }
+
     displayVolume = (wholeMaxVolume) => {
         this.allLightsOff();
         for (let i=7; i>=wholeMaxVolume; i--) {

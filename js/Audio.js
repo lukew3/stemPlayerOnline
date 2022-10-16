@@ -41,6 +41,7 @@ class Audio {
         // Previously used a single polywad for all stems, but this caused the audioMeter to not work
         // this.polywad = new Wad.Poly(stemPolywadConfig);
         // this.stemPolywads.forEach((stemPolywad) => { this.polywad.add(stemPolywad) });
+        audio.sampleVolumes();
     }
 
     #onEnded = () => {
@@ -105,6 +106,19 @@ class Audio {
             this.beatDuration = 60/this.bpm*1000;
         }
         this.checkLoadProgress();
+    }
+
+    sampleVolumes = () => {
+        setTimeout(() => {
+            if (!loop.inLoopMode) { // loop is loaded after audio; shouldn't be calling loop from audio
+                audio.stemPolywads.forEach((polywad, i) => {
+                    if (polywad.audioMeter.volume > 0.01) {
+                        lights.flashSlider(sliderNames[i]);
+                    }
+                });
+            }
+            this.sampleVolumes();
+        }, 100);
     }
 
     playAudio() {

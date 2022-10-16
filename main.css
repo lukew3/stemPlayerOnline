@@ -162,35 +162,39 @@ nav * {
 	border: none;
 	margin: 5px;
 	border-radius: 50%;
+	transition: 0.1s;
+}
+.lightBright {
+	transition: 0.1s;
 }
 .light1 {
 	background-color: var(--light-1);
 }
-.light1.lightBright {
+.light1.lightBright:not(.lightOff) {
 	box-shadow: 0px 0px 3px 3px var(--light-1);
 }
 .light2 {
 	background-color: var(--light-2);
 }
-.light2.lightBright {
+.light2.lightBright:not(.lightOff) {
 	box-shadow: 0px 0px 3px 3px var(--light-2);
 }
 .light3 {
 	background-color: var(--light-3);
 }
-.light3.lightBright {
+.light3.lightBright:not(.lightOff) {
 	box-shadow: 0px 0px 3px 3px var(--light-3);
 }
 .light4 {
 	background-color: var(--light-4);
 }
-.light4.lightBright {
+.light4.lightBright:not(.lightOff) {
 	box-shadow: 0px 0px 3px 3px var(--light-4);
 }
 .loopLight {
 	background-color: var(--loopColor) !important;
 }
-.loopLight.lightBright {
+.loopLight.lightBright:not(.lightOff) {
 	box-shadow: 0px 0px 3px 3px var(--loopColor);
 }
 .lightOff {

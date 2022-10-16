@@ -79,12 +79,3 @@ const isolateStem = (sliderName) => {
 	}
 	document.addEventListener('pointerup', resetVolume)
 }
-
-const sampleVolumes = () => {
-	setTimeout(() => {
-		console.log(audio.stemPolywads[0].audioMeter.volume);
-		sampleVolumes();
-	}, 100);
-}
-
-sampleVolumes();
