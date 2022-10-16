@@ -429,7 +429,18 @@ nav * {
 	margin-left: 10px;
 	cursor: pointer;
 }
-
+#selectStemsPlayButtons {
+	margin-top: -30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+#selectStemsResumeCurrent {
+	text-align: center;
+	text-decoration: underline;
+	cursor: pointer;
+	display: none;
+}
 #selectStemsLaunch {
 	width: 150px;
 	height: 45px;

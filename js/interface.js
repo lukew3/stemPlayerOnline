@@ -147,8 +147,12 @@ document.addEventListener("click", (e) => {
 */
 
 /* Stem Select */
+$("selectStemsResumeCurrent").addEventListener("click", () => {
+	$("selectStems").style.display = "none";
+});
 $("selectStemsLaunch").addEventListener("click", () => {
 	$("selectStems").style.display = "none";
+	$("selectStemsResumeCurrent").style.display = "block";
 	selectingStems = false;
 	audio.nowPlaying = false;
 	audio.loadSong();
