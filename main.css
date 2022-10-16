@@ -417,6 +417,19 @@ nav * {
 	align-items: center;
 	margin: 5px 0;
 }
+#stemSelectLocalLayout {
+	display: grid;
+	grid-template-rows: 1fr 1fr 1fr;
+	text-align: center;
+	justify-content: center;
+	margin-top: 10px;
+}
+#stemSelectLocalLayout div {
+	display: flex;
+	width: 40px;
+	align-self: center;
+	justify-content: space-between;
+}
 .stemFileSelect {
 	display: none;
 }
