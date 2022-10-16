@@ -18,7 +18,7 @@ class Loop {
 
 	handleTick = () => {
 		let nextHorizLight = $(this.horizArray[this.horizLoopIndex]);
-		nextHorizLight.classList.add("loopLight", "lightBright");
+		nextHorizLight.classList.add("lightBright");
 		nextHorizLight.classList.remove("lightOff");
 		this.loopTickTimeout = setTimeout(() => {
 			// Set loop
@@ -34,11 +34,11 @@ class Loop {
 			if (this.inLoopMode && audio.nowPlaying) {
 				let lastLight = $(this.horizArray[this.horizLoopIndex]);
 				if (this.horizLoopIndex !== this.speedDotIndex) {
-					lastLight.classList.remove("loopLight");
-					lastLight.classList.add("lightOff");
+					lastLight.classList.add("lightOff"); // ?
 				}
+				// Turn off horizLoop light if not speedDot
+				if (this.horizLoopIndex != this.speedDotIndex) lastLight.classList.add("lightOff");
 				lastLight.classList.remove("lightBright");
-				lastLight.classList.add("lightOff");
 				if (this.horizLoopIndex < 7) {
 					this.horizLoopIndex++;
 				} else {
@@ -57,8 +57,8 @@ class Loop {
 				let nextVertLight = $(this.vertArray[this.vertLoopIndex]);
 				let prevVertIndex = this.vertLoopIndex == 0 ? this.loopDuration - 1 : this.vertLoopIndex - 1;
 				$(this.vertArray[prevVertIndex]).classList.remove("lightBright");
-				nextVertLight.classList.add("loopLight", "lightBright");
 				nextVertLight.classList.remove("lightOff");
+				nextVertLight.classList.add("lightBright");
 				if (this.vertLoopIndex < this.loopDuration - 1) {
 					this.vertLoopIndex++;
 				} else {
@@ -77,7 +77,6 @@ class Loop {
 		this.handleTick();
 		this.loopDuration = 8;
 		this.vertLoopIndex = 0;
-		$(this.horizArray[this.speedDotIndex]).classList.add("loopLight");
 		$(this.horizArray[this.speedDotIndex]).classList.remove("lightOff");
 	}
 
@@ -95,11 +94,9 @@ class Loop {
 			audio.beatDuration = 60/audio.bpm*1000/audio.playbackRate;
 			audio.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
 			if (this.speedDotIndex !== this.horizLoopIndex) {
-				$(this.horizArray[this.speedDotIndex]).classList.remove("loopLight");
 				$(this.horizArray[this.speedDotIndex]).classList.add("lightOff");
 			}
 			this.speedDotIndex = 3 + lightIndex;
-			$(this.horizArray[this.speedDotIndex]).classList.add("loopLight");
 			$(this.horizArray[this.speedDotIndex]).classList.remove("lightOff");
 		}
 	}
@@ -109,14 +106,20 @@ class Loop {
 			let lightId = `${sliderName}_${lightIndex}`;
 			let lightPosition = this.vertArray.indexOf(lightId);
 			this.nextLoopDuration = lightPosition+1;
-			for (let i=0; i<=lightPosition; i++) $(this.vertArray[i]).classList.add("loopLight");
-			for (let i=lightPosition+1; i<8; i++) $(this.vertArray[i]).classList.remove("loopLight", "lightBright");
+			// Turn on all lights below and at clicked light
+			for (let i=0; i<=lightPosition; i++) {
+				$(this.vertArray[i]).classList.remove("lightOff");
+			}
+			// Turn off all lights above clicked light and remove their brightness
+			for (let i=lightPosition+1; i<8; i++) {
+				$(this.vertArray[i]).classList.remove("lightBright");
+				$(this.vertArray[i]).classList.add("lightOff");
+			}
 			//let brightId = (vertLoopIndex==0) ? 7 : vertLoopIndex-1;
 			//if (nextLoopDuration == 8) $(vertArray[brightId]).classList.remove("lightBright");
 			if (this.vertLoopIndex === 0 || lightPosition === 7 || lightPosition < this.vertLoopIndex) {
 				this.vertArray.forEach((vertLightId) => {
 					$(vertLightId).classList.remove("lightBright");
-					$(vertLightId).classList.add("lightOff");
 				})
 			}
 			if (this.vertLoopIndex > lightPosition) this.vertLoopIndex = 0;

@@ -44,9 +44,15 @@ class Lights {
 
     initLoopLights = () => {
         this.allLightsOff();
-        ["top", "bottom"].forEach((dir) => {
+        // Add loopLight class to all lights
+        ["top", "bottom", "left", "right"].forEach((dir) => {
             for(let i=1; i<5; i++) {
                 $(`${dir}_${i}`).classList.add("loopLight");
+            }
+        });
+        // Turn on all vertical lights
+        ["top", "bottom"].forEach((dir) => {
+            for(let i=1; i<5; i++) {
                 $(`${dir}_${i}`).classList.remove("lightOff");
             }
         })
