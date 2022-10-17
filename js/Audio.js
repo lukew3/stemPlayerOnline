@@ -74,7 +74,7 @@ class Audio {
                 stemPolywad.stop();
                 stemPolywad.remove(this.wads[i]);
                 stemPolywad.add(this.reversedWads[i]);
-                stemPolywad.play({offset: reversedOffset});
+                if (this.nowPlaying) stemPolywad.play({offset: reversedOffset});
             });
             this.inReverse = true;
         } else if (!setReversed && this.inReverse) {
@@ -83,7 +83,7 @@ class Audio {
                 stemPolywad.stop();
                 stemPolywad.remove(this.reversedWads[i]);
                 stemPolywad.add(this.wads[i]);
-                stemPolywad.play({offset: reversedOffset});
+                if (this.nowPlaying) stemPolywad.play({offset: reversedOffset});
             });
             this.inReverse = false;
         }
@@ -139,6 +139,8 @@ class Audio {
             this.bpm = playlist[this.songIndex].bpm || 120;
             this.beatDuration = 60/this.bpm*1000;
         }
+        this.playbackRate = 1;
+        loop.speedDotIndex = 5;
         this.checkLoadProgress();
     }
 
