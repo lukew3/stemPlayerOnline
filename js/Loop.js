@@ -36,10 +36,18 @@ class Loop {
 				// Turn off horizLoop light if not speedDot
 				if (this.horizLoopIndex != this.speedDotIndex) lastLight.classList.add("lightOff");
 				lastLight.classList.remove("lightBright");
-				if (this.horizLoopIndex < 7) {
-					this.horizLoopIndex++;
+				if (!audio.inReverse) {
+					if (this.horizLoopIndex < 7) {
+						this.horizLoopIndex++;
+					} else {
+						this.horizLoopIndex = 0;
+					}
 				} else {
-					this.horizLoopIndex = 0;
+					if (this.horizLoopIndex > 0) {
+						this.horizLoopIndex--;
+					} else {
+						this.horizLoopIndex = 7;
+					}
 				}
 			}
 			// Vertical
