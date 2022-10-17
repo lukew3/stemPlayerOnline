@@ -60,13 +60,11 @@ class Loop {
 					Wad.stopAll();
 					if (!audio.inReverse) {
 						audio.wads.forEach((wad) => {
-							wad.setRate(audio.playbackRate);
-							wad.play({offset: this.offset});
+							wad.play({offset: this.offset, rate: audio.playbackRate});
 						});
 					} else {
 						audio.reversedWads.forEach((reversedWad) => {
-							reversedWad.setRate(audio.playbackRate);
-							reversedWad.play({offset: this.offset});
+							reversedWad.play({offset: this.offset, rate: audio.playBackRate});
 						});
 					}
 				}
