@@ -74,7 +74,7 @@ class Audio {
                 stemPolywad.stop();
                 stemPolywad.remove(this.wads[i]);
                 stemPolywad.add(this.reversedWads[i]);
-                this.reversedWads[i].play({offset: reversedOffset});
+                stemPolywad.play({offset: reversedOffset});
             });
             this.inReverse = true;
         } else if (!setReversed && this.inReverse) {
@@ -83,7 +83,7 @@ class Audio {
                 stemPolywad.stop();
                 stemPolywad.remove(this.reversedWads[i]);
                 stemPolywad.add(this.wads[i]);
-                this.wads[i].play({offset: reversedOffset});
+                stemPolywad.play({offset: reversedOffset});
             });
             this.inReverse = false;
         }
