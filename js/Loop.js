@@ -95,6 +95,10 @@ class Loop {
 			}
 			this.speedDotIndex = 3 + lightIndex;
 			$(this.horizArray[this.speedDotIndex]).classList.remove("lightOff");
+			audio.setPlaybackDirection(false);
+		} else if (sliderName == "left") {
+			audio.playbackRate = lightIndex * 0.5;
+			audio.setPlaybackDirection(true);
 		}
 	}
 

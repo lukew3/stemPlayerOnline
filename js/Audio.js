@@ -18,6 +18,7 @@ class Audio {
         this.playAfterLoaded = false;
         
         this.playbackRate = 1;
+        this.inReverse = false;
         this.bpm = 120;
         this.beatDuration = 60/this.bpm*1000; // Milliseconds per beat
 
@@ -34,7 +35,6 @@ class Audio {
             new Wad({source: tracks[2]}),
             new Wad({source: tracks[3]})
         ];
-        this.reversedWads.forEach((wad) => {wad.reverse()});
         // stemPolywads necessary for analyzing audioMeter
         this.stemPolywads = [
             new Wad.Poly(stemPolywadConfig),
@@ -65,6 +65,36 @@ class Audio {
         }
     }
 
+
+    setPlaybackDirection = (setReversed) => {
+        if (setReversed && !this.inReverse) {
+            console.log("reversed on");
+            let reversedOffset = this.wads[0].duration/1000 - (Wad.audioContext.currentTime - this.wads[0].lastPlayedTime);
+            console.log(reversedOffset);
+            this.stemPolywads.forEach((stemPolywad, i) => {
+                stemPolywad.stop();
+                stemPolywad.remove(this.wads[i]);
+                stemPolywad.add(this.reversedWads[i]);
+                this.reversedWads[i].play({offset: reversedOffset});
+            });
+            this.beatDuration = 60/this.bpm*1000/this.playbackRate;
+            this.reversedWads.forEach((wad) => {wad.setRate(this.playbackRate)});
+            this.inReverse = true;
+        } else if (!setReversed && this.inReverse) {
+            let reversedOffset = this.reversedWads[0].duration/1000 - (Wad.audioContext.currentTime - this.reversedWads[0].lastPlayedTime);
+            console.log(reversedOffset);
+            this.stemPolywads.forEach((stemPolywad, i) => {
+                stemPolywad.stop();
+                stemPolywad.remove(this.reversedWads[i]);
+                stemPolywad.add(this.wads[i]);
+                this.wads[i].play({offset: reversedOffset});
+            });
+            this.beatDuration = 60/this.bpm*1000/this.playbackRate;
+            this.wads.forEach((wad) => {wad.setRate(this.playbackRate)});
+            this.inReverse = false;
+        }
+    }
+
     incrementPolyVolume = () => {
         if (this.wholeMaxVolume != 8) {
 			this.wholeMaxVolume++;
@@ -88,6 +118,7 @@ class Audio {
         if (this.loadProgress < 400) {
             this.checkLoadTimeout = setTimeout(this.checkLoadProgress, 100);
         } else {
+            this.reversedWads.forEach((reversedWad) => reversedWad.reverse());
             if (this.playAfterLoaded) {
                 this.playAfterLoaded = false;
                 this.playAudio();
@@ -101,13 +132,13 @@ class Audio {
     }
     
     loadSong = () => {
+        console.log("loaded song");
         Wad.stopAll();
         this.wads.forEach((wad, i) => { this.stemPolywads[i].remove(wad) });
         let nextTracks = playlist[this.songIndex].tracks;
         nextTracks.forEach((track, i) => {
             this.wads[i] = new Wad({source: track});
             this.reversedWads[i] = new Wad({source: track});
-            this.reversedWads.forEach((wad) => {wad.reverse()});
             this.stemPolywads[i].add(this.wads[i]);
         })
         if (this.bpm) {
