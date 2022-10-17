@@ -24,7 +24,11 @@ class Loop {
 			// Set loop
 			if (this.nextLoopDuration) { //Does in loopmode and nowplaying need to be checked
 				if (this.loopDuration == 8) { // If loopDuration was 8, but now is not, set loop
-					this.offset = Wad.audioContext.currentTime - audio.wads[0].lastPlayedTime;
+					if (!audio.inReverse) {
+						this.offset = Wad.audioContext.currentTime - audio.wads[0].lastPlayedTime;
+					} else {
+						this.offset = Wad.audioContext.currentTime - audio.reversedWads[0].lastPlayedTime;
+					}
 					this.vertLoopIndex = 0;
 				}
 				this.loopDuration = this.nextLoopDuration;
@@ -53,11 +57,18 @@ class Loop {
 			// Vertical
 			if (this.loopDuration < 8) {
 				if (this.vertLoopIndex == 0) {
-					audio.wads.forEach((wad) => {
-						wad.stop();
-						audio.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
-						wad.play({offset: this.offset});
-					});
+					Wad.stopAll();
+					if (!audio.inReverse) {
+						audio.wads.forEach((wad) => {
+							wad.setRate(audio.playbackRate);
+							wad.play({offset: this.offset});
+						});
+					} else {
+						audio.reversedWads.forEach((reversedWad) => {
+							reversedWad.setRate(audio.playbackRate);
+							reversedWad.play({offset: this.offset});
+						});
+					}
 				}
 				let nextVertLight = $(this.vertArray[this.vertLoopIndex]);
 				let prevVertIndex = this.vertLoopIndex == 0 ? this.loopDuration - 1 : this.vertLoopIndex - 1;
