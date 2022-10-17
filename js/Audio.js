@@ -28,6 +28,13 @@ class Audio {
             new Wad({source: tracks[2]}),
             new Wad({source: tracks[3]})
         ];
+        this.reversedWads = [
+            new Wad({source: tracks[0]}),
+            new Wad({source: tracks[1]}),
+            new Wad({source: tracks[2]}),
+            new Wad({source: tracks[3]})
+        ];
+        this.reversedWads.forEach((wad) => {wad.reverse()});
         // stemPolywads necessary for analyzing audioMeter
         this.stemPolywads = [
             new Wad.Poly(stemPolywadConfig),
@@ -99,6 +106,8 @@ class Audio {
         let nextTracks = playlist[this.songIndex].tracks;
         nextTracks.forEach((track, i) => {
             this.wads[i] = new Wad({source: track});
+            this.reversedWads[i] = new Wad({source: track});
+            this.reversedWads.forEach((wad) => {wad.reverse()});
             this.stemPolywads[i].add(this.wads[i]);
         })
         if (this.bpm) {
