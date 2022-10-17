@@ -86,20 +86,21 @@ class Loop {
 
 	setSpeed = (sliderName, lightIndex) => {
 		lightIndex = parseInt(lightIndex);
-		if (sliderName == "right") {
-			audio.playbackRate = lightIndex * 0.5;
-			audio.beatDuration = 60/audio.bpm*1000/audio.playbackRate;
-			audio.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
-			if (this.speedDotIndex !== this.horizLoopIndex) {
-				$(this.horizArray[this.speedDotIndex]).classList.add("lightOff");
-			}
-			this.speedDotIndex = 3 + lightIndex;
-			$(this.horizArray[this.speedDotIndex]).classList.remove("lightOff");
-			audio.setPlaybackDirection(false);
-		} else if (sliderName == "left") {
-			audio.playbackRate = lightIndex * 0.5;
-			audio.setPlaybackDirection(true);
+		audio.playbackRate = lightIndex * 0.5;
+		audio.beatDuration = 60/audio.bpm*1000/audio.playbackRate;
+		if (this.speedDotIndex !== this.horizLoopIndex) {
+			$(this.horizArray[this.speedDotIndex]).classList.add("lightOff");
 		}
+		if (sliderName == "right") {
+			this.speedDotIndex = 3 + lightIndex;
+			audio.setPlaybackDirection(false);
+			audio.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
+		} else if (sliderName == "left") {
+			this.speedDotIndex = 4 - lightIndex;
+			audio.setPlaybackDirection(true);
+			audio.reversedWads.forEach((reversedWad) => {reversedWad.setRate(audio.playbackRate)});
+		}
+		$(this.horizArray[this.speedDotIndex]).classList.remove("lightOff");
 	}
 
 	loopHandleLightTap = (sliderName, lightIndex) => {

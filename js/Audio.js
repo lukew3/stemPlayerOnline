@@ -68,7 +68,6 @@ class Audio {
 
     setPlaybackDirection = (setReversed) => {
         if (setReversed && !this.inReverse) {
-            console.log("reversed on");
             let reversedOffset = this.wads[0].duration/1000 - (Wad.audioContext.currentTime - this.wads[0].lastPlayedTime);
             console.log(reversedOffset);
             this.stemPolywads.forEach((stemPolywad, i) => {
@@ -77,20 +76,15 @@ class Audio {
                 stemPolywad.add(this.reversedWads[i]);
                 this.reversedWads[i].play({offset: reversedOffset});
             });
-            this.beatDuration = 60/this.bpm*1000/this.playbackRate;
-            this.reversedWads.forEach((wad) => {wad.setRate(this.playbackRate)});
             this.inReverse = true;
         } else if (!setReversed && this.inReverse) {
             let reversedOffset = this.reversedWads[0].duration/1000 - (Wad.audioContext.currentTime - this.reversedWads[0].lastPlayedTime);
-            console.log(reversedOffset);
             this.stemPolywads.forEach((stemPolywad, i) => {
                 stemPolywad.stop();
                 stemPolywad.remove(this.reversedWads[i]);
                 stemPolywad.add(this.wads[i]);
                 this.wads[i].play({offset: reversedOffset});
             });
-            this.beatDuration = 60/this.bpm*1000/this.playbackRate;
-            this.wads.forEach((wad) => {wad.setRate(this.playbackRate)});
             this.inReverse = false;
         }
     }
