@@ -113,12 +113,12 @@ class Audio {
             if (!loop.inLoopMode) { // loop is loaded after audio; shouldn't be calling loop from audio
                 audio.stemPolywads.forEach((polywad, i) => {
                     if (polywad.audioMeter.volume > 0.01) {
-                        lights.flashSlider(sliderNames[i]);
+                        lights.flashSlider(i);
                     }
                 });
             }
             this.sampleVolumes();
-        }, 100);
+        }, 50);
     }
 
     playAudio() {

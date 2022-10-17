@@ -5,6 +5,7 @@ class Lights {
         // Should volumeLights be set and used here?
         this.volumeLights = ["bottom_4", "bottom_3", "bottom_2", "bottom_1", "top_1", "top_2", "top_3", "top_4"];
         this.hideVolumeLightsTimeout;
+        this.flashTimeouts = [null, null, null, null];
 
         // Load lights from localStorage or load colors from current client colors
         this.colors = window.localStorage.colors ? JSON.parse(window.localStorage.colors) : [$('color4Input').value, $('color1Input').value];
@@ -14,15 +15,17 @@ class Lights {
         this.generateGradient();
     }
 
-    flashSlider = (sliderName) => {
+    flashSlider = (sliderIndex) => {
+        let sliderName = sliderNames[sliderIndex]; // sliderNames defined in app.js
         for (let i=1; i<5; i++) {
             $(`${sliderName}_${i}`).classList.add("lightBright");
         }
-        setTimeout(() => {
+        clearTimeout(this.flashTimeouts[sliderIndex]);
+        this.flashTimeouts[sliderIndex] = setTimeout(() => {
             for (let i=1; i<5; i++) {
                 $(`${sliderName}_${i}`).classList.remove("lightBright");
             }
-        }, 1000);
+        }, 70); // timeout is slightly greater than sampling timeout // gives time for next sample to overlap but no more
     }
 
     displayVolume = (wholeMaxVolume) => {
