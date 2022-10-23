@@ -22,6 +22,8 @@ class Audio {
         this.bpm = 120;
         this.beatDuration = 60/this.bpm*1000; // Milliseconds per beat
 
+        this.loadStartTime;
+
         let tracks = playlist[this.songIndex].tracks
         this.wads = [
             new Wad({source: tracks[0]}),
@@ -29,12 +31,7 @@ class Audio {
             new Wad({source: tracks[2]}),
             new Wad({source: tracks[3]})
         ];
-        this.reversedWads = [
-            new Wad({source: tracks[0]}),
-            new Wad({source: tracks[1]}),
-            new Wad({source: tracks[2]}),
-            new Wad({source: tracks[3]})
-        ];
+        this.reversedWads = [null, null, null, null];
         // stemPolywads necessary for analyzing audioMeter
         this.stemPolywads = [
             new Wad.Poly(stemPolywadConfig),
@@ -104,6 +101,11 @@ class Audio {
 		}
     }
 
+    generateReversedWads = () => {
+        this.wads.forEach((wad, i) => {this.reversedWads[i] = new Wad({source: wad.decodedBuffer})})
+        this.reversedWads.forEach((reversedWad) => reversedWad.reverse());
+    }
+
     checkLoadProgress = () => {
         this.loadProgress = 0;
         this.wads.forEach((wad) => {this.loadProgress += wad.playable*100});
@@ -112,10 +114,13 @@ class Audio {
         if (this.loadProgress < 400) {
             this.checkLoadTimeout = setTimeout(this.checkLoadProgress, 100);
         } else {
-            this.reversedWads.forEach((reversedWad) => reversedWad.reverse());
+            // Without a timeout, generating reversed wads adds ~10 seconds to load time
+            // TODO: This should probably be done using async, but this works as well
+            setTimeout(() => this.generateReversedWads(), 1);
             if (this.playAfterLoaded) {
                 this.playAfterLoaded = false;
                 this.playAudio();
+                console.log("Time to load: " + (((new Date()) - this.loadStartTime)/1000) + " seconds");
             }
             // Hide loading bar after a short delay
             setTimeout(() => {
@@ -132,7 +137,6 @@ class Audio {
         let nextTracks = playlist[this.songIndex].tracks;
         nextTracks.forEach((track, i) => {
             this.wads[i] = new Wad({source: track});
-            this.reversedWads[i] = new Wad({source: track});
             this.stemPolywads[i].add(this.wads[i]);
         })
         if (this.bpm) {
@@ -141,6 +145,7 @@ class Audio {
         }
         this.playbackRate = 1;
         loop.speedDotIndex = 5;
+        this.loadStartTime = new Date();
         this.checkLoadProgress();
     }
 
