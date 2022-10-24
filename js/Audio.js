@@ -101,12 +101,14 @@ class Audio {
 		}
     }
 
-    generateReversedWads = () => {
-        this.wads.forEach((wad, i) => {this.reversedWads[i] = new Wad({source: wad.decodedBuffer})})
-        this.reversedWads.forEach((reversedWad) => reversedWad.reverse());
+    generateReversedWads = async () => {
+        this.wads.forEach(async (wad, i) => {
+            this.reversedWads[i] = new Wad({source: wad.decodedBuffer});
+            this.reversedWads[i].reverse();
+        })
     }
 
-    checkLoadProgress = () => {
+    checkLoadProgress = async () => {
         this.loadProgress = 0;
         this.wads.forEach((wad) => {this.loadProgress += wad.playable*100});
         $("loading").value = this.loadProgress;
@@ -115,8 +117,8 @@ class Audio {
             this.checkLoadTimeout = setTimeout(this.checkLoadProgress, 100);
         } else {
             // Without a timeout, generating reversed wads adds ~10 seconds to load time
+            setTimeout(this.generateReversedWads, 1000);
             // TODO: This should probably be done using async, but this works as well
-            setTimeout(() => this.generateReversedWads(), 1);
             if (this.playAfterLoaded) {
                 this.playAfterLoaded = false;
                 this.playAudio();
