@@ -24,11 +24,7 @@ class Loop {
 			// Set loop
 			if (this.nextLoopDuration) { //Does in loopmode and nowplaying need to be checked
 				if (this.loopDuration == 8) { // If loopDuration was 8, but now is not, set loop
-					if (!audio.inReverse) {
-						this.offset = Wad.audioContext.currentTime - audio.wads[0].lastPlayedTime;
-					} else {
-						this.offset = Wad.audioContext.currentTime - audio.reversedWads[0].lastPlayedTime;
-					}
+					this.offset = Wad.audioContext.currentTime - audio.wads[0].lastPlayedTime;
 					this.vertLoopIndex = 0;
 				}
 				this.loopDuration = this.nextLoopDuration;
@@ -58,15 +54,9 @@ class Loop {
 			if (this.loopDuration < 8) {
 				if (this.vertLoopIndex == 0) {
 					Wad.stopAll();
-					if (!audio.inReverse) {
-						audio.wads.forEach((wad) => {
-							wad.play({offset: this.offset, rate: audio.playbackRate});
-						});
-					} else {
-						audio.reversedWads.forEach((reversedWad) => {
-							reversedWad.play({offset: this.offset, rate: audio.playBackRate});
-						});
-					}
+					audio.wads.forEach((wad) => {
+						wad.play({offset: this.offset, rate: audio.playbackRate});
+					});
 				}
 				let nextVertLight = $(this.vertArray[this.vertLoopIndex]);
 				let prevVertIndex = this.vertLoopIndex == 0 ? this.loopDuration - 1 : this.vertLoopIndex - 1;
@@ -110,12 +100,7 @@ class Loop {
 		}
 		if (sliderName == "right") {
 			this.speedDotIndex = 3 + lightIndex;
-			audio.setPlaybackDirection(false);
 			audio.wads.forEach((wad) => {wad.setRate(audio.playbackRate)});
-		} else if (sliderName == "left") {
-			this.speedDotIndex = 4 - lightIndex;
-			audio.setPlaybackDirection(true);
-			audio.reversedWads.forEach((reversedWad) => {reversedWad.setRate(audio.playbackRate)});
 		}
 		$(this.horizArray[this.speedDotIndex]).classList.remove("lightOff");
 	}

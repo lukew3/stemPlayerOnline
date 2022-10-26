@@ -18,18 +18,11 @@ class Audio {
         this.playAfterLoaded = false;
         
         this.playbackRate = 1;
-        this.inReverse = false;
         this.bpm = 120;
         this.beatDuration = 60/this.bpm*1000; // Milliseconds per beat
 
         let tracks = playlist[this.songIndex].tracks
         this.wads = [
-            new Wad({source: tracks[0]}),
-            new Wad({source: tracks[1]}),
-            new Wad({source: tracks[2]}),
-            new Wad({source: tracks[3]})
-        ];
-        this.reversedWads = [
             new Wad({source: tracks[0]}),
             new Wad({source: tracks[1]}),
             new Wad({source: tracks[2]}),
@@ -65,30 +58,6 @@ class Audio {
         }
     }
 
-
-    setPlaybackDirection = (setReversed) => {
-        if (setReversed && !this.inReverse) {
-            let reversedOffset = this.wads[0].duration/1000 - (Wad.audioContext.currentTime - this.wads[0].lastPlayedTime);
-            console.log(reversedOffset);
-            this.stemPolywads.forEach((stemPolywad, i) => {
-                stemPolywad.stop();
-                stemPolywad.remove(this.wads[i]);
-                stemPolywad.add(this.reversedWads[i]);
-                if (this.nowPlaying) stemPolywad.play({offset: reversedOffset});
-            });
-            this.inReverse = true;
-        } else if (!setReversed && this.inReverse) {
-            let reversedOffset = this.reversedWads[0].duration/1000 - (Wad.audioContext.currentTime - this.reversedWads[0].lastPlayedTime);
-            this.stemPolywads.forEach((stemPolywad, i) => {
-                stemPolywad.stop();
-                stemPolywad.remove(this.reversedWads[i]);
-                stemPolywad.add(this.wads[i]);
-                if (this.nowPlaying) stemPolywad.play({offset: reversedOffset});
-            });
-            this.inReverse = false;
-        }
-    }
-
     incrementPolyVolume = () => {
         if (this.wholeMaxVolume != 8) {
 			this.wholeMaxVolume++;
@@ -112,7 +81,6 @@ class Audio {
         if (this.loadProgress < 400) {
             this.checkLoadTimeout = setTimeout(this.checkLoadProgress, 100);
         } else {
-            this.reversedWads.forEach((reversedWad) => reversedWad.reverse());
             if (this.playAfterLoaded) {
                 this.playAfterLoaded = false;
                 this.playAudio();
@@ -132,7 +100,6 @@ class Audio {
         let nextTracks = playlist[this.songIndex].tracks;
         nextTracks.forEach((track, i) => {
             this.wads[i] = new Wad({source: track});
-            this.reversedWads[i] = new Wad({source: track});
             this.stemPolywads[i].add(this.wads[i]);
         })
         if (this.bpm) {
