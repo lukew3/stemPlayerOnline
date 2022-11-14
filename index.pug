@@ -3,6 +3,14 @@ mixin slider(name)
     each i in [1,2,3,4]
       div(id=`${name}_${i}`, class=`light${i} light ${name}Light`)
 
+mixin dotButton(name)
+  div(id=`${name}DotButton`, class='halfButton')
+    div(id=`${name}DotIcon`, class='dotIcon')
+
+mixin colorInput(id, defaultColor)
+  input(id=`color${id}Input`, class='colorInput', type='color', value=`${defaultColor}`)
+    div(id=`color${id}Icon`, class='colorIcon')
+
 doctype html
 head
   meta(charset='UTF-8')
@@ -39,10 +47,8 @@ p#loadingLabel 0%
     img#folderSelectIcon(src='img/folder.svg' alt='Folder Select')
     p#folderSelectLabel Select stems
   #colorIcons
-    input#color4Input.colorInput(type='color' value='#4349e3')
-    #color4Icon.colorIcon
-    input#color1Input.colorInput(type='color' value='#f5440a')
-    #color1Icon.colorIcon
+    +colorInput(4, '#4349e3')
+    +colorInput(1, '#f5440a')
 #content
   #playerContainer
     #player
@@ -63,10 +69,8 @@ p#loadingLabel 0%
         #minusButton.halfButton
           #minusIcon
       #selectButtons.playerButton
-        #leftDotButton.halfButton
-          #leftDotIcon.dotIcon
-        #rightDotButton.halfButton
-          #rightDotIcon.dotIcon
+        +dotButton('left')
+        +dotButton('right')
 #externalLinks
   a(href='https://github.com/lukew3/stemPlayerOnline')
     img(src='img/githubIcon.svg' alt='Github')
