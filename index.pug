@@ -11,12 +11,12 @@ mixin dotButton(name)
   div(id=`${name}DotButton`, class='halfButton')
     div(id=`${name}DotIcon`, class='dotIcon')
 
-mixin selectStemsFromSource(name, title, visible)
+mixin selectStemsFromSource(name, title, opened=false)
   div(id=`selectStemsFrom${name}`, class='selectStemsSource')
     div(id=`selectStems${name}Header`, class='selectStemsSourceHeader')
       img(id=`selectStems${name}Arrow`, class='stemsSourceArrow', src='/img/collapseArrow.svg')
       p FROM #{title}
-    div(id=`selectStems${name}`, class=`selectStemsCollapsible ${visible ? '' : 'collapsed'}`)
+    div(id=`selectStems${name}`, class=`selectStemsCollapsible ${opened ? '' : 'collapsed'}`)
       if block
         block
 
@@ -93,7 +93,7 @@ div(style='position: absolute; bottom: 20px; right: 20px;')
     h2#selectStemsTitle SELECT STEMS
     div
       +selectStemsFromSource('SPO', 'STEMPLAYERONLINE.COM', true)
-      +selectStemsFromSource('Local', 'LOCAL FILES', false)
+      +selectStemsFromSource('Local', 'LOCAL FILES')
         input#folderSelectField(type='file' webkitdirectory='' multiple='')
         button#folderSelectButton Select Folder
         p#folderSelectSubtext * Folder selection on desktop only
