@@ -1,7 +1,15 @@
+- var testFunc = function(){
+-     return "Test func";
+- }
+
+- var renderSlider = function(name){
+-     return `#${name}Slider.slider\n  each i in [1,2,3,4]\n    div(id='${name}_'+i, class='light' + i).light.${name}Light`
+- }
+
 doctype html
 head
   meta(charset='UTF-8')
-  title Stem Player Online
+  title testFunc()
   meta(name='description' content='An online stem player. Inspired by but not affiliated with YEEZY TECH X KANO Stem Player')
   meta(name='theme-color' content='#2c2f33')
   link(rel='stylesheet' type='text/css' href='main.css' media='screen')
@@ -46,9 +54,7 @@ p#loadingLabel 0%
           each i in [1,2,3,4]
             div(id='top_' + i, class='light' + i).light.topLight
       #middlePlayer.playerSection
-        #leftSlider.slider
-          each i in [1,2,3,4]
-            div(id='left_' + i, class='light' + i).light.leftLight
+        renderSlider("left")
         #centerButton
         #rightSlider.slider
           each i in [1,2,3,4]
