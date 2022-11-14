@@ -2,14 +2,14 @@ mixin colorInput(id, defaultColor)
   input(id=`color${id}Input`, class='colorInput', type='color', value=`${defaultColor}`)
   div(id=`color${id}Icon`, class='colorIcon')
 
-mixin slider(name)
-  div(id=`${name}Slider`, class='slider')
+mixin slider(direction)
+  div(id=`${direction}Slider`, class='slider')
     each i in [1,2,3,4]
-      div(id=`${name}_${i}`, class=`light${i} light ${name}Light`)
+      div(id=`${direction}_${i}`, class=`light${i} light ${direction}Light`)
 
-mixin dotButton(name)
-  div(id=`${name}DotButton`, class='halfButton')
-    div(id=`${name}DotIcon`, class='dotIcon')
+mixin dotButton(direction)
+  div(id=`${direction}DotButton`, class='halfButton')
+    div(id=`${direction}DotIcon`, class='dotIcon')
 
 mixin selectStemsFromSource(name, title, opened=false)
   div(id=`selectStemsFrom${name}`, class='selectStemsSource')
