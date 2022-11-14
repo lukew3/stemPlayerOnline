@@ -1,0 +1,124 @@
+mixin colorInput(id, defaultColor)
+  input(id=`color${id}Input`, class='colorInput', type='color', value=`${defaultColor}`)
+  div(id=`color${id}Icon`, class='colorIcon')
+
+mixin slider(direction)
+  div(id=`${direction}Slider`, class='slider')
+    each i in [1,2,3,4]
+      div(id=`${direction}_${i}`, class=`light${i} light ${direction}Light`)
+
+mixin dotButton(direction)
+  div(id=`${direction}DotButton`, class='halfButton')
+    div(id=`${direction}DotIcon`, class='dotIcon')
+
+mixin selectStemsFromSource(name, title, opened=false)
+  div(id=`selectStemsFrom${name}`, class='selectStemsSource')
+    div(id=`selectStems${name}Header`, class='selectStemsSourceHeader')
+      img(id=`selectStems${name}Arrow`, class='stemsSourceArrow', src='/img/collapseArrow.svg')
+      p FROM #{title}
+    div(id=`selectStems${name}`, class=`selectStemsCollapsible ${opened ? '' : 'collapsed'}`)
+      block
+
+doctype html
+head
+  meta(charset='UTF-8')
+  title Stem Player Online
+  meta(name='description' content='An online stem player. Inspired by but not affiliated with YEEZY TECH X KANO Stem Player')
+  meta(name='theme-color' content='#2c2f33')
+  link(rel='stylesheet' type='text/css' href='main.css' media='screen')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  link(rel='manifest' type='application/manifest+json; charset=utf-8' href='manifest.json')
+  link(rel='icon' href='img/logo-512.png')
+  // Global site tag (gtag.js) - Google Analytics
+  script(async='' src='https://www.googletagmanager.com/gtag/js?id=G-JNJPG2RFK2')
+  script.
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JNJPG2RFK2');
+  link(rel='preconnect' href='https://fonts.googleapis.com')
+  link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin='')
+  link(href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap' rel='stylesheet')
+  script.
+    /*
+    window.addEventListener("load", () => {
+    if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+    }
+    });
+    */
+  script(src='https://unpkg.com/web-audio-daw')
+  script.
+    const $ = (id) => { return document.getElementById(id) };
+  script(src='js/Lights.js' defer)
+  script(src='js/data.js' defer)
+  script(src='js/Audio.js' defer)
+  script(src='js/Loop.js' defer)
+  script(src='js/app.js' defer)
+  script(src='js/interface.js' defer)
+  script(src='js/keyboardControls.js' defer)
+
+progress#loading(value='0' max='400')
+#alertBanner iOS users, ensure that your ringer is not muted
+p#loadingLabel 0%
+#topBar
+  #folderSelectGroup
+    img#folderSelectIcon(src='img/folder.svg' alt='Folder Select')
+    p#folderSelectLabel Select stems
+  #colorIcons
+    +colorInput(4, '#4349e3')
+    +colorInput(1, '#f5440a')
+#content
+  #playerContainer
+    #player
+      #upperPlayer.playerSection
+        +slider('top')
+      #middlePlayer.playerSection
+        +slider('left')
+        #centerButton
+        +slider('right')
+      #lowerPlayer.playerSection
+        +slider('bottom')
+    #playerButtons
+      #menuButton.playerButton
+      #volumeButtons.playerButton
+        #plusButton.halfButton
+          #plusIconVertical
+          #plusIconHorizontal
+        #minusButton.halfButton
+          #minusIcon
+      #selectButtons.playerButton
+        +dotButton('left')
+        +dotButton('right')
+#externalLinks
+  a(href='https://github.com/lukew3/stemPlayerOnline')
+    img(src='img/githubIcon.svg' alt='Github')
+  a(href='https://discord.gg/jfnFhggJGZ')
+    img(src='img/discordIcon.svg' alt='Discord')
+div(style='position: absolute; bottom: 20px; right: 20px;')
+  a(href='https://stemplayeronline.com') Go to classic version
+#selectStems
+  #selectStemsInner
+    p#selectStemsHeader STEM PLAYER ONLINE
+    h2#selectStemsTitle SELECT STEMS
+    div
+      +selectStemsFromSource('SPO', 'STEMPLAYERONLINE.COM', true)
+      +selectStemsFromSource('Local', 'LOCAL FILES')
+        input#folderSelectField(type='file' webkitdirectory='' multiple='')
+        button#folderSelectButton Select Folder
+        p#folderSelectSubtext * Folder selection on desktop only
+        p#trackSelectSubtext Tracks
+        each i in [1,2,3,4]
+          .singleStemFileSelectGroup
+            label #{i})
+            div(id='stemFileSelectBtn' + i).stemFileSelectButton tap to select...
+            input(id='stemFileSelect' + i, type='file').stemFileSelect
+        #stemSelectLocalLayout
+          label 2
+          div
+            label 3
+            label 1
+          label 4
+    #selectStemsPlayButtons
+      p#selectStemsResumeCurrent Resume current
+      button#selectStemsLaunch LAUNCH
