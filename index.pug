@@ -1,3 +1,7 @@
+mixin colorInput(id, defaultColor)
+  input(id=`color${id}Input`, class='colorInput', type='color', value=`${defaultColor}`)
+  div(id=`color${id}Icon`, class='colorIcon')
+
 mixin slider(name)
   div(id=`${name}Slider`, class='slider')
     each i in [1,2,3,4]
@@ -6,10 +10,6 @@ mixin slider(name)
 mixin dotButton(name)
   div(id=`${name}DotButton`, class='halfButton')
     div(id=`${name}DotIcon`, class='dotIcon')
-
-mixin colorInput(id, defaultColor)
-  input(id=`color${id}Input`, class='colorInput', type='color', value=`${defaultColor}`)
-  div(id=`color${id}Icon`, class='colorIcon')
 
 mixin selectStemsFromSource(name, title, visible)
   div(id=`selectStemsFrom${name}`, class='selectStemsSource')
