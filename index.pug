@@ -11,6 +11,15 @@ mixin colorInput(id, defaultColor)
   input(id=`color${id}Input`, class='colorInput', type='color', value=`${defaultColor}`)
   div(id=`color${id}Icon`, class='colorIcon')
 
+mixin selectStemsFromSource(name, title, visible)
+  div(id=`selectStemsFrom${name}`, class='selectStemsSource')
+    div(id=`selectStems${name}Header`, class='selectStemsSourceHeader')
+      img(id=`selectStems${name}Arrow`, class='stemsSourceArrow', src='/img/collapseArrow.svg')
+      p FROM #{title}
+    div(id=`selectStems${name}`, class=`selectStemsCollapsible ${visible ? '' : 'collapsed'}`)
+      if block
+        block
+
 doctype html
 head
   meta(charset='UTF-8')
@@ -83,31 +92,23 @@ div(style='position: absolute; bottom: 20px; right: 20px;')
     p#selectStemsHeader STEM PLAYER ONLINE
     h2#selectStemsTitle SELECT STEMS
     div
-      #selectStemsFromSPO.selectStemsSource
-        #selectStemsSPOHeader.selectStemsSourceHeader
-          img#selectStemsSPOArrow.stemsSourceArrow(src='/img/collapseArrow.svg')
-          p FROM STEMPLAYERONLINE.COM
-        #selectStemsSPO.selectStemsCollapsible
-      #selectStemsFromLocal.selectStemsSource
-        #selectStemsLocalHeader.selectStemsSourceHeader
-          img#selectStemsLocalArrow.stemsSourceArrow.collapsed(src='/img/collapseArrow.svg')
-          p FROM LOCAL FILES
-        #selectStemsLocal.selectStemsCollapsible.collapsed
-          input#folderSelectField(type='file' webkitdirectory='' multiple='')
-          button#folderSelectButton Select Folder
-          p#folderSelectSubtext * Folder selection on desktop only
-          p#trackSelectSubtext Tracks
-          each i in [1,2,3,4]
-            .singleStemFileSelectGroup
-              label #{i})
-              div(id='stemFileSelectBtn' + i).stemFileSelectButton tap to select...
-              input(id='stemFileSelect' + i, type='file').stemFileSelect
-          #stemSelectLocalLayout
-            label 2
-            div
-              label 3
-              label 1
-            label 4
+      +selectStemsFromSource('SPO', 'STEMPLAYERONLINE.COM', true)
+      +selectStemsFromSource('Local', 'LOCAL FILES', false)
+        input#folderSelectField(type='file' webkitdirectory='' multiple='')
+        button#folderSelectButton Select Folder
+        p#folderSelectSubtext * Folder selection on desktop only
+        p#trackSelectSubtext Tracks
+        each i in [1,2,3,4]
+          .singleStemFileSelectGroup
+            label #{i})
+            div(id='stemFileSelectBtn' + i).stemFileSelectButton tap to select...
+            input(id='stemFileSelect' + i, type='file').stemFileSelect
+        #stemSelectLocalLayout
+          label 2
+          div
+            label 3
+            label 1
+          label 4
     #selectStemsPlayButtons
       p#selectStemsResumeCurrent Resume current
       button#selectStemsLaunch LAUNCH
