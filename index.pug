@@ -17,8 +17,7 @@ mixin selectStemsFromSource(name, title, opened=false)
       img(id=`selectStems${name}Arrow`, class='stemsSourceArrow', src='/img/collapseArrow.svg')
       p FROM #{title}
     div(id=`selectStems${name}`, class=`selectStemsCollapsible ${opened ? '' : 'collapsed'}`)
-      if block
-        block
+      block
 
 doctype html
 head
