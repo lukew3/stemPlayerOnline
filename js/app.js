@@ -43,6 +43,18 @@ playlist.forEach((stem, i) => {
 	$("selectStemsSPO").appendChild(item);
 });
 
+// Start playback if valid query params
+const params = new URLSearchParams(window.location.search);
+console.log(params.get('source'));
+console.log(params.get('id'));
+if (params.get('id')) {
+	$("selectStems").style.display = "none";
+	audio.songIndex = params.get('id');
+	selectingStems = false;
+	audio.nowPlaying = false;
+	audio.loadSong();
+	audio.playAudio();
+}
 
 const levelToVolume = (level) => {
 	return (level-1)/3;

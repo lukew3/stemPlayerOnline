@@ -154,12 +154,16 @@ $("selectStemsResumeCurrent").addEventListener("click", () => {
 	selectingStems = false;
 });
 $("selectStemsLaunch").addEventListener("click", () => {
+	let newUrl = `${location.protocol}//${location.host}${location.pathname}?source=SPO&id=${audio.songIndex}`;
+	window.location.replace(newUrl);
+	/*
 	$("selectStems").style.display = "none";
 	$("selectStemsResumeCurrent").style.display = "block";
 	selectingStems = false;
 	audio.nowPlaying = false;
 	audio.loadSong();
 	audio.playAudio();
+	*/
 });
 
 $("selectStemsSPOHeader").addEventListener("click", () => {
