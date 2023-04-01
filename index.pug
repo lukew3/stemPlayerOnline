@@ -22,7 +22,7 @@ mixin selectStemsFromSource(name, title, opened=false)
 doctype html
 head
   meta(charset='UTF-8')
-  title Stem Player Online
+  title Stem Player Online (beta)
   meta(name='description' content='An online stem player. Inspired by but not affiliated with YEEZY TECH X KANO Stem Player')
   meta(name='theme-color' content='#2c2f33')
   link(rel='stylesheet' type='text/css' href='main.css' media='screen')
@@ -40,13 +40,11 @@ head
   link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin='')
   link(href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap' rel='stylesheet')
   script.
-    /*
     window.addEventListener("load", () => {
     if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
     }
     });
-    */
   script(src='https://unpkg.com/web-audio-daw')
   script.
     const $ = (id) => { return document.getElementById(id) };
