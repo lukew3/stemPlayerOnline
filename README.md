@@ -27,4 +27,4 @@ python -m http.server
 3. Navigate to the url http://localhost:8000 or the url set by the python server
 4. You can use the player by uploading your own tracks by using the folder button in the top left.
 
-Don't edit the `index.html` file directly. Edit `index.pug` and then run `pug index.pug` to generate the `index.html` file. Note that you must have pug installed first, which you can do by running `npm i -g pug`.
+Don't edit the `index.html` file directly. Edit `index.pug` and then run `pug index.pug` to generate the `index.html` file. Note that you must have pug installed first, which you can do by running `npm i -g pug-cli`.

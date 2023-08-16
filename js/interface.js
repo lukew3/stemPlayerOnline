@@ -162,18 +162,18 @@ $("selectStemsLaunch").addEventListener("click", () => {
 	audio.playAudio();
 });
 
-$("selectStemsSPOHeader").addEventListener("click", () => {
-	$("selectStemsSPO").classList.remove('collapsed');
-	$("selectStemsSPOArrow").classList.remove('collapsed');
-	$("selectStemsLocal").classList.add('collapsed');
-	$("selectStemsLocalArrow").classList.add('collapsed');
-});
-$("selectStemsLocalHeader").addEventListener("click", () => {
-	$("selectStemsLocal").classList.remove('collapsed');
-	$("selectStemsLocalArrow").classList.remove('collapsed');
-	$("selectStemsSPO").classList.add('collapsed');
-	$("selectStemsSPOArrow").classList.add('collapsed');
-});
+// When a stem select header is clicked, collapse all selects and uncollapse the one clicked
+const selects = ['S2', 'SPO', 'Local'];
+selects.forEach(s0 => {
+	$(`selectStems${s0}Header`).addEventListener("click", () => {
+		selects.forEach(s1 => {
+			$(`selectStems${s1}`).classList.add('collapsed');
+			$(`selectStems${s1}Arrow`).classList.add('collapsed');
+		})
+		$(`selectStems${s0}`).classList.remove('collapsed');
+		$(`selectStems${s0}Arrow`).classList.remove('collapsed');
+	});
+})
 
 $("folderSelectGroup").addEventListener("click", () => {
 	$("selectStems").style.display = "flex";
