@@ -62,7 +62,7 @@ p#loadingLabel 0%
 #topBar
   #folderSelectGroup
     img#folderSelectIcon(src='img/folder.svg' alt='Folder Select')
-    p#folderSelectLabel Select stems
+    p#trackNameLabel Select stems
   #colorIcons
     +colorInput(4, '#4349e3')
     +colorInput(1, '#f5440a')
@@ -103,7 +103,7 @@ div(style='position: absolute; bottom: 20px; right: 20px;')
       +selectStemsFromSource('S2', 'STEMIFY2.NET', true)
         form#s2SearchContainer
           #s2SearchInner
-            input#s2SearchQuery(type='text')
+            input#s2SearchQuery(type='text' placeholder='Search for a song')
             input#s2SearchSubmit(type='submit' value='Go')
         #s2SearchResults
       +selectStemsFromSource('SPO', 'STEMPLAYERONLINE.COM')

@@ -94,6 +94,8 @@ class Audio {
     }
     
     loadSong = () => {
+        // Set 
+        $('trackNameLabel').innerHTML = playlist[this.songIndex].title;
         console.log("loaded song");
         Wad.stopAll();
         this.wads.forEach((wad, i) => { this.stemPolywads[i].remove(wad) });

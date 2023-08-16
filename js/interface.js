@@ -238,8 +238,6 @@ $("folderSelectField").addEventListener("change", () => {
 		playlist[0].tracks.push(URL.createObjectURL(files[i]));
 	}
 	audio.songIndex = 0;
-	// set label to folder name
-	$("folderSelectLabel").innerHTML = trackName;
 });
 
 $("stemFileSelectBtn1").addEventListener("click", () => {$("stemFileSelect1").click()});
