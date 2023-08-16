@@ -175,6 +175,44 @@ selects.forEach(s0 => {
 	});
 })
 
+// Handle Stemify2 search
+$('s2SearchSubmit').addEventListener('click', () => {
+	const query = $('s2SearchQuery').value;
+	fetch(`https://www.stemify2.net/api/songs/search?page=1&limit=24&query=${query}`).then(r => r.json()).then(searchResults => {
+		// Clear old results
+		$('s2SearchResults').innerHTML = '';
+		// Add each result to #s2SearchResults
+		searchResults.forEach((d, i) => {
+			const simple = {
+				id: d.id,
+				title: d.title,
+				bpm: d.bpm,
+				artist: d.artist.name,
+				image: d.album.image
+			}
+			let item = createSelectStemsItem(simple.title, simple.artist, simple.image);
+			item.addEventListener("click", () => {
+				unselectStemsItems();
+				item.classList.add('selected');
+				fetch(`https://www.stemify2.net/api/download?id=${simple.id}`).then(r => r.json()).then(dlData => {
+					playlist = [{
+					  "title": simple.title,
+					  "bpm": simple.bpm,
+					  "tracks": [
+						dlData.other,
+						dlData.vocals,
+						dlData.bass,
+						dlData.drums
+					  ]
+					}]
+					audio.songIndex = 0;
+				});
+			});
+			$("s2SearchResults").appendChild(item);
+		})
+	});
+})
+
 $("folderSelectGroup").addEventListener("click", () => {
 	$("selectStems").style.display = "flex";
 	selectingStems = true;
