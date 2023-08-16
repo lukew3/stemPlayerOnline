@@ -487,8 +487,11 @@ nav * {
 	border: none;
 	font-size: 16px;
 }
+#s2SearchContainer {
+	margin: 5px 0;
+}
 #s2SearchInner {
-	width: 250px;
+	width: 260px;
 	margin: auto;
 }
 #s2SearchQuery {
@@ -497,11 +500,20 @@ nav * {
 	padding: 5px 8px;
 	border: none;
 	background-color: var(--ui-sub);
+	font-size: 11pt;
 }
 #s2SearchSubmit {
-	width: 30px;
+	width: 40px;
 	border-radius: 0 5px 5px 0;
 	padding: 5px 8px;
 	border: none;
 	background-color: var(--uiGoColor);
+	font-size: 11pt;
+}
+#s2SearchNoResults {
+	display: block;
+	text-align: center;
+	font-size: .9em;
+	color: #1d1d1d;
+	margin: 0;
 }

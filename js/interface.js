@@ -211,6 +211,7 @@ $('s2SearchContainer').addEventListener('submit', (e) => {
 			});
 			$("s2SearchResults").appendChild(item);
 		})
+		if (searchResults.length == 0) $("s2SearchResults").innerHTML = "<p id='s2SearchNoResults'>No results</p>";
 	});
 })
 
