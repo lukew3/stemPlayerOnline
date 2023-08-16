@@ -17,6 +17,8 @@
 	--light-4: #515151;
 	--maxVolColor: #303FDB;
 	--loopColor: orange;
+	--uiGoColor: #539d5d;
+	--ui-sub: #b4a692;
 }
 
 
@@ -412,7 +414,7 @@ nav * {
 #folderSelectButton {
 	border: none;
 	border-radius: 8px;
-	background-color: #b4a692;
+	background-color: var(--ui-sub);
 	width: 50%;
 	font-size: 0.9em;
 	height: 35px;
@@ -453,7 +455,7 @@ nav * {
 	display: none;
 }
 .stemFileSelectButton {
-	background-color: #b4a692;
+	background-color: var(--ui-sub);
 	width: 100%;
 	padding: 3px 5px;
 	font-size: 0.9em;
@@ -479,9 +481,27 @@ nav * {
 	align-self: center;
 	justify-self: center;
 	text-align: center;
-	background-color: #539d5d;
+	background-color: var(--uiGoColor);
 	border-radius: 10px;
 	cursor: pointer;
 	border: none;
 	font-size: 16px;
+}
+#s2SearchInner {
+	width: 250px;
+	margin: auto;
+}
+#s2SearchQuery {
+	width: 200px;
+	border-radius: 5px 0 0 5px;
+	padding: 5px 8px;
+	border: none;
+	background-color: var(--ui-sub);
+}
+#s2SearchSubmit {
+	width: 30px;
+	border-radius: 0 5px 5px 0;
+	padding: 5px 8px;
+	border: none;
+	background-color: var(--uiGoColor);
 }

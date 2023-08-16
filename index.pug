@@ -101,9 +101,10 @@ div(style='position: absolute; bottom: 20px; right: 20px;')
     h2#selectStemsTitle SELECT STEMS
     div
       +selectStemsFromSource('S2', 'STEMIFY2.NET', true)
-        #s2SearchContainer
-          input#s2SearchQuery(type='text')
-          button#s2SearchSubmit Go
+        form#s2SearchContainer
+          #s2SearchInner
+            input#s2SearchQuery(type='text')
+            input#s2SearchSubmit(type='submit' value='Go')
         #s2SearchResults
       +selectStemsFromSource('SPO', 'STEMPLAYERONLINE.COM')
       +selectStemsFromSource('Local', 'LOCAL FILES')

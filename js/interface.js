@@ -176,7 +176,8 @@ selects.forEach(s0 => {
 })
 
 // Handle Stemify2 search
-$('s2SearchSubmit').addEventListener('click', () => {
+$('s2SearchContainer').addEventListener('submit', (e) => {
+	e.preventDefault();
 	const query = $('s2SearchQuery').value;
 	fetch(`https://www.stemify2.net/api/songs/search?page=1&limit=24&query=${query}`).then(r => r.json()).then(searchResults => {
 		// Clear old results
