@@ -1,5 +1,5 @@
 // Service worker adapted from: https://developers.google.com/web/fundamentals/primers/service-workers
-const CACHE_NAME = 'stemplayeronline-beta-cache-v2';
+const CACHE_NAME = 'stemplayeronline-beta-cache-v5';
 const urlsToCache = [
 	'/',
 	'/main.css',
