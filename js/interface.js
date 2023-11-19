@@ -179,7 +179,7 @@ selects.forEach(s0 => {
 $('s2SearchContainer').addEventListener('submit', (e) => {
 	e.preventDefault();
 	const query = $('s2SearchQuery').value;
-	const url = 'https://corsproxy.io/?' + encodeURIComponent(`https://www.stemify2.net/api/songs/search?page=1&limit=24&query=${query}`);
+	const url = 'https://corsanywhere.lukew3.com/' + `https://www.stemify2.net/api/songs/search?page=1&limit=24&query=${query}`;
 	fetch(url).then(r => r.json()).then(searchResults => {
 		// Clear old results
 		$('s2SearchResults').innerHTML = '';
@@ -196,7 +196,7 @@ $('s2SearchContainer').addEventListener('submit', (e) => {
 			item.addEventListener("click", () => {
 				unselectStemsItems();
 				item.classList.add('selected');
-				const url2 = 'https://corsproxy.io/?' + encodeURIComponent(`https://www.stemify2.net/api/download?id=${simple.id}`);
+				const url2 = 'https://corsanywhere.lukew3.com/' + `https://www.stemify2.net/api/download?id=${simple.id}`;
 				fetch(url2).then(r => r.json()).then(dlData => {
 					playlist = [{
 					  "title": simple.title,
