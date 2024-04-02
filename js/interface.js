@@ -186,47 +186,47 @@ selects.forEach(s0 => {
 	});
 })
 
-// Handle Stemify2 search
-$('s2SearchContainer').addEventListener('submit', (e) => {
-	e.preventDefault();
-	const query = $('s2SearchQuery').value;
-	const url = 'https://corsanywhere.lukew3.com/' + `https://www.stemify2.net/api/songs/search?page=1&limit=24&query=${query}`;
-	fetch(url).then(r => r.json()).then(searchResults => {
-		// Clear old results
-		$('s2SearchResults').innerHTML = '';
-		// Add each result to #s2SearchResults
-		searchResults.forEach((d, i) => {
-			const simple = {
-				id: d.id,
-				title: d.title,
-				bpm: d.bpm,
-				artist: d.artist.name,
-				image: d.album.image
-			}
-			let item = createSelectStemsItem(simple.title, simple.artist, simple.image);
-			item.addEventListener("click", () => {
-				unselectStemsItems();
-				item.classList.add('selected');
-				const url2 = 'https://corsanywhere.lukew3.com/' + `https://www.stemify2.net/api/download?id=${simple.id}`;
-				fetch(url2).then(r => r.json()).then(dlData => {
-					playlist = [{
-					  "title": simple.title,
-					  "bpm": simple.bpm,
-					  "tracks": [
-						dlData.other,
-						dlData.vocals,
-						dlData.bass,
-						dlData.drums
-					  ]
-					}]
-					audio.songIndex = 0;
-				});
-			});
-			$("s2SearchResults").appendChild(item);
-		})
-		if (searchResults.length == 0) $("s2SearchResults").innerHTML = "<p id='s2SearchNoResults'>No results</p>";
-	});
-})
+// // Handle Stemify2 search
+// $('s2SearchContainer').addEventListener('submit', (e) => {
+// 	e.preventDefault();
+// 	const query = $('s2SearchQuery').value;
+// 	const url = 'https://corsanywhere.lukew3.com/' + `https://www.stemify2.net/api/songs/search?page=1&limit=24&query=${query}`;
+// 	fetch(url).then(r => r.json()).then(searchResults => {
+// 		// Clear old results
+// 		$('s2SearchResults').innerHTML = '';
+// 		// Add each result to #s2SearchResults
+// 		searchResults.forEach((d, i) => {
+// 			const simple = {
+// 				id: d.id,
+// 				title: d.title,
+// 				bpm: d.bpm,
+// 				artist: d.artist.name,
+// 				image: d.album.image
+// 			}
+// 			let item = createSelectStemsItem(simple.title, simple.artist, simple.image);
+// 			item.addEventListener("click", () => {
+// 				unselectStemsItems();
+// 				item.classList.add('selected');
+// 				const url2 = 'https://corsanywhere.lukew3.com/' + `https://www.stemify2.net/api/download?id=${simple.id}`;
+// 				fetch(url2).then(r => r.json()).then(dlData => {
+// 					playlist = [{
+// 					  "title": simple.title,
+// 					  "bpm": simple.bpm,
+// 					  "tracks": [
+// 						dlData.other,
+// 						dlData.vocals,
+// 						dlData.bass,
+// 						dlData.drums
+// 					  ]
+// 					}]
+// 					audio.songIndex = 0;
+// 				});
+// 			});
+// 			$("s2SearchResults").appendChild(item);
+// 		})
+// 		if (searchResults.length == 0) $("s2SearchResults").innerHTML = "<p id='s2SearchNoResults'>No results</p>";
+// 	});
+// })
 
 $("folderSelectGroup").addEventListener("click", () => {
 	$("selectStems").style.display = "flex";
