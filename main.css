@@ -235,11 +235,15 @@ nav * {
 	display: flex;
 	justify-content: space-between;
 }
+#plusIcon {
+	float: right;
+}
 #plusIconVertical {
 	position: absolute;
 	height: 2px;
 	width: 10px;
 	margin: 11px 10px;
+	margin-left: -18px;
 	background-color: #68533c;
 	transform: rotate(90deg);
 }
@@ -248,6 +252,7 @@ nav * {
 	height: 2px;
 	width: 10px;
 	margin: 11px 10px;
+	margin-left: -18px;
 	background-color: #68533c;
 }
 #minusIcon {
@@ -256,7 +261,7 @@ nav * {
 	margin: 10.5px 10px;
 	background-color: #68533c;
 }
-#minusIcon, #rightDotIcon {
+#rightDotIcon {
 	float: right;
 }
 .dotIcon {
