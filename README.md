@@ -17,7 +17,10 @@ Keyboard shortcuts have been included to help better the experience of using the
 
 * `Spacebar` - Presses the center button
 * `<Arrowkey>`
-  * Standard mode - Each arrow key controls the volume of it's respective slider. Pressing the arrow key will increase the volume and holding control while pressing the arrow key will decrease the volume.
+  * Standard mode - 
+    * Just arrows - Each arrow key increases the volume of it's respective slider.
+    * `Ctrl+Arrow` - Each arrow key decreases the volume of it's respective slider.
+    * `Shift+Arrow` - Isolates the stem of it's respective slider
   * Loop mode - Left/right Controls the playback speed, Up/down controls the loop duration
 * `q` - Presses the menu button
 * `a` - Presses the minus button
