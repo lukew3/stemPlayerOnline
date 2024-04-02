@@ -105,28 +105,32 @@ class Loop {
 		$(this.horizArray[this.speedDotIndex]).classList.remove("lightOff");
 	}
 
+	setLoop = (lightPosition) => {
+		this.nextLoopDuration = lightPosition+1;
+		// Turn on all lights below and at clicked light
+		for (let i=0; i<=lightPosition; i++) {
+			$(this.vertArray[i]).classList.remove("lightOff");
+		}
+		// Turn off all lights above clicked light and remove their brightness
+		for (let i=lightPosition+1; i<8; i++) {
+			$(this.vertArray[i]).classList.remove("lightBright");
+			$(this.vertArray[i]).classList.add("lightOff");
+		}
+		//let brightId = (vertLoopIndex==0) ? 7 : vertLoopIndex-1;
+		//if (nextLoopDuration == 8) $(vertArray[brightId]).classList.remove("lightBright");
+		if (this.vertLoopIndex === 0 || lightPosition === 7 || lightPosition < this.vertLoopIndex) {
+			this.vertArray.forEach((vertLightId) => {
+				$(vertLightId).classList.remove("lightBright");
+			})
+		}
+		if (this.vertLoopIndex > lightPosition) this.vertLoopIndex = 0;
+	}
+
 	loopHandleLightTap = (sliderName, lightIndex) => {
 		if (["top","bottom"].includes(sliderName)) {
 			let lightId = `${sliderName}_${lightIndex}`;
 			let lightPosition = this.vertArray.indexOf(lightId);
-			this.nextLoopDuration = lightPosition+1;
-			// Turn on all lights below and at clicked light
-			for (let i=0; i<=lightPosition; i++) {
-				$(this.vertArray[i]).classList.remove("lightOff");
-			}
-			// Turn off all lights above clicked light and remove their brightness
-			for (let i=lightPosition+1; i<8; i++) {
-				$(this.vertArray[i]).classList.remove("lightBright");
-				$(this.vertArray[i]).classList.add("lightOff");
-			}
-			//let brightId = (vertLoopIndex==0) ? 7 : vertLoopIndex-1;
-			//if (nextLoopDuration == 8) $(vertArray[brightId]).classList.remove("lightBright");
-			if (this.vertLoopIndex === 0 || lightPosition === 7 || lightPosition < this.vertLoopIndex) {
-				this.vertArray.forEach((vertLightId) => {
-					$(vertLightId).classList.remove("lightBright");
-				})
-			}
-			if (this.vertLoopIndex > lightPosition) this.vertLoopIndex = 0;
+			this.setLoop(lightPosition);
 		} else if (["left", "right"].includes(sliderName)) {
 			this.setSpeed(sliderName, lightIndex);
 		}

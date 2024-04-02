@@ -78,8 +78,8 @@ const getLightClicked = (clickEvent, boundIndex) => {
             if (inBounds[boundIndex]()) return i.toString();
     return "1"; // catch error
 }
-let centerButtonPressed = false;
-$("centerButton").addEventListener("click", () => {
+let centerButtonDown = false;
+const centerButtonPressed = () => {
 	if (!loop.inLoopMode) {
 		audio.togglePlayback();
 	} else {
@@ -90,33 +90,42 @@ $("centerButton").addEventListener("click", () => {
 			loop.setSpeed("right", "2"); // Should speed be getting reset here?
 		}
 	}
-})
+}
+$("centerButton").addEventListener("click", centerButtonPressed);
 
 $("centerButton").addEventListener("pointerdown", () => {
     $("centerButton").style.backgroundColor = "#82664b";
-    centerButtonPressed = true;
+    centerButtonDown = true;
 });
 $("centerButton").addEventListener("pointerup", () => {
-    if (centerButtonPressed) {
+    if (centerButtonDown) {
         $("centerButton").style.backgroundColor = "var(--player)";
         centerButtonPressed = false;
     }
 });
 
-$("minusButton").addEventListener("click", () => {
+const menuPressed = () => {
+	!loop.inLoopMode ? loop.enterLoopMode() : loop.exitLoopMode();
+};
+$("menuButton").addEventListener("click", menuPressed);
+
+const minusPressed = () => {
 	if (!loop.inLoopMode) {
 		audio.decrementPolyVolume();
 		lights.displayVolume(audio.wholeMaxVolume);
 	}
-});
-$("plusButton").addEventListener("click", () => {
+};
+$("minusButton").addEventListener("click", minusPressed);
+
+const plusPressed = () => {
 	if (!loop.inLoopMode) {
 		audio.incrementPolyVolume();
 		lights.displayVolume(audio.wholeMaxVolume);
 	}
-});
+};
+$("plusButton").addEventListener("click", plusPressed);
 
-$("leftDotButton").addEventListener("click", () => {
+const leftDotPress = () => {
 	if (!loop.inLoopMode) {
 		if (audio.songIndex != 0) {
 			audio.songIndex--;
@@ -126,9 +135,10 @@ $("leftDotButton").addEventListener("click", () => {
 	} else if (loop.offset*1000 >= audio.beatDuration) {
 		loop.offset -= audio.beatDuration/1000;
 	}
-});
+};
+$("leftDotButton").addEventListener("click", leftDotPress);
 
-$("rightDotButton").addEventListener("click", () => {
+const rightDotPress = () => {
 	if (!loop.inLoopMode) {
 		if (audio.songIndex + 1 != playlist.length) {
 			audio.songIndex++;
@@ -138,7 +148,8 @@ $("rightDotButton").addEventListener("click", () => {
 	} else {
 		loop.offset += audio.beatDuration/1000;
 	}
-});
+};
+$("rightDotButton").addEventListener("click", rightDotPress);
 /*
 document.addEventListener("click", (e) => {
 	if ($("selectLocalStems").style.display == 'block' && !$("selectLocalStems").contains(e.target)) {
@@ -288,12 +299,4 @@ $("color4Input").addEventListener("change", () => {
 })
 $("color1Input").addEventListener("change", () => {
 	lights.generateGradient();
-})
-
-$("menuButton").addEventListener("click", () => {
-	if (!loop.inLoopMode) {
-		loop.enterLoopMode();
-	} else {
-		loop.exitLoopMode();
-	}
 })

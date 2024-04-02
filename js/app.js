@@ -88,4 +88,7 @@ const isolateStem = (sliderName) => {
 		document.removeEventListener('pointerup', resetVolume);
 	}
 	document.addEventListener('pointerup', resetVolume)
+	document.addEventListener("keyup", (e) => {
+        if (e.key == "Shift") resetVolume();
+	});
 }
