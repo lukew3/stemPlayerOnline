@@ -100,7 +100,7 @@ $("centerButton").addEventListener("pointerdown", () => {
 $("centerButton").addEventListener("pointerup", () => {
     if (centerButtonDown) {
         $("centerButton").style.backgroundColor = "var(--player)";
-        centerButtonPressed = false;
+        centerButtonDown = false;
     }
 });
 
@@ -174,7 +174,7 @@ $("selectStemsLaunch").addEventListener("click", () => {
 });
 
 // When a stem select header is clicked, collapse all selects and uncollapse the one clicked
-const selects = ['S2', 'SPO', 'Local'];
+const selects = ['SPO', 'Local'];
 selects.forEach(s0 => {
 	$(`selectStems${s0}Header`).addEventListener("click", () => {
 		selects.forEach(s1 => {
