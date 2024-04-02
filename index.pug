@@ -101,13 +101,7 @@ div(style='position: absolute; bottom: 20px; right: 20px;')
     p#selectStemsHeader STEM PLAYER ONLINE
     h2#selectStemsTitle SELECT STEMS
     div
-      +selectStemsFromSource('S2', 'STEMIFY2.NET', true)
-        form#s2SearchContainer
-          #s2SearchInner
-            input#s2SearchQuery(type='text' placeholder='Search for a song')
-            input#s2SearchSubmit(type='submit' value='Go')
-        #s2SearchResults
-      +selectStemsFromSource('SPO', 'STEMPLAYERONLINE.COM')
+      +selectStemsFromSource('SPO', 'STEMPLAYERONLINE.COM', true)
       +selectStemsFromSource('Local', 'LOCAL FILES')
         input#folderSelectField(type='file' webkitdirectory='' multiple='')
         button#folderSelectButton Select Folder
