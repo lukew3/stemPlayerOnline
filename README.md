@@ -3,9 +3,9 @@
 # Stem Player Online
 An online stem player. Inspired by but not affiliated with YEEZY TECH X KANO Stem Player.
 
-https://stemplayeronline.com
+See it live: https://stemplayeronline.com
 
-See [the project board](https://github.com/lukew3/stemPlayerOnline/projects/1) to see what features are coming up next.
+Join the Stem Player Online community: https://discord.gg/jfnFhggJGZ
 
 ## Usage
 This site aims to function as closely to the original stem player device as possible. All usage instructions unique to the site are listed below.
